@@ -3,7 +3,7 @@ import React from "react";
 const Options = () => {
     return (
         <div>
-            <h1 className="text-4xl text-green-500">Hello World</h1>
+            <h1 className="font-bold text-2xl mt-4 ml-4">Settings👨‍🎓</h1>
         </div>
     )
 };
