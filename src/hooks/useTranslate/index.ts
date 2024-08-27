@@ -1,3 +1,1 @@
-export const useTranslate = () => {
-
-}
+export const useTranslate = () => {}
