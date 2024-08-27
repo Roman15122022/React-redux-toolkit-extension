@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
-    "name": "react-boilerplate",
-    "description": "react-boilerplate for chrome extension",
+    "name": "TrackerR",
+    "description": "It is extension for tracking time",
     "version": "1.0.0",
     "action" : {
         "default_popup": "popup.html",
