@@ -3,7 +3,8 @@ import { createRoot } from 'react-dom/client'
 import '../../assets/tailwind.css'
 import Options from './options'
 import { Provider } from 'react-redux'
-import { setupStore } from '../../store'
+import { persistor, store } from '../../store'
+import { PersistGate } from 'redux-persist/integration/react'
 
 function init() {
   const appContainer = document.createElement('div')
@@ -14,11 +15,12 @@ function init() {
   }
 
   const root = createRoot(appContainer)
-  const store = setupStore()
 
   root.render(
     <Provider store={store}>
-      <Options />
+      <PersistGate loading={null} persistor={persistor}>
+        <Options />
+      </PersistGate>
     </Provider>,
   )
 }
