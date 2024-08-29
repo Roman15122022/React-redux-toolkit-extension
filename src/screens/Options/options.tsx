@@ -19,6 +19,7 @@ const Options = () => {
             checked={isDark}
             onChange={switchTheme}
             size="small"
+            color="secondary"
           />
         </div>
         <div className="flex items-center justify-between my-4">

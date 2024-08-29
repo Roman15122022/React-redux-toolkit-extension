@@ -1,6 +1,6 @@
-import { Language } from '../../../types/enums'
+import { Language, ThemeVariants } from '../../../types/enums'
 
 export interface Setting {
   language: Language
-  isDark: boolean
+  theme: ThemeVariants
 }

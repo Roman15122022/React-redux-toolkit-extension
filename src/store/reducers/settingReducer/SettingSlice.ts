@@ -1,10 +1,10 @@
 import { Setting } from './types'
-import { Language } from '../../../types/enums'
+import { Language, ThemeVariants } from '../../../types/enums'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: Setting = {
   language: Language.EN,
-  isDark: false,
+  theme: ThemeVariants.LIGHT,
 }
 
 export const settingSlice = createSlice({
@@ -14,8 +14,8 @@ export const settingSlice = createSlice({
     setLocale(state, action: PayloadAction<Language>): void {
       state.language = action.payload
     },
-    toggleTheme(state) {
-      state.isDark = !state.isDark
+    toggleTheme(state, action: PayloadAction<ThemeVariants>) {
+      state.theme = action.payload
     },
   },
 })
