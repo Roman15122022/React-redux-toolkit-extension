@@ -1,4 +1,3 @@
-import { useAppSelector } from '../../hooks/useAppSelector'
 import { clickerSlice } from '../../store/reducers/clickerReducer/ClickerSlice'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 

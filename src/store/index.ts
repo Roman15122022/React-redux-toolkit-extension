@@ -1,10 +1,6 @@
-import {
-  Action,
-  combineReducers,
-  configureStore,
-  ThunkAction,
-} from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import ClickerReducer from './reducers/clickerReducer/ClickerSlice'
+import SettingReducer from './reducers/settingReducer/SettingSlice'
 import {
   persistStore,
   persistReducer,
@@ -24,6 +20,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   ClickerReducer,
+  SettingReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -46,9 +43,10 @@ export const persistor = persistStore(store)
 export type RootState = ReturnType<typeof rootReducer>
 export type AppStore = ReturnType<typeof setupStore>
 export type AppDispatch = AppStore['dispatch']
-export type AppThunk<ReturnType = void> = ThunkAction<
+
+/*export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
   unknown,
   Action<string>
->
+>*/

@@ -1,6 +1,6 @@
 import React from 'react'
 import './popup.css'
-import { Clicker } from '../../components/Clicker'
+import { Clicker } from '../../features/Clicker'
 
 const Popup = (): JSX.Element => {
   return (
