@@ -1,7 +1,8 @@
 import { SelectChangeEvent } from '@mui/material'
+
 import { Language, ThemeVariants } from '../../types/enums'
-import useTheme from '../../hooks/useTheme'
 import { useTranslate } from '../../hooks/useTranslate'
+import useTheme from '../../hooks/useTheme'
 
 export const useOptions = () => {
   const { handleChangeTheme, theme } = useTheme()

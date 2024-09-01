@@ -1,12 +1,14 @@
-import React from 'react'
-import { createRoot } from 'react-dom/client'
-import '../../assets/tailwind.css'
-import Popup from './popup'
-import { Provider } from 'react-redux'
-import { persistor, store } from '../../store'
 import { PersistGate } from 'redux-persist/integration/react'
+import { Provider } from 'react-redux'
+import { createRoot } from 'react-dom/client'
+import React from 'react'
+import '../../assets/tailwind.css'
 
-function init() {
+import { persistor, store } from '../../store'
+
+import Popup from './popup'
+
+function init(): void {
   const appContainer = document.createElement('div')
   document.body.appendChild(appContainer)
 

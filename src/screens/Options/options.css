@@ -3,5 +3,5 @@
 }
 
 .custom-select .MuiSelect-outlined {
-  @apply border-none focus:border-none
+  @apply border-none focus:border-none;
 }

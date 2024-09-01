@@ -1,12 +1,14 @@
-import React from 'react'
 import { createRoot } from 'react-dom/client'
+import React from 'react'
 import '../../assets/tailwind.css'
-import Options from './options'
 import { Provider } from 'react-redux'
-import { persistor, store } from '../../store'
 import { PersistGate } from 'redux-persist/integration/react'
 
-function init() {
+import { persistor, store } from '../../store'
+
+import Options from './options'
+
+function init(): void {
   const appContainer = document.createElement('div')
   document.body.appendChild(appContainer)
 

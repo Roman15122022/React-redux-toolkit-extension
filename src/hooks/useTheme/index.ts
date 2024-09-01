@@ -1,5 +1,5 @@
-import { useAppSelector } from '../useAppSelector'
 import { useEffect } from 'react'
+import { useAppSelector } from '../useAppSelector'
 import { ThemeVariants } from '../../types/enums'
 import { settingSlice } from '../../store/reducers/settingReducer/SettingSlice'
 import { useAppDispatch } from '../useAppDispatch'
