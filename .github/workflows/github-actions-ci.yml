@@ -6,6 +6,8 @@ on:
     branches:
       - develop
       - master
+  pull_request:
+    branches: [ master ]
 
 jobs:
   build:
