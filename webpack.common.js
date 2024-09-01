@@ -8,7 +8,7 @@ const autoprefixer = require('autoprefixer')
 module.exports = {
   entry: {
     popup: path.resolve('src/screens/Popup/index.tsx'),
-    options: path.resolve('src/screens/Options/index.tsx'),
+    options: path.resolve('src/screens/Settings/index.tsx'),
     background: path.resolve('src/background/background.ts'),
     contentScript: path.resolve('src/contentScript/contentScript.ts'),
   },
