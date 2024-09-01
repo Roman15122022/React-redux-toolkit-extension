@@ -9,7 +9,8 @@
     "build": "webpack --watch --progress --config webpack.prod.js",
     "lint": "eslint --cache ./src",
     "lint:fix": "eslint --cache --fix ./src",
-    "lint:format": "prettier --write --cache ./src --log-level silent"
+    "lint:format": "prettier --write --cache ./src --log-level silent",
+    "prettier:check": "prettier --check \"./src/**/*.{js,jsx,ts,tsx,css,json,md}\""
   },
   "devDependencies": {
     "@types/chrome": "^0.0.188",

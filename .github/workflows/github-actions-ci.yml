@@ -28,6 +28,9 @@ jobs:
       - name: Install modules 🧰
         run: yarn
 
+      - name: Prettier check 🏁
+        run: yarn prettier:check
+
       - name: Lint 💅
         run: yarn lint
 
