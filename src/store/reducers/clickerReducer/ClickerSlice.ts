@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
+
 import { UserClicker } from './types'
 
 const initialState: UserClicker = {
   count: 0,
 }
+
 export const clickerSlice = createSlice({
   name: 'clicker',
   initialState,

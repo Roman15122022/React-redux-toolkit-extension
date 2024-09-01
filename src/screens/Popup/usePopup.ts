@@ -1,5 +1,5 @@
-import useTheme from '../../hooks/useTheme'
 import { useTranslate } from '../../hooks/useTranslate'
+import useTheme from '../../hooks/useTheme'
 
 export const usePopup = () => {
   useTheme()

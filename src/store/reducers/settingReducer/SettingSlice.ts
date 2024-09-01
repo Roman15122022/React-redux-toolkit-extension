@@ -1,6 +1,8 @@
-import { Setting } from './types'
-import { Language, ThemeVariants } from '../../../types/enums'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+
+import { Language, ThemeVariants } from '../../../types/enums'
+
+import { Setting } from './types'
 
 const initialState: Setting = {
   language: Language.EN,

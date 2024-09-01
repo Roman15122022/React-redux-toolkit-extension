@@ -1,13 +1,15 @@
 import React from 'react'
 import './options.css'
-import { useOptions } from './useOptions'
 import { FormControl, MenuItem, Select } from '@mui/material'
-import { Language } from '../../types/enums'
-import DarkModeIcon from '@mui/icons-material/DarkMode'
 import LightModeIcon from '@mui/icons-material/LightMode'
+import DarkModeIcon from '@mui/icons-material/DarkMode'
+
+import { Language } from '../../types/enums'
 import { Clicker } from '../../features/Clicker'
 
-const Options = () => {
+import { useOptions } from './useOptions'
+
+const Options = (): JSX.Element => {
   const { language, isDark, handleSelectLocale, switchTheme, interfaceLang } =
     useOptions()
 
@@ -50,7 +52,13 @@ const Options = () => {
       </div>
       <p className="theme-text text-right mt-6 opacity-60">
         {interfaceLang.settings.createdBy}
-        <a className="font-bold text-purple-dark dark:text-purple-light opacity-100" target="_blank" href="https://github.com/Roman15122022">@Roman15122022</a>
+        <a
+          className="font-bold text-purple-dark dark:text-purple-light opacity-100"
+          target="_blank"
+          href="https://github.com/Roman15122022"
+        >
+          @Roman15122022
+        </a>
       </p>
     </div>
   )

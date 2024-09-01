@@ -1,6 +1,6 @@
 import { clickerSlice } from '../../store/reducers/clickerReducer/ClickerSlice'
-import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { useAppSelector } from '../../hooks/useAppSelector'
+import { useAppDispatch } from '../../hooks/useAppDispatch'
 
 export const useClicker = () => {
   const { count } = useAppSelector(state => state.ClickerReducer)

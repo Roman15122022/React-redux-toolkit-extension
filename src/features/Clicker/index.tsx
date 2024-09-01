@@ -1,7 +1,9 @@
 import React from 'react'
-import { useClicker } from './useClicker'
-import Button from '../../components/Button'
 import clsx from 'clsx'
+
+import Button from '../../components/Button'
+
+import { useClicker } from './useClicker'
 import { ClickerProps } from './types'
 
 export const Clicker = ({ styles, locale }: ClickerProps): JSX.Element => {

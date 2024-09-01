@@ -1,4 +1,5 @@
 import { ClassValue } from 'clsx'
+
 import ENJSON from '../../locales/en.json'
 
 export type ClickerProps = {
