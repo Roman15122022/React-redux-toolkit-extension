@@ -1,0 +1,29 @@
+name: CI/CD Pipeline
+run-name: ${{ github.actor }} is testing out CI/CD 🚀
+
+on:
+  push:
+    branches:
+      - develop
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 20.x ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Staring Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install modules
+        run: yarn add
+      - name: Build project
+        run: yarn build
+      - name: Lint
+        run: yarn lint
+
+
