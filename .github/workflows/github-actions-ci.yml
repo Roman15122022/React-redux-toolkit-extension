@@ -16,16 +16,19 @@ jobs:
       matrix:
         node-version: [ 20.x ]
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code 🔎
+        uses: actions/checkout@v3
+
       - name: Staring Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Install modules
-        run: yarn install
-      - name: Build project
-        run: yarn build
-      - name: Lint
+          cache: 'yarn'
+
+      - name: Install modules 🧰
+        run: yarn
+
+      - name: Lint 💅
         run: yarn lint
 
 
