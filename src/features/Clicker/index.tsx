@@ -10,7 +10,7 @@ export const Clicker = ({ styles, locale }: ClickerProps): JSX.Element => {
   return (
     <div className={clsx(styles)}>
       <div className="flex justify-between items-center">
-        <span className="theme-text">
+        <span className="theme-text font-semibold text-lg">
           {locale.settings.score} {count} {locale.settings.times}
         </span>
         <div className="text-center">

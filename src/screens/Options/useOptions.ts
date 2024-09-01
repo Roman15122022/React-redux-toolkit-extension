@@ -1,7 +1,5 @@
-import { useAppSelector } from '../../hooks/useAppSelector'
 import { SelectChangeEvent } from '@mui/material'
 import { Language, ThemeVariants } from '../../types/enums'
-import React from 'react'
 import useTheme from '../../hooks/useTheme'
 import { useTranslate } from '../../hooks/useTranslate'
 
@@ -14,11 +12,11 @@ export const useOptions = () => {
     handleChangeLocale(language)
   }
 
-  function switchTheme(event: React.ChangeEvent<HTMLInputElement>): void {
-    const isChecked = event.target.checked
-    const theme = isChecked ? ThemeVariants.DARK : ThemeVariants.LIGHT
+  function switchTheme(): void {
+    const newTheme =
+      theme === ThemeVariants.LIGHT ? ThemeVariants.DARK : ThemeVariants.LIGHT
 
-    handleChangeTheme(theme)
+    handleChangeTheme(newTheme)
   }
 
   return {

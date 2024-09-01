@@ -1,11 +1,12 @@
 {
   "settings": {
     "title": "Settings",
-    "darkTheme": "Dark theme",
+    "darkTheme": "Theme",
     "language": "Language",
     "button": "Click",
     "score": "You clicked ",
-    "times": "time(s)"
+    "times": "time(s)",
+    "createdBy": "Created by "
   },
   "popup": {
     "main": {

@@ -13,14 +13,14 @@ module.exports = {
           dark: '#000000',
         },
         purple: {
-          light: '#9C27B0',
-          dark: '#4E1358',
+          light: '#ab2bc0',
+          dark: '#631870',
         },
       },
       borderColor: {
         purple: {
-          light: '#9C27B0',
-          dark: '#4E1358',
+          light: '#ab2bc0',
+          dark: '#631870',
         },
       },
       backgroundColor: {

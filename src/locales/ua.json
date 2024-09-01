@@ -1,11 +1,12 @@
 {
   "settings": {
     "title": "Налаштування",
-    "darkTheme": "Темна тема",
+    "darkTheme": "Тема",
     "language": "Мова",
     "button": "Натисни",
     "score": "Ти натиснув ",
-    "times": "раз(ів)"
+    "times": "раз(ів)",
+    "createdBy": "Створено "
   },
   "popup": {
     "main": {

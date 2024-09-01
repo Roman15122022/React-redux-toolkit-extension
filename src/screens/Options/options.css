@@ -1,0 +1,7 @@
+.custom-select .MuiSelect-select {
+  @apply !px-6 !py-2 text-white;
+}
+
+.custom-select .MuiSelect-outlined {
+  @apply border-none focus:border-none
+}
