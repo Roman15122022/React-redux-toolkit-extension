@@ -2,7 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .text-light {
+    color: theme('colors.text.light');
+  }
+  .text-dark {
+    color: theme('colors.text.dark');
+  }
+  .bg-light {
+    background-color: theme('colors.bg.light');
+  }
+  .bg-dark {
+    background-color: theme('colors.bg.dark');
+  }
+
+  .theme-text {
+    @apply text-light dark:text-dark;
+  }
+  .theme-bg {
+    @apply bg-light dark:bg-dark;
+  }
+}
+
 body {
   height: 400px;
   width: 400px;
+  @apply bg-white dark:bg-black;
 }

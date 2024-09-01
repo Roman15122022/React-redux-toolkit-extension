@@ -1,15 +1,21 @@
 import React from 'react'
 import { useClicker } from './useClicker'
 import Button from '../../components/Button'
+import clsx from 'clsx'
+import { ClickerProps } from './types'
 
-export const Clicker = (): JSX.Element => {
-  const { handleClick } = useClicker()
+export const Clicker = ({ styles, locale }: ClickerProps): JSX.Element => {
+  const { handleClick, count } = useClicker()
 
   return (
-    <div className="flex justify-center">
-      <div className="text-center">
-        <h1 className="text-lg font-semibold">Bored?</h1>
-        <Button onClick={handleClick}>Click!</Button>
+    <div className={clsx(styles)}>
+      <div className="flex justify-between items-center">
+        <span className="theme-text">
+          {locale.settings.score} {count} {locale.settings.times}
+        </span>
+        <div className="text-center">
+          <Button onClick={handleClick}>{locale.settings.button}!</Button>
+        </div>
       </div>
     </div>
   )

@@ -1,9 +1,9 @@
 import useTheme from '../../hooks/useTheme'
+import { useTranslate } from '../../hooks/useTranslate'
 
 export const usePopup = () => {
   useTheme()
+  const { interfaceLang } = useTranslate()
 
-  const mock = 5
-
-  return { mock }
+  return { locale: interfaceLang.popup.main }
 }

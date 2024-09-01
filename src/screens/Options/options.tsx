@@ -3,17 +3,27 @@ import { useOptions } from './useOptions'
 import { FormControl, MenuItem, Select, Switch } from '@mui/material'
 import { Language } from '../../types/enums'
 import { LABEL } from './constants'
+import { Clicker } from '../../features/Clicker'
 
 const Options = () => {
-  const { count, language, isDark, handleSelectLocale, switchTheme } =
-    useOptions()
+  const {
+    language,
+    isDark,
+    handleSelectLocale,
+    switchTheme,
+    interfaceLang,
+  } = useOptions()
 
   return (
     <div>
-      <h1 className="font-bold text-2xl mt-4 ml-4">Settings👨‍🎓</h1>
-      <div className="ml-8 mt-4">
+      <h1 className="font-bold theme-text text-2xl mt-4 ml-4">
+        {interfaceLang.settings.title}👨‍🎓
+      </h1>
+      <div className="ml-8 mt-6">
         <div className="flex items-center justify-between my-4">
-          <p className="text-lg font-semibold">Dark theme</p>
+          <p className="text-lg theme-text font-semibold">
+            {interfaceLang.settings.darkTheme}
+          </p>
           <Switch
             {...LABEL}
             checked={isDark}
@@ -23,13 +33,16 @@ const Options = () => {
           />
         </div>
         <div className="flex items-center justify-between my-4">
-          <p className="text-lg font-semibold">Language</p>
-          <FormControl xs={{ m: 1, minWidth: 80 }}>
+          <p className="text-lg theme-text font-semibold">
+            {interfaceLang.settings.language}
+          </p>
+          <FormControl>
             <Select
               value={language}
               label="Locale"
               autoWidth
               onChange={handleSelectLocale}
+              className="theme-text theme-bg"
             >
               <MenuItem value={Language.EN}>EN</MenuItem>
               <MenuItem value={Language.UA}>UA</MenuItem>
@@ -37,7 +50,7 @@ const Options = () => {
           </FormControl>
         </div>
       </div>
-      <p className="ml-4 mt-8">You clicked {count} time(s)</p>
+      <Clicker styles="ml-4" locale={interfaceLang} />
     </div>
   )
 }
