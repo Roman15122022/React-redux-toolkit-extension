@@ -11,6 +11,11 @@
   "popup": {
     "main": {
       "title": "Track your study time"
+    },
+    "track": {
+      "start": "Почати",
+      "stop": "Звершити сеанс",
+      "pause": "Пауза"
     }
   }
 }

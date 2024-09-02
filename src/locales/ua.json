@@ -11,6 +11,11 @@
   "popup": {
     "main": {
       "title": "Відслідковуй свій навчальний час!"
+    },
+    "track": {
+      "start": "Start",
+      "stop": "End session",
+      "pause": "Pause"
     }
   }
 }

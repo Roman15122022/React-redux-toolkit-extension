@@ -16,18 +16,33 @@ module.exports = {
           light: '#ab2bc0',
           dark: '#631870',
         },
+        secondary: {
+          light: '#ff6347',
+          dark: '#d53f8c',
+        },
+        gray: '#c0c0c0'
       },
       borderColor: {
         purple: {
           light: '#ab2bc0',
           dark: '#631870',
         },
+        secondary: {
+          light: '#ff6347',
+          dark: '#d53f8c',
+        },
+        gray: '#c0c0c0'
       },
       backgroundColor: {
         purple: {
           light: '#9C27B0',
           dark: '#4E1358',
         },
+        secondary: {
+          light: '#ff6347',
+          dark: '#d53f8c',
+        },
+        gray: '#c0c0c0'
       },
     },
   },
