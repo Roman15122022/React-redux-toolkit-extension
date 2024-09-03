@@ -18,7 +18,7 @@ module.exports = {
         },
         secondary: {
           light: '#ff6347',
-          dark: '#d53f8c',
+          dark: '#b9006a',
         },
         gray: '#c0c0c0'
       },
@@ -29,7 +29,7 @@ module.exports = {
         },
         secondary: {
           light: '#ff6347',
-          dark: '#d53f8c',
+          dark: '#b9006a',
         },
         gray: '#c0c0c0'
       },
@@ -40,7 +40,7 @@ module.exports = {
         },
         secondary: {
           light: '#ff6347',
-          dark: '#d53f8c',
+          dark: '#b9006a',
         },
         gray: '#c0c0c0'
       },

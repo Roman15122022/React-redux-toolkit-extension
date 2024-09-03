@@ -13,8 +13,8 @@
       "title": "Track your study time"
     },
     "track": {
-      "start": "Start",
-      "stop": "End session",
+      "start": "Start session",
+      "stop": "Finish session",
       "pause": "Pause",
       "hours": "h",
       "minutes": "m",
