@@ -13,9 +13,12 @@
       "title": "Track your study time"
     },
     "track": {
-      "start": "Почати",
-      "stop": "Звершити сеанс",
-      "pause": "Пауза"
+      "start": "Start",
+      "stop": "End session",
+      "pause": "Pause",
+      "hours": "h",
+      "minutes": "m",
+      "seconds": "s"
     }
   }
 }

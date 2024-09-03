@@ -13,9 +13,12 @@
       "title": "Відслідковуй свій навчальний час!"
     },
     "track": {
-      "start": "Start",
-      "stop": "End session",
-      "pause": "Pause"
+      "start": "Почати",
+      "stop": "Звершити сеанс",
+      "pause": "Пауза",
+      "hours": "год",
+      "minutes": "хв",
+      "seconds": "с"
     }
   }
 }

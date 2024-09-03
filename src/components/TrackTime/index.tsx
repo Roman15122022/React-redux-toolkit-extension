@@ -6,8 +6,15 @@ import { TypeButton } from '../../types/enums'
 import { useTrackTime } from './useTrackTime'
 
 const TrackTime = (): JSX.Element => {
-  const { locale, time, stop, start, pause, isPaused, isActive } =
-    useTrackTime()
+  const {
+    locale,
+    time,
+    stopTimer,
+    startTimer,
+    pauseTimer,
+    isPaused,
+    isActive,
+  } = useTrackTime()
 
   return (
     <div className="mt-6">
@@ -15,13 +22,19 @@ const TrackTime = (): JSX.Element => {
         <p className="text-2xl theme-text text-center">{time}</p>
       </div>
       <div className="mt-8 flex justify-center items-center">
-        <Button onClick={start}>{locale.start}</Button>
-        <Button variant={TypeButton.ERROR} onClick={stop}>
-          {locale.stop}
-        </Button>
-        <Button variant={TypeButton.SECONDARY} onClick={pause}>
-          {locale.pause}
-        </Button>
+        {(!isActive || isPaused) && (
+          <Button onClick={startTimer}>{locale.start}</Button>
+        )}
+        {isActive && (
+          <Button variant={TypeButton.ERROR} onClick={stopTimer}>
+            {locale.stop}
+          </Button>
+        )}
+        {isActive && (
+          <Button variant={TypeButton.SECONDARY} onClick={pauseTimer}>
+            {locale.pause}
+          </Button>
+        )}
       </div>
     </div>
   )
