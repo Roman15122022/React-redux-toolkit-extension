@@ -1,4 +1,4 @@
-import { Language, ThemeVariants } from '../../../types/enums'
+import { Language, ThemeVariants } from '../../../types'
 
 export interface Setting {
   language: Language
