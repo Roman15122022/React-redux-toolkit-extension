@@ -36,7 +36,6 @@ const useTimer = (
 
   const initializeTimer = (): void => {
     startTimeRef.current = Date.now() - initialTime * TIME_IN_MS.SECOND
-
   }
 
   const startTimer = (): void => {
