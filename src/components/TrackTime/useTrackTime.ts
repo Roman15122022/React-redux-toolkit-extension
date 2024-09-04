@@ -1,8 +1,8 @@
 import { useTranslate } from '../../hooks/useTranslate'
-import useTimer from '../../hooks/useTimer/inex'
+import useTimer from '../../hooks/useTimer'
 
 import { formatTime } from './helpers'
-import { INITIAL_TIME } from './consants'
+import { INITIAL_TIME } from './constants'
 
 export const useTrackTime = () => {
   const { interfaceLang } = useTranslate()
