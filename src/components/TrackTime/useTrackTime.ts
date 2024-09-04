@@ -20,11 +20,14 @@ export const useTrackTime = () => {
     currentTimerSlice.actions
   const dispatch = useAppDispatch()
 
-  const { seconds, stateTimer, pauseTimer, stopTimer, startTimer } = useTimer(
-    getTimeDifferenceByNow(startDate),
-    elapsedTime,
-    storeStateTimer,
-  )
+  const {
+    seconds,
+    stateTimer,
+    pauseTimer,
+    stopTimer,
+    startTimer,
+    initializeTimer,
+  } = useTimer(getTimeDifferenceByNow(startDate), elapsedTime, storeStateTimer)
 
   function handleStopTimer(): void {
     stopTimer()
@@ -36,17 +39,24 @@ export const useTrackTime = () => {
   function handleStartTimer(): void {
     const now = new Date().getTime()
     dispatch(setStartDate(now))
+    dispatch(setStateTimer({ isActive: true, isPause: false }))
     startTimer()
   }
 
   function handlePauseTimer(): void {
     pauseTimer()
-    dispatch(setStateTimer(stateTimer))
+    dispatch(setStateTimer({ ...stateTimer, isPause: true }))
     dispatch(setElapsedTime(seconds))
   }
 
   useLayoutEffect(() => {
-    if (!startDate || storeStateTimer?.isPause) return
+    if (!startDate) return
+
+    if (storeStateTimer.isPause) {
+      initializeTimer()
+
+      return
+    }
 
     startTimer()
   }, [])

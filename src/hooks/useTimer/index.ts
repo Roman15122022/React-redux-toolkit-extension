@@ -1,14 +1,20 @@
 import { useState, useRef } from 'react'
 import { TIME_IN_MS } from '../../constants'
 import { DEFAULT_INTERVAL } from './constants'
-import { StateTimer } from "../../types";
+import { StateTimer } from '../../types'
 
-const useTimer = (initialTime: number, storeElapsedTime: number , storeState: StateTimer | null) => {
+const useTimer = (
+  initialTime: number,
+  storeElapsedTime: number,
+  storeState: StateTimer | null,
+) => {
   const [elapsedTime, setElapsedTime] = useState<number>(storeElapsedTime)
-  const [stateTimer, setStateTimer] = useState<StateTimer>(storeState || {
-    isActive: false,
-    isPause: false,
-  })
+  const [stateTimer, setStateTimer] = useState<StateTimer>(
+    storeState || {
+      isActive: false,
+      isPause: false,
+    },
+  )
   const startTimeRef = useRef<number>(0)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -28,6 +34,11 @@ const useTimer = (initialTime: number, storeElapsedTime: number , storeState: St
     resetTimer()
   }
 
+  const initializeTimer = (): void => {
+    startTimeRef.current = Date.now() - initialTime * TIME_IN_MS.SECOND
+
+  }
+
   const startTimer = (): void => {
     if (intervalRef.current !== null) return
 
@@ -37,9 +48,7 @@ const useTimer = (initialTime: number, storeElapsedTime: number , storeState: St
       startTimeRef.current = Date.now() - initialTime * TIME_IN_MS.SECOND
     }
 
-    setStateTimer( { isPause: false, isActive: true })
-
-
+    setStateTimer({ isPause: false, isActive: true })
 
     intervalRef.current = setInterval(() => {
       const currentTime = Date.now()
@@ -66,6 +75,7 @@ const useTimer = (initialTime: number, storeElapsedTime: number , storeState: St
     stopTimer,
     pauseTimer,
     resetTimer,
+    initializeTimer,
     seconds: elapsedTime,
     stateTimer,
   }
