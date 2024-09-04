@@ -1,13 +1,15 @@
-import { TIME_IN_MS } from '../../constants'
+import { TIME_IN_MS, TIME_IN_SECONDS } from '../../constants'
 
 import { INITIAL_TIME } from './constants'
 
 export function formatTime(seconds: number): string {
   if (!seconds) return INITIAL_TIME
 
-  const hours = Math.floor(seconds / 3600)
-  const minutes = Math.floor((seconds % 3600) / 60)
-  const secs = seconds % 60
+  const hours = Math.floor(seconds / TIME_IN_SECONDS.HOUR)
+  const minutes = Math.floor(
+    (seconds % TIME_IN_SECONDS.HOUR) / TIME_IN_SECONDS.MINUTE,
+  )
+  const secs = seconds % TIME_IN_SECONDS.MINUTE
 
   const formattedHours = hours.toString().padStart(2, '0')
   const formattedMinutes = minutes.toString().padStart(2, '0')
@@ -17,7 +19,7 @@ export function formatTime(seconds: number): string {
 }
 
 export function getTimeDifferenceByNow(date: number): number {
-  if (date === 0) return date
+  if (!date) return date
 
   const now = new Date()
   const differenceInMilliseconds = now.getTime() - date

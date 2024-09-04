@@ -1,12 +1,12 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { TIME_IN_MS } from '../../constants'
 import { DEFAULT_INTERVAL } from './constants'
 import { StateTimer } from '../../types'
 
 const useTimer = (
-  initialTime: number,
-  storeElapsedTime: number,
-  storeState: StateTimer | null,
+  initialTime: number = 0,
+  storeElapsedTime: number = 0,
+  storeState: StateTimer | null = null,
 ) => {
   const [elapsedTime, setElapsedTime] = useState<number>(storeElapsedTime)
   const [stateTimer, setStateTimer] = useState<StateTimer>(
@@ -28,18 +28,20 @@ const useTimer = (
     startTimeRef.current = 0
   }
 
-  const stopTimer = (): void => {
+  const stopAndResetTimer = (): void => {
     clearInterval(intervalRef.current as NodeJS.Timeout)
     intervalRef.current = null
     resetTimer()
   }
 
   const initializeTimer = (): void => {
+    if (initialTime <= 0) return
+
     startTimeRef.current = Date.now() - initialTime * TIME_IN_MS.SECOND
   }
 
   const startTimer = (): void => {
-    if (intervalRef.current !== null) return
+    if (intervalRef.current || initialTime < 0 || elapsedTime < 0) return
 
     if (stateTimer.isPause) {
       startTimeRef.current = Date.now() - elapsedTime * TIME_IN_MS.SECOND
@@ -59,7 +61,7 @@ const useTimer = (
   }
 
   const pauseTimer = (): void => {
-    if (intervalRef.current === null) return
+    if (!intervalRef.current) return
 
     clearInterval(intervalRef.current as NodeJS.Timeout)
     intervalRef.current = null
@@ -69,9 +71,13 @@ const useTimer = (
     }))
   }
 
+  useEffect(() => {
+    return () => clearInterval(intervalRef.current as NodeJS.Timeout)
+  }, [])
+
   return {
     startTimer,
-    stopTimer,
+    stopAndResetTimer,
     pauseTimer,
     resetTimer,
     initializeTimer,

@@ -24,13 +24,13 @@ export const useTrackTime = () => {
     seconds,
     stateTimer,
     pauseTimer,
-    stopTimer,
+    stopAndResetTimer,
     startTimer,
     initializeTimer,
   } = useTimer(getTimeDifferenceByNow(startDate), elapsedTime, storeStateTimer)
 
   function handleStopTimer(): void {
-    stopTimer()
+    stopAndResetTimer()
     dispatch(setStartDate(0))
     dispatch(setElapsedTime(0))
     dispatch(setStateTimer(null))
