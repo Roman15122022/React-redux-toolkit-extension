@@ -5,7 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "watch": "webpack --watch --progress --config webpack.dev.js",
+    "start": "webpack --watch --progress --config webpack.dev.js",
     "build": "webpack --watch --progress --config webpack.prod.js",
     "lint": "eslint --cache ./src",
     "lint:fix": "eslint --cache --fix ./src",

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { Language, ThemeVariants } from '../../../types/enums'
+import { Language, ThemeVariants } from '../../../types'
 
 import { Setting } from './types'
 

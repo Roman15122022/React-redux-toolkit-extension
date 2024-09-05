@@ -53,7 +53,7 @@ const Options = (): JSX.Element => {
       <p className="theme-text text-right mt-6 opacity-60">
         {interfaceLang.settings.createdBy}
         <a
-          className="font-bold text-purple-dark dark:text-purple-light opacity-100"
+          className="font-bold text-purple-dark dark:text-purple-light opacity-100 hover:text-secondary-light dark:hover:text-secondary-dark transition-colors duration-300"
           target="_blank"
           href="https://github.com/Roman15122022"
         >
