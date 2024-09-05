@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 
 import { currentTimerSlice } from '../../store/reducers/currentTimerReducer/CurrentTimerSlice'
 import { useTranslate } from '../../hooks/useTranslate'
@@ -7,10 +7,12 @@ import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { TIME_IN_MS } from '../../constants'
 
-import { formatTime, getTimeDifferenceByNow } from './helpers'
+import { customizedTime, formatTime, getTimeDifferenceByNow } from './helpers'
 
 export const useTrackTime = () => {
   const { interfaceLang } = useTranslate()
+
+  const [lastTime, setLastTime] = useState<string>('')
 
   const {
     stateTimer: storeStateTimer,
@@ -35,6 +37,8 @@ export const useTrackTime = () => {
     dispatch(setElapsedTime(0))
     dispatch(setStateTimer(null))
     stopAndResetTimer()
+
+    setLastTime(customizedTime(formatTime(seconds), interfaceLang))
   }
 
   function handleStartTimer(): void {
@@ -89,5 +93,6 @@ export const useTrackTime = () => {
     isPaused: stateTimer.isPause,
     isActive: stateTimer.isActive,
     handleStartFromButton,
+    lastTime,
   }
 }

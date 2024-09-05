@@ -18,7 +18,8 @@
       "pause": "Pause",
       "hours": "h",
       "minutes": "m",
-      "seconds": "s"
+      "seconds": "s",
+      "lastTime": "The last session lasted"
     }
   }
 }

@@ -10,7 +10,8 @@ import { useTrackTime } from './useTrackTime'
 const TrackTime = (): JSX.Element => {
   const {
     locale,
-    time,
+    time: { formattedSeconds, formattedMinutes, formattedHours },
+    lastTime,
     handleStopTimer,
     handleStartFromButton,
     handlePauseTimer,
@@ -20,11 +21,13 @@ const TrackTime = (): JSX.Element => {
   } = useTrackTime()
 
   return (
-    <div className="mt-8">
+    <div className="mx-4 mt-10">
       <div className="relative">
-        <div className="text-5xl theme-text text-center">{time}</div>
+        <div className="text-5xl theme-text text-center">
+          {formattedHours}:{formattedMinutes}:{formattedSeconds}
+        </div>
         {isActive && (
-          <div className="absolute top-2 right-16">
+          <div className="absolute top-2 right-12">
             {isPaused ? (
               <button onClick={handleStartFromButton}>
                 <PlayCircleFilledWhiteIcon sx={{ fontSize: 36 }} />
@@ -49,6 +52,11 @@ const TrackTime = (): JSX.Element => {
           </Button>
         )}
       </div>
+      {lastTime && (
+        <div className="mt-4 font-bold">
+          {locale.lastTime}: {lastTime}
+        </div>
+      )}
     </div>
   )
 }

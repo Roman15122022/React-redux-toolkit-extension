@@ -18,7 +18,8 @@
       "pause": "Пауза",
       "hours": "год",
       "minutes": "хв",
-      "seconds": "с"
+      "seconds": "с",
+      "lastTime": "Остання сессія тривала"
     }
   }
 }
