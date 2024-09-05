@@ -20,12 +20,11 @@ const useTimer = (
 
   const resetTimer = (): void => {
     setElapsedTime(0)
+    startTimeRef.current = 0
     setStateTimer({
       isActive: false,
       isPause: false,
     })
-
-    startTimeRef.current = 0
   }
 
   const stopAndResetTimer = (): void => {
@@ -45,19 +44,21 @@ const useTimer = (
 
     if (stateTimer.isPause) {
       startTimeRef.current = Date.now() - elapsedTime * TIME_IN_MS.SECOND
-    } else {
-      startTimeRef.current = Date.now() - initialTime * TIME_IN_MS.SECOND
     }
 
-    setStateTimer({ isPause: false, isActive: true })
+    if (!stateTimer.isPause) {
+      startTimeRef.current = Date.now() - initialTime * TIME_IN_MS.SECOND
+    }
 
     intervalRef.current = setInterval(() => {
       const currentTime = Date.now()
       const timeElapsed = Math.floor(
-        (currentTime - startTimeRef.current!) / TIME_IN_MS.SECOND,
+        (currentTime - startTimeRef.current) / TIME_IN_MS.SECOND,
       )
       setElapsedTime(timeElapsed)
     }, DEFAULT_INTERVAL)
+
+    setStateTimer({ isPause: false, isActive: true })
   }
 
   const pauseTimer = (): void => {
@@ -65,10 +66,7 @@ const useTimer = (
 
     clearInterval(intervalRef.current as NodeJS.Timeout)
     intervalRef.current = null
-    setStateTimer(prevState => ({
-      ...prevState,
-      isPause: true,
-    }))
+    setStateTimer({ isPause: true, isActive: true })
   }
 
   useEffect(() => {

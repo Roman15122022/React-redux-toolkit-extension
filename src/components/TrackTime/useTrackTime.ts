@@ -1,10 +1,11 @@
-import { useLayoutEffect } from 'react'
+import { useEffect, useLayoutEffect } from 'react'
 
 import { currentTimerSlice } from '../../store/reducers/currentTimerReducer/CurrentTimerSlice'
 import { useTranslate } from '../../hooks/useTranslate'
 import useTimer from '../../hooks/useTimer'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
+import { TIME_IN_MS } from '../../constants'
 
 import { formatTime, getTimeDifferenceByNow } from './helpers'
 
@@ -30,23 +31,36 @@ export const useTrackTime = () => {
   } = useTimer(getTimeDifferenceByNow(startDate), elapsedTime, storeStateTimer)
 
   function handleStopTimer(): void {
-    stopAndResetTimer()
     dispatch(setStartDate(0))
     dispatch(setElapsedTime(0))
     dispatch(setStateTimer(null))
+    stopAndResetTimer()
   }
 
   function handleStartTimer(): void {
-    const now = new Date().getTime()
-    dispatch(setStartDate(now))
     dispatch(setStateTimer({ isActive: true, isPause: false }))
     startTimer()
   }
 
+  function handleStartFromButton(): void {
+    const newDate = Date.now() - seconds * TIME_IN_MS.SECOND
+    dispatch(setStartDate(newDate))
+
+    handleStartTimer()
+  }
+
+  function handleStartSession(): void {
+    const now = Date.now()
+    dispatch(setStartDate(now))
+
+    handleStartTimer()
+  }
+
   function handlePauseTimer(): void {
-    pauseTimer()
-    dispatch(setStateTimer({ ...stateTimer, isPause: true }))
+    dispatch(setStateTimer({ isActive: true, isPause: true }))
     dispatch(setElapsedTime(seconds))
+
+    pauseTimer()
   }
 
   useLayoutEffect(() => {
@@ -58,17 +72,22 @@ export const useTrackTime = () => {
       return
     }
 
-    startTimer()
+    handleStartTimer()
   }, [])
+
+  useEffect(() => {
+    dispatch(setElapsedTime(seconds))
+  }, [seconds])
 
   return {
     locale: interfaceLang.popup.track,
     time: formatTime(seconds),
-    handleStartTimer,
+    handleStartSession,
     handleStopTimer,
     handlePauseTimer,
     startTimer,
     isPaused: stateTimer.isPause,
     isActive: stateTimer.isActive,
+    handleStartFromButton,
   }
 }

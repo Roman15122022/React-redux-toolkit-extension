@@ -12,8 +12,9 @@ const TrackTime = (): JSX.Element => {
     locale,
     time,
     handleStopTimer,
-    handleStartTimer,
+    handleStartFromButton,
     handlePauseTimer,
+    handleStartSession,
     isPaused,
     isActive,
   } = useTrackTime()
@@ -25,7 +26,7 @@ const TrackTime = (): JSX.Element => {
         {isActive && (
           <div className="absolute top-2 right-16">
             {isPaused ? (
-              <button onClick={handleStartTimer}>
+              <button onClick={handleStartFromButton}>
                 <PlayCircleFilledWhiteIcon sx={{ fontSize: 36 }} />
               </button>
             ) : (
@@ -38,7 +39,7 @@ const TrackTime = (): JSX.Element => {
       </div>
       <div className="mt-8 flex justify-evenly items-center">
         {!isActive && (
-          <Button onClick={handleStartTimer} classes="px-6">
+          <Button onClick={handleStartSession} classes="px-6">
             {locale.start}
           </Button>
         )}
