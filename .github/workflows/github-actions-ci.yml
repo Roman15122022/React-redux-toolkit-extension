@@ -34,4 +34,13 @@ jobs:
       - name: Lint 💅
         run: yarn lint
 
+      - name: Build project 🏗
+        run: yarn build:deploy
+
+      - name: Upload build folder as artifact 📦
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-folder
+          path: ./dist
+
 
