@@ -5,3 +5,4 @@
 - [x] Webpack Compatible
 - [x] TailwindCSS 3.0 Compatible
 - [x] Redux-toolkit
+- [x] TypeScript
