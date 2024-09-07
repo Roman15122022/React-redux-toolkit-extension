@@ -7,6 +7,7 @@
   "scripts": {
     "start": "webpack --watch --progress --config webpack.dev.js",
     "build": "webpack --watch --progress --config webpack.prod.js",
+    "build:deploy": "webpack --progress --config webpack.prod.js",
     "lint": "eslint --cache ./src",
     "lint:fix": "eslint --cache --fix ./src",
     "prettier": "prettier --write --cache ./src --log-level silent",
