@@ -44,3 +44,27 @@ jobs:
           path: ./dist
 
 
+  release:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    needs: build
+    steps:
+      - name: Checkout code 🔎
+        uses: actions/checkout@v3
+
+      - name: Create Release ✨
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.sha }}
+          release_name: 'Release ${{ github.sha }}'
+          draft: false
+          prerelease: false
+
+      - name: Upload build folder to release 📦
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist
+          asset_name: build.zip
+          asset_content_type: application/zip
