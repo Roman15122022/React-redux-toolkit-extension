@@ -34,4 +34,71 @@ jobs:
       - name: Lint 💅
         run: yarn lint
 
+      - name: Build project 🏗
+        run: yarn build:release
+
+      - name: Pack on zip 📦
+        run: yarn postbuild
+
+      - name: List files in working directory 🗂
+        run: ls -alh
+
+      - name: Upload build folder as artifact 📦
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-zip
+          path: ./dist
+
+
+  # release:
+  #   runs-on: ubuntu-latest
+  #   if: github.ref == 'refs/heads/master'
+  #   needs: build
+  #   steps:
+  #     - name: Checkout code 🔎
+  #       uses: actions/checkout@v3
+
+  #     - name: Download build.zip artifact 📦
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: build-zip
+
+  #     - name: Create Release ✨
+  #       id: create_release
+  #       uses: actions/github-script@v6
+  #       with:
+  #         github-token: ${{ secrets.RELEASE_TOKEN }}
+  #         script: |
+  #           const { data: release } = await github.rest.repos.createRelease({
+  #             owner: context.repo.owner,
+  #             repo: context.repo.repo,
+  #             tag_name: 'v1.0.0',
+  #             name: 'Release v1.0.0',
+  #             draft: false,
+  #             prerelease: false
+  #           });
+  #           return release.upload_url;
+
+  #     - name: Upload build.zip to release 📦
+  #       id: upload_asset
+  #       uses: actions/github-script@v6
+  #       with:
+  #         github-token: ${{ secrets.RELEASE_TOKEN }}
+  #         script: |
+  #           const fs = require('fs');
+  #           const path = require('path');
+  #           const uploadUrl = '${{ steps.create_release.outputs.upload_url }}';
+
+  #           const assetPath = path.join(process.env.GITHUB_WORKSPACE, 'build-zip.zip');
+  #           const assetBuffer = fs.readFileSync(assetPath);
+  #           await github.rest.repos.uploadReleaseAsset({
+  #             url: uploadUrl,
+  #             name: 'build.zip',
+  #             data: assetBuffer,
+  #             headers: {
+  #               'content-type': 'application/zip',
+  #               'content-length': assetBuffer.length
+  #             }
+  #           });
+
 
