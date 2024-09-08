@@ -37,15 +37,18 @@ jobs:
       - name: Build project 🏗
         run: yarn build:release
 
-      - name: Create build archive 📦
-        run: yarn postbuild
 
-      - name: Upload build folder as artifact 📦
+      - name: Create ZIP file 📦
+        run: zip -r build.zip dist
+
+      - name: Check for build.zip 📦
+        run: ls -l build.zip
+
+      - name: Upload build.zip as artifact 📦
         uses: actions/upload-artifact@v3
         with:
-          name: build-folder
-          path: ./dist
-
+          name: build-zip
+          path: build.zip
 
   release:
     runs-on: ubuntu-latest
