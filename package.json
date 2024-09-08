@@ -7,7 +7,8 @@
   "scripts": {
     "start": "webpack --watch --progress --config webpack.dev.js",
     "build": "webpack --watch --progress --config webpack.prod.js",
-    "build:deploy": "webpack --progress --config webpack.prod.js",
+    "build:release": "webpack --progress --config webpack.prod.js",
+    "postbuild": "node scripts/zip.js",
     "lint": "eslint --cache ./src",
     "lint:fix": "eslint --cache --fix ./src",
     "prettier": "prettier --write --cache ./src --log-level silent",
@@ -19,6 +20,7 @@
     "@types/react-dom": "^18.0.4",
     "@typescript-eslint/eslint-plugin": "^5.59.2",
     "@typescript-eslint/parser": "^5.59.2",
+    "archiver": "^7.0.1",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.1",

@@ -35,7 +35,10 @@ jobs:
         run: yarn lint
 
       - name: Build project 🏗
-        run: yarn build:deploy
+        run: yarn build:release
+
+      - name: Create build archive 📦
+        run: yarn postbuild
 
       - name: Upload build folder as artifact 📦
         uses: actions/upload-artifact@v3
@@ -54,17 +57,38 @@ jobs:
 
       - name: Create Release ✨
         id: create_release
-        uses: actions/create-release@v1
+        uses: actions/github-script@v6
         with:
-          tag_name: ${{ github.sha }}
-          release_name: 'Release ${{ github.sha }}'
-          draft: false
-          prerelease: false
+          github-token: ${{ secrets.RELEASE_TOKEN }}
+          script: |
+            const { data: release } = await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: 'v1.0.0',
+              name: 'Release v1.0.0',
+              draft: false,
+              prerelease: false
+            });
+            return release.upload_url;
 
       - name: Upload build folder to release 📦
-        uses: actions/upload-release-asset@v1
+        id: upload_asset
+        uses: actions/github-script@v6
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist
-          asset_name: build.zip
-          asset_content_type: application/zip
+          github-token: ${{ secrets.RELEASE_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const uploadUrl = '${{ steps.create_release.outputs.upload_url }}';
+            
+            const assetPath = path.join(process.env.GITHUB_WORKSPACE, 'build.zip');
+            const assetBuffer = fs.readFileSync(assetPath);
+            await github.rest.repos.uploadReleaseAsset({
+              url: uploadUrl,
+              name: 'build.zip',
+              data: assetBuffer,
+              headers: {
+                'content-type': 'application/zip',
+                'content-length': assetBuffer.length
+              }
+            });
