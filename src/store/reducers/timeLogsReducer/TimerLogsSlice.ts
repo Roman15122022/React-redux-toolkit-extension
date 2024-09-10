@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { TimePeriod } from '../../../types'
+import { MAX_SIZE_DATES } from '../../../constants'
 
 import { TimerLogs } from './types'
 
@@ -14,6 +15,10 @@ export const timerLogsSlice = createSlice({
   initialState,
   reducers: {
     addTimeLogs(state, action: PayloadAction<TimePeriod>) {
+      if (state.dates.length > MAX_SIZE_DATES) {
+        state.dates.shift()
+      }
+
       state.dates.push(action.payload)
     },
     setLastStartDate(state, action: PayloadAction<number>) {

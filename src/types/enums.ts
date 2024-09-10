@@ -8,6 +8,16 @@ export enum ThemeVariants {
   LIGHT = 'light',
 }
 
+export enum DayOfWeek {
+  SUNDAY = 'Sunday',
+  MONDAY = 'Monday',
+  TUESDAY = 'Tuesday',
+  WEDNESDAY = 'Wednesday',
+  THURSDAY = 'Thursday',
+  FRIDAY = 'Friday',
+  SATURDAY = 'Saturday',
+}
+
 export enum TypeButton {
   PRIMARY = 'primary',
   SECONDARY = 'secondary',

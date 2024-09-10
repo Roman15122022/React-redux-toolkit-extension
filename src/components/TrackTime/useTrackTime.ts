@@ -12,11 +12,12 @@ import {
   customizedPeriod,
   customizedTime,
   formatTime,
+  getDayOfWeekNumber,
   getTimeDifferenceByNow,
 } from './helpers'
 
 export const useTrackTime = () => {
-  const { interfaceLang } = useTranslate()
+  const { interfaceLang, language } = useTranslate()
 
   const [lastTime, setLastTime] = useState<string>('')
 
@@ -48,7 +49,13 @@ export const useTrackTime = () => {
     dispatch(setStartDate(0))
     dispatch(setElapsedTime(0))
     dispatch(setStateTimer(null))
-    dispatch(addTimeLogs({ startDate: lastStartDate, endDate: Date.now() }))
+    dispatch(
+      addTimeLogs({
+        startDate: lastStartDate,
+        endDate: Date.now(),
+        dayOfWeek: getDayOfWeekNumber(),
+      }),
+    )
     stopAndResetTimer()
 
     setLastTime(customizedTime(formatTime(seconds), interfaceLang))
@@ -109,6 +116,6 @@ export const useTrackTime = () => {
     isActive: stateTimer.isActive,
     handleStartFromButton,
     lastTime,
-    period: customizedPeriod(dates),
+    period: customizedPeriod(dates, language),
   }
 }

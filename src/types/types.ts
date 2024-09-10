@@ -12,4 +12,5 @@ export type Locale = (typeof TRANSLATIONS)[Language.EN]
 export type TimePeriod = {
   startDate: number
   endDate: number
+  dayOfWeek: number
 }

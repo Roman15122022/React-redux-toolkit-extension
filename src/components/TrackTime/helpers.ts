@@ -1,9 +1,11 @@
 import moment from 'moment'
 
-import { Locale, TimePeriod } from '../../types'
+import { Language, Locale, TimePeriod } from '../../types'
 import {
   DATE_DAY_FORMAT,
+  DATE_DAY_OF_WEEK_FORMAT,
   DATE_TIME_FORMAT,
+  dayOfWeekMap,
   TIME_IN_MS,
   TIME_IN_SECONDS,
 } from '../../constants'
@@ -43,8 +45,13 @@ export function customizedTime(time: FormattedTime, locale: Locale): string {
   return `${formattedHours}${hours} ${formattedMinutes}${minutes} ${formattedSeconds}${seconds}`
 }
 
-export function customizedPeriod(dates: TimePeriod[]): string {
+export function customizedPeriod(
+  dates: TimePeriod[],
+  language: Language,
+): string {
   if (!dates.length) return ''
+
+  moment.locale(language)
 
   const { startDate, endDate } = dates.at(-1)
 
@@ -58,4 +65,11 @@ export function customizedPeriod(dates: TimePeriod[]): string {
   }
 
   return `${formattedStartDate} ${formattedStartTime} - ${formattedEndDate} ${formattedEndTime}`
+}
+
+export function getDayOfWeekNumber(): number {
+  moment.locale(Language.EN)
+  const dayOfWeek = moment().format(DATE_DAY_OF_WEEK_FORMAT)
+
+  return dayOfWeekMap[dayOfWeek] || 0
 }

@@ -54,13 +54,20 @@ const TrackTime = (): JSX.Element => {
         )}
       </div>
       {lastTime && (
-        <div className="mt-6 font-bold text-sm gap-1 flex flex-col">
-          <div>
-            {locale.lastTime}: {lastTime}
+        <div className="mt-6 font-semibold text-sm">
+          <div className="flex items-center">
+            <span>{locale.lastTime}:</span>
+            <span className="ml-2 text-secondary-light dark:text-purple-light">
+              {lastTime}
+            </span>
           </div>
+
           {period && (
-            <div>
-              {locale.period}: {period}
+            <div className="flex items-center mt-1">
+              <span>{locale.period}:</span>
+              <span className="ml-2 text-secondary-light dark:text-purple-light">
+                {period}
+              </span>
             </div>
           )}
         </div>
