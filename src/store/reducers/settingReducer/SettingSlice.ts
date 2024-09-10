@@ -6,7 +6,7 @@ import { Setting } from './types'
 
 const initialState: Setting = {
   language: Language.EN,
-  theme: ThemeVariants.LIGHT,
+  theme: ThemeVariants.DARK,
 }
 
 export const settingSlice = createSlice({

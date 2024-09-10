@@ -5,23 +5,22 @@ import { settingSlice } from '../../store/reducers/settingReducer/SettingSlice'
 import { TRANSLATIONS } from './constants'
 import { Language } from '../../types'
 import { Locale } from '../../types'
-import moment from "moment";
+import moment from 'moment'
 
-require('moment/locale/uk');
+require('moment/locale/uk')
 
 export const useTranslate = () => {
   const { language } = useAppSelector(state => state.SettingReducer)
   const dispatch = useAppDispatch()
   const { setLocale } = settingSlice.actions
 
-  const [interfaceLang, setInterfaceLang] = useState<Locale>(
-    TRANSLATIONS[language],
-  )
+  const [interfaceLang, setInterfaceLang] = useState<Locale>(TRANSLATIONS[language])
 
   function handleChangeLocale(locale: Language) {
     dispatch(setLocale(locale))
     setInterfaceLang(TRANSLATIONS[locale])
-    moment.locale('uk')
+    moment.locale(language)
+    moment.locale()
   }
 
   return { interfaceLang, handleChangeLocale, language }

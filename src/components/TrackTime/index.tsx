@@ -54,7 +54,7 @@ const TrackTime = (): JSX.Element => {
         )}
       </div>
       {lastTime && (
-        <div className="mt-6">
+        <div className="mt-6 font-bold text-sm gap-1 flex flex-col">
           <div>
             {locale.lastTime}: {lastTime}
           </div>
