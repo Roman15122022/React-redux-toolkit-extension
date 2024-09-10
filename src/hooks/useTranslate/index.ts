@@ -14,7 +14,9 @@ export const useTranslate = () => {
   const dispatch = useAppDispatch()
   const { setLocale } = settingSlice.actions
 
-  const [interfaceLang, setInterfaceLang] = useState<Locale>(TRANSLATIONS[language])
+  const [interfaceLang, setInterfaceLang] = useState<Locale>(
+    TRANSLATIONS[language],
+  )
 
   function handleChangeLocale(locale: Language) {
     dispatch(setLocale(locale))
