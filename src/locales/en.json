@@ -20,7 +20,8 @@
       "minutes": "m",
       "seconds": "s",
       "lastTime": "The last session lasted",
-      "period": "Period"
+      "period": "Period",
+      "totalForDay": "Total time for today"
     }
   }
 }

@@ -10,7 +10,9 @@ export type StateTimer = {
 export type Locale = (typeof TRANSLATIONS)[Language.EN]
 
 export type TimePeriod = {
+  activityName: string
   startDate: number
   endDate: number
   dayOfWeek: number
+  totalTimeForSession: number
 }

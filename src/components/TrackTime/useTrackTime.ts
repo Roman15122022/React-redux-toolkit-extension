@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useState } from 'react'
 
+import { getDayOfWeekNumber, getTimeDifferenceByNow } from '../../utils'
 import { timerLogsSlice } from '../../store/reducers/timeLogsReducer/TimerLogsSlice'
 import { currentTimerSlice } from '../../store/reducers/currentTimerReducer/CurrentTimerSlice'
 import { useTranslate } from '../../hooks/useTranslate'
@@ -12,8 +13,7 @@ import {
   customizedPeriod,
   customizedTime,
   formatTime,
-  getDayOfWeekNumber,
-  getTimeDifferenceByNow,
+  totalElapsedTime,
 } from './helpers'
 
 export const useTrackTime = () => {
@@ -46,16 +46,20 @@ export const useTrackTime = () => {
   } = useTimer(getTimeDifferenceByNow(startDate), elapsedTime, storeStateTimer)
 
   function handleStopTimer(): void {
-    dispatch(setStartDate(0))
-    dispatch(setElapsedTime(0))
-    dispatch(setStateTimer(null))
     dispatch(
       addTimeLogs({
+        activityName: '',
         startDate: lastStartDate,
         endDate: Date.now(),
         dayOfWeek: getDayOfWeekNumber(),
+        totalTimeForSession: elapsedTime,
       }),
     )
+
+    dispatch(setStartDate(0))
+    dispatch(setElapsedTime(0))
+    dispatch(setStateTimer(null))
+
     stopAndResetTimer()
 
     setLastTime(customizedTime(formatTime(seconds), interfaceLang))
@@ -117,5 +121,6 @@ export const useTrackTime = () => {
     handleStartFromButton,
     lastTime,
     period: customizedPeriod(dates, language),
+    totalForDay: totalElapsedTime(dates, interfaceLang),
   }
 }

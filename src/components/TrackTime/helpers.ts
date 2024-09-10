@@ -1,19 +1,20 @@
 import moment from 'moment'
 
 import { Language, Locale, TimePeriod } from '../../types'
+import { getTotalTimeForDate } from '../../helpers'
 import {
   DATE_DAY_FORMAT,
-  DATE_DAY_OF_WEEK_FORMAT,
   DATE_TIME_FORMAT,
-  dayOfWeekMap,
-  TIME_IN_MS,
   TIME_IN_SECONDS,
 } from '../../constants'
 
 import { FormattedTime } from './types'
 import { INITIAL_TIME } from './constants'
 
-export function formatTime(seconds: number): FormattedTime {
+export function formatTime(
+  seconds: number,
+  includeLeadingZeros = true,
+): FormattedTime {
   if (!seconds) return INITIAL_TIME
 
   const hours = Math.floor(seconds / TIME_IN_SECONDS.HOUR)
@@ -22,20 +23,19 @@ export function formatTime(seconds: number): FormattedTime {
   )
   const secs = seconds % TIME_IN_SECONDS.MINUTE
 
-  const formattedHours = hours.toString().padStart(2, '0')
-  const formattedMinutes = minutes.toString().padStart(2, '0')
-  const formattedSeconds = secs.toString().padStart(2, '0')
+  const formatNumber = (num: number): string => {
+    if (includeLeadingZeros) {
+      return num.toString().padStart(2, '0')
+    }
+
+    return num.toString()
+  }
+
+  const formattedHours = formatNumber(hours)
+  const formattedMinutes = formatNumber(minutes)
+  const formattedSeconds = formatNumber(secs)
 
   return { formattedHours, formattedMinutes, formattedSeconds }
-}
-
-export function getTimeDifferenceByNow(date: number): number {
-  if (!date) return date
-
-  const now = new Date()
-  const differenceInMilliseconds = now.getTime() - date
-
-  return Math.floor(differenceInMilliseconds / TIME_IN_MS.SECOND)
 }
 
 export function customizedTime(time: FormattedTime, locale: Locale): string {
@@ -67,9 +67,15 @@ export function customizedPeriod(
   return `${formattedStartDate} ${formattedStartTime} - ${formattedEndDate} ${formattedEndTime}`
 }
 
-export function getDayOfWeekNumber(): number {
-  moment.locale(Language.EN)
-  const dayOfWeek = moment().format(DATE_DAY_OF_WEEK_FORMAT)
+export function totalElapsedTime(dates: TimePeriod[], locale: Locale): string {
+  const now = Date.now()
 
-  return dayOfWeekMap[dayOfWeek] || 0
+  const totalTime = getTotalTimeForDate(now, dates)
+
+  const customTime = customizedTime(formatTime(totalTime, false), locale)
+
+  return customTime
+    .split(' ')
+    .map(item => (item.startsWith('0') ? '' : item))
+    .join(' ')
 }

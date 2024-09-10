@@ -13,6 +13,7 @@ const TrackTime = (): JSX.Element => {
     time: { formattedSeconds, formattedMinutes, formattedHours },
     lastTime,
     period,
+    totalForDay,
     handleStopTimer,
     handleStartFromButton,
     handlePauseTimer,
@@ -67,6 +68,15 @@ const TrackTime = (): JSX.Element => {
               <span>{locale.period}:</span>
               <span className="ml-2 text-secondary-light dark:text-purple-light">
                 {period}
+              </span>
+            </div>
+          )}
+
+          {totalForDay && (
+            <div className="flex items-center mt-2 text-[18px]">
+              <span>{locale.totalForDay}:</span>
+              <span className="ml-2 text-secondary-light dark:text-purple-light">
+                {totalForDay}
               </span>
             </div>
           )}
