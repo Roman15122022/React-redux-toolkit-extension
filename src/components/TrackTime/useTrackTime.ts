@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useState } from 'react'
 
+import { timerLogsSlice } from '../../store/reducers/timeLogsReducer/TimerLogsSlice'
 import { currentTimerSlice } from '../../store/reducers/currentTimerReducer/CurrentTimerSlice'
 import { useTranslate } from '../../hooks/useTranslate'
 import useTimer from '../../hooks/useTimer'
@@ -7,7 +8,12 @@ import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { TIME_IN_MS } from '../../constants'
 
-import { customizedTime, formatTime, getTimeDifferenceByNow } from './helpers'
+import {
+  customizedPeriod,
+  customizedTime,
+  formatTime,
+  getTimeDifferenceByNow,
+} from './helpers'
 
 export const useTrackTime = () => {
   const { interfaceLang } = useTranslate()
@@ -19,8 +25,14 @@ export const useTrackTime = () => {
     startDate,
     elapsedTime,
   } = useAppSelector(state => state.CurrentTimerReducer)
+  const { dates, lastStartDate } = useAppSelector(
+    state => state.TimerLogsReducer,
+  )
+
   const { setStateTimer, setStartDate, setElapsedTime } =
     currentTimerSlice.actions
+  const { setLastStartDate, addTimeLogs } = timerLogsSlice.actions
+
   const dispatch = useAppDispatch()
 
   const {
@@ -36,6 +48,7 @@ export const useTrackTime = () => {
     dispatch(setStartDate(0))
     dispatch(setElapsedTime(0))
     dispatch(setStateTimer(null))
+    dispatch(addTimeLogs({ startDate: lastStartDate, endDate: Date.now() }))
     stopAndResetTimer()
 
     setLastTime(customizedTime(formatTime(seconds), interfaceLang))
@@ -56,7 +69,9 @@ export const useTrackTime = () => {
   function handleStartSession(): void {
     const now = Date.now()
     dispatch(setStartDate(now))
+    dispatch(setLastStartDate(now))
 
+    setLastTime('')
     handleStartTimer()
   }
 
@@ -94,5 +109,6 @@ export const useTrackTime = () => {
     isActive: stateTimer.isActive,
     handleStartFromButton,
     lastTime,
+    period: customizedPeriod(dates),
   }
 }

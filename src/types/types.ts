@@ -6,3 +6,8 @@ export type StateTimer = {
 }
 
 export type Locale = (typeof TRANSLATIONS)['ua']
+
+export type TimePeriod = {
+  startDate: number
+  endDate: number
+}

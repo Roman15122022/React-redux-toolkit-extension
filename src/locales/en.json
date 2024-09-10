@@ -19,7 +19,8 @@
       "hours": "h",
       "minutes": "m",
       "seconds": "s",
-      "lastTime": "The last session lasted"
+      "lastTime": "The last session lasted",
+      "period": "Period"
     }
   }
 }

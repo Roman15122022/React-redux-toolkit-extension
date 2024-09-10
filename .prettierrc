@@ -8,7 +8,7 @@
   "arrowParens": "avoid",
   "trailingComma": "all",
   "quoteProps": "as-needed",
-  "printWidth": 80
+  "printWidth": 90
 }
 
 

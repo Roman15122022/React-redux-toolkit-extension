@@ -12,6 +12,7 @@ const TrackTime = (): JSX.Element => {
     locale,
     time: { formattedSeconds, formattedMinutes, formattedHours },
     lastTime,
+    period,
     handleStopTimer,
     handleStartFromButton,
     handlePauseTimer,
@@ -53,8 +54,15 @@ const TrackTime = (): JSX.Element => {
         )}
       </div>
       {lastTime && (
-        <div className="mt-4 font-bold">
-          {locale.lastTime}: {lastTime}
+        <div className="mt-6">
+          <div>
+            {locale.lastTime}: {lastTime}
+          </div>
+          {period && (
+            <div>
+              {locale.period}: {period}
+            </div>
+          )}
         </div>
       )}
     </div>
