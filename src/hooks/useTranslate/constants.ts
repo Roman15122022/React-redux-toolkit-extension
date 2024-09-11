@@ -1,7 +1,8 @@
 import UAJSON from '../../locales/ua.json'
 import ENJSON from '../../locales/en.json'
+import { Language } from '../../types'
 
 export const TRANSLATIONS = {
-  ua: UAJSON,
-  en: ENJSON,
+  [Language.UA]: UAJSON,
+  [Language.EN]: ENJSON,
 }

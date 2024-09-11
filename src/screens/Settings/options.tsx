@@ -40,7 +40,7 @@ const Options = (): JSX.Element => {
               value={language}
               autoWidth
               onChange={handleSelectLocale}
-              className="bg-purple-light dark:bg-purple-dark light:text-white dark:text-white custom-select"
+              className="bg-secondary-light dark:bg-purple-dark light:text-white dark:text-white custom-select"
               IconComponent={null}
             >
               <MenuItem value={Language.EN}>EN</MenuItem>
@@ -53,7 +53,7 @@ const Options = (): JSX.Element => {
       <p className="theme-text text-right mt-6 opacity-60">
         {interfaceLang.settings.createdBy}
         <a
-          className="font-bold text-purple-dark dark:text-purple-light opacity-100 hover:text-secondary-light dark:hover:text-secondary-dark transition-colors duration-300"
+          className="font-bold text-secondary-light dark:text-purple-light opacity-100 hover:text-purple-dark dark:hover:text-secondary-dark transition-colors duration-300"
           target="_blank"
           href="https://github.com/Roman15122022"
         >

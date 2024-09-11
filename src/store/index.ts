@@ -11,6 +11,7 @@ import {
 } from 'redux-persist'
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 
+import TimerLogsReducer from './reducers/timeLogsReducer/TimerLogsSlice'
 import SettingReducer from './reducers/settingReducer/SettingSlice'
 import CurrentTimerReducer from './reducers/currentTimerReducer/CurrentTimerSlice'
 import ClickerReducer from './reducers/clickerReducer/ClickerSlice'
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   ClickerReducer,
   SettingReducer,
   CurrentTimerReducer,
+  TimerLogsReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -31,6 +33,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer)
 const setupStore = (): any => {
   return configureStore({
     reducer: persistedReducer,
+    devTools: true,
     middleware: getDefaultMiddleware =>
       getDefaultMiddleware({
         serializableCheck: {

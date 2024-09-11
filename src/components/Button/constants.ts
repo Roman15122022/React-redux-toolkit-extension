@@ -1,9 +1,9 @@
 import { ClassValue } from 'clsx'
 
-import { TypeButton } from '../../types/enums'
+import { TypeButton } from '../../types'
 
 export const variantButton: Record<TypeButton, ClassValue> = {
-  [TypeButton.PRIMARY]: 'bg-purple-light dark:bg-purple-dark',
+  [TypeButton.PRIMARY]: 'bg-secondary-light dark:bg-purple-dark',
   [TypeButton.SECONDARY]: 'bg-gray',
-  [TypeButton.ERROR]: 'bg-secondary-light dark:bg-secondary-dark',
+  [TypeButton.ERROR]: 'bg-black dark:bg-secondary-dark',
 }

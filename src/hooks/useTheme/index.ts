@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useAppSelector } from '../useAppSelector'
-import { ThemeVariants } from '../../types/enums'
+import { ThemeVariants } from '../../types'
 import { settingSlice } from '../../store/reducers/settingReducer/SettingSlice'
 import { useAppDispatch } from '../useAppDispatch'
 

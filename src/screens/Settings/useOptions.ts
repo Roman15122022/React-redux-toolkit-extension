@@ -1,6 +1,6 @@
 import { SelectChangeEvent } from '@mui/material'
 
-import { Language, ThemeVariants } from '../../types/enums'
+import { Language, ThemeVariants } from '../../types'
 import { useTranslate } from '../../hooks/useTranslate'
 import useTheme from '../../hooks/useTheme'
 
