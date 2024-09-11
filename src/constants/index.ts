@@ -24,7 +24,7 @@ export const DATE_DAY_OF_WEEK_FORMAT = 'dddd'
 
 export const MAX_SIZE_DATES = 1000
 
-export const dayOfWeekMap: { [key in DayOfWeek]: number } = {
+export const dayOfWeekMap: Record<DayOfWeek, number> = {
   [DayOfWeek.SUNDAY]: 1,
   [DayOfWeek.MONDAY]: 2,
   [DayOfWeek.TUESDAY]: 3,
