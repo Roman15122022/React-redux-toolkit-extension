@@ -22,7 +22,6 @@ export const useTranslate = () => {
     dispatch(setLocale(locale))
     setInterfaceLang(TRANSLATIONS[locale])
     moment.locale(language)
-    moment.locale()
   }
 
   return { interfaceLang, handleChangeLocale, language }

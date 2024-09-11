@@ -1,7 +1,5 @@
-import moment from 'moment'
-
 import { Language, Locale, TimePeriod } from '../../types'
-import { getTotalTimeForDate } from '../../helpers'
+import { formatLanguageDate, getTotalTimeForDate } from '../../helpers'
 import {
   DATE_DAY_FORMAT,
   DATE_TIME_FORMAT,
@@ -51,14 +49,30 @@ export function customizedPeriod(
 ): string {
   if (!dates.length) return ''
 
-  moment.locale(language)
+  const { startDate, endDate } = dates.at(-1) || {}
 
-  const { startDate, endDate } = dates.at(-1)
+  if (!startDate || !endDate) return ''
 
-  const formattedStartDate = moment(startDate).format(DATE_DAY_FORMAT)
-  const formattedStartTime = moment(startDate).format(DATE_TIME_FORMAT)
-  const formattedEndDate = moment(endDate).format(DATE_DAY_FORMAT)
-  const formattedEndTime = moment(endDate).format(DATE_TIME_FORMAT)
+  const formattedStartDate = formatLanguageDate(
+    startDate,
+    DATE_DAY_FORMAT,
+    language,
+  )
+  const formattedStartTime = formatLanguageDate(
+    startDate,
+    DATE_TIME_FORMAT,
+    language,
+  )
+  const formattedEndDate = formatLanguageDate(
+    endDate,
+    DATE_DAY_FORMAT,
+    language,
+  )
+  const formattedEndTime = formatLanguageDate(
+    endDate,
+    DATE_TIME_FORMAT,
+    language,
+  )
 
   if (formattedStartDate === formattedEndDate) {
     return `${formattedStartDate}, ${formattedStartTime} - ${formattedEndTime}`

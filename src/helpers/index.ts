@@ -1,3 +1,5 @@
+import moment from 'moment/moment'
+
 import { TimePeriod } from '../types'
 
 export function getTotalTimeForDate(
@@ -7,11 +9,19 @@ export function getTotalTimeForDate(
   const startOfDay = new Date(timestamp).setHours(0, 0, 0, 0)
   const endOfDay = new Date(timestamp).setHours(23, 59, 59, 999)
 
-  return dates.reduce((total, period) => {
+  return dates.reduce((total: number, period: TimePeriod) => {
     if (period.startDate >= startOfDay && period.endDate <= endOfDay) {
       return total + (period.totalTimeForSession || 0)
     }
 
     return total
   }, 0)
+}
+
+export function formatLanguageDate(
+  date: number,
+  format: string,
+  language: string,
+): string {
+  return moment(date).locale(language).format(format)
 }
