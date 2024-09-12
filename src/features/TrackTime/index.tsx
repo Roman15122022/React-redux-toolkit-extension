@@ -2,9 +2,9 @@ import React from 'react'
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite'
 import PauseCircleIcon from '@mui/icons-material/PauseCircle'
 
-import Button from '../Button'
+import StudyTimeInfoForDay from '../StudyTimeInfoForDay'
 import { TypeButton } from '../../types'
-import StudyTimeInfoForDay from '../../features/StudyTimeInfoForDay'
+import Button from '../../components/Button'
 
 import { useTrackTime } from './useTrackTime'
 

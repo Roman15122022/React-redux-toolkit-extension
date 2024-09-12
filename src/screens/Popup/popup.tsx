@@ -1,7 +1,8 @@
 import React from 'react'
 
 import './popup.css'
-import TrackTime from '../../components/TrackTime'
+import TrackTime from '../../features/TrackTime'
+import Title from '../../components/Title'
 
 import { usePopup } from './usePopup'
 
@@ -10,9 +11,7 @@ const Popup = (): JSX.Element => {
 
   return (
     <div className="theme-text">
-      <h1 className="text-xl text-text font-semibold text-center my-2">
-        {locale.title}
-      </h1>
+      <Title title={locale.title} classes="text-center my-2" />
       <TrackTime />
     </div>
   )

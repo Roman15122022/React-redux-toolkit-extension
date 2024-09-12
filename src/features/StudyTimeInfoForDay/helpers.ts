@@ -1,7 +1,7 @@
+import { customizedTime, formatTime } from '../TrackTime/helpers'
 import { Language, Locale, TimePeriod } from '../../types'
 import { formatLanguageDate, getTotalTimeForDate } from '../../helpers'
 import { DATE_DAY_FORMAT, DATE_TIME_FORMAT } from '../../constants'
-import { customizedTime, formatTime } from '../../components/TrackTime/helpers'
 
 export function customizedPeriod(
   dates: TimePeriod,

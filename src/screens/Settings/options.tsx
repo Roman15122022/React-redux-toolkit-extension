@@ -1,9 +1,11 @@
 import React from 'react'
 import './options.css'
 
+import { TypeTittle } from '../../types'
+import ThemeSwitcher from '../../features/ThemeSwitcher'
+import LocaleSwitcher from '../../features/LocaleSwitcher'
 import { Clicker } from '../../features/Clicker'
-import ThemeSwitcher from '../../components/ThemeSwitcher'
-import LocaleSwitcher from '../../components/LocaleSwitcher'
+import Title from '../../components/Title'
 
 import { useOptions } from './useOptions'
 
@@ -13,9 +15,11 @@ const Options = (): JSX.Element => {
 
   return (
     <div>
-      <h1 className="font-bold theme-text text-2xl mt-4 ml-4">
-        {interfaceLang.settings.title}👨‍🎓
-      </h1>
+      <Title
+        title={`${interfaceLang.settings.title}👨‍🎓`}
+        variant={TypeTittle.LARGE}
+        classes="mt-4 ml-4"
+      />
       <div className="ml-8 mt-6">
         <ThemeSwitcher
           switchTheme={switchTheme}
