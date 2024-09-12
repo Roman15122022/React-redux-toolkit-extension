@@ -1,11 +1,9 @@
 import React from 'react'
 import './options.css'
-import { FormControl, MenuItem, Select } from '@mui/material'
-import LightModeIcon from '@mui/icons-material/LightMode'
-import DarkModeIcon from '@mui/icons-material/DarkMode'
 
-import { Language } from '../../types/enums'
 import { Clicker } from '../../features/Clicker'
+import ThemeSwitcher from '../../components/ThemeSwitcher'
+import LocaleSwitcher from '../../components/LocaleSwitcher'
 
 import { useOptions } from './useOptions'
 
@@ -19,35 +17,16 @@ const Options = (): JSX.Element => {
         {interfaceLang.settings.title}👨‍🎓
       </h1>
       <div className="ml-8 mt-6">
-        <div className="flex items-center justify-between my-4">
-          <p className="text-lg theme-text font-semibold">
-            {interfaceLang.settings.darkTheme}
-          </p>
-          <div onClick={switchTheme} className="cursor-pointer">
-            {isDark ? (
-              <DarkModeIcon sx={{ fontSize: 28 }} color="secondary" />
-            ) : (
-              <LightModeIcon sx={{ fontSize: 28 }} color="warning" />
-            )}
-          </div>
-        </div>
-        <div className="flex items-center justify-between my-4">
-          <p className="text-lg theme-text font-semibold">
-            {interfaceLang.settings.language}
-          </p>
-          <FormControl>
-            <Select
-              value={language}
-              autoWidth
-              onChange={handleSelectLocale}
-              className="bg-secondary-light dark:bg-purple-dark light:text-white dark:text-white custom-select"
-              IconComponent={null}
-            >
-              <MenuItem value={Language.EN}>EN</MenuItem>
-              <MenuItem value={Language.UA}>UA</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
+        <ThemeSwitcher
+          switchTheme={switchTheme}
+          isDark={isDark}
+          interfaceLang={interfaceLang}
+        />
+        <LocaleSwitcher
+          interfaceLang={interfaceLang}
+          language={language}
+          handleSelectLocale={handleSelectLocale}
+        />
         <Clicker locale={interfaceLang} />
       </div>
       <p className="theme-text text-right mt-6 opacity-60">
