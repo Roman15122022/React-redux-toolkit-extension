@@ -26,6 +26,7 @@ export const timerLogsSlice = createSlice({
     },
     resetData(state) {
       state.dates = []
+      state.lastStartDate = 0
     },
   },
 })
