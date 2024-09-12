@@ -2,6 +2,9 @@ import React from 'react'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 
+import { TypeTittle } from '../../types'
+import Title from '../../components/Title'
+
 import { ThemeSwitcherProps } from './types'
 
 const ThemeSwitcher = ({
@@ -11,9 +14,10 @@ const ThemeSwitcher = ({
 }: ThemeSwitcherProps): JSX.Element => {
   return (
     <div className="flex items-center justify-between my-4">
-      <p className="text-lg theme-text font-semibold">
-        {interfaceLang.settings.darkTheme}
-      </p>
+      <Title
+        title={interfaceLang.settings.darkTheme}
+        variant={TypeTittle.SMALL}
+      />
       <div onClick={switchTheme} className="cursor-pointer">
         {isDark ? (
           <DarkModeIcon sx={{ fontSize: 28 }} color="secondary" />

@@ -3,6 +3,7 @@ import './options.css'
 
 import { TypeTittle } from '../../types'
 import ThemeSwitcher from '../../features/ThemeSwitcher'
+import ResetStatistics from '../../features/ResetStatistics'
 import LocaleSwitcher from '../../features/LocaleSwitcher'
 import { Clicker } from '../../features/Clicker'
 import Title from '../../components/Title'
@@ -32,6 +33,8 @@ const Options = (): JSX.Element => {
           handleSelectLocale={handleSelectLocale}
         />
         <Clicker locale={interfaceLang} />
+        <div className="border-t-2 mt-4 dark:border-white" />
+        <ResetStatistics />
       </div>
       <p className="theme-text text-right mt-6 opacity-60">
         {interfaceLang.settings.createdBy}

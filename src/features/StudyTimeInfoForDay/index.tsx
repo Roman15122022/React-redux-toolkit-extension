@@ -35,7 +35,7 @@ const StudyTimeInfoForDay = ({ lastTime }: StudyTimeInfoProps): JSX.Element => {
       )}
 
       {totalForDay.trim() && (
-        <div className="flex items-center mt-2 text-[18px]">
+        <div className="flex items-center mt-2 text-lg">
           <span>{locale.totalForDay}:</span>
           <span className="ml-2 text-secondary-light dark:text-purple-light">
             {totalForDay}
