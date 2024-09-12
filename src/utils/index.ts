@@ -13,8 +13,9 @@ export function getDayOfWeekNumber(): number {
 export function getTimeDifferenceByNow(date: number): number {
   if (!date) return date
 
-  const now = new Date()
-  const differenceInMilliseconds = now.getTime() - date
+  const now = moment()
+  const givenDate = moment(date)
+  const differenceInMilliseconds = now.diff(givenDate)
 
   return Math.floor(differenceInMilliseconds / TIME_IN_MS.SECOND)
 }

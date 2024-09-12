@@ -9,15 +9,10 @@ import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { TIME_IN_MS } from '../../constants'
 
-import {
-  customizedPeriod,
-  customizedTime,
-  formatTime,
-  totalElapsedTime,
-} from './helpers'
+import { customizedTime, formatTime } from './helpers'
 
 export const useTrackTime = () => {
-  const { interfaceLang, language } = useTranslate()
+  const { interfaceLang } = useTranslate()
 
   const [lastTime, setLastTime] = useState<string>('')
 
@@ -26,9 +21,7 @@ export const useTrackTime = () => {
     startDate,
     elapsedTime,
   } = useAppSelector(state => state.CurrentTimerReducer)
-  const { dates, lastStartDate } = useAppSelector(
-    state => state.TimerLogsReducer,
-  )
+  const { lastStartDate } = useAppSelector(state => state.TimerLogsReducer)
 
   const { setStateTimer, setStartDate, setElapsedTime } =
     currentTimerSlice.actions
@@ -120,7 +113,5 @@ export const useTrackTime = () => {
     isActive: stateTimer.isActive,
     handleStartFromButton,
     lastTime,
-    period: customizedPeriod(dates, language),
-    totalForDay: totalElapsedTime(dates, interfaceLang),
   }
 }

@@ -1,12 +1,5 @@
-import moment from 'moment'
-
-import { Language, Locale, TimePeriod } from '../../types'
-import { getTotalTimeForDate } from '../../helpers'
-import {
-  DATE_DAY_FORMAT,
-  DATE_TIME_FORMAT,
-  TIME_IN_SECONDS,
-} from '../../constants'
+import { Locale } from '../../types'
+import { TIME_IN_SECONDS } from '../../constants'
 
 import { FormattedTime } from './types'
 import { INITIAL_TIME } from './constants'
@@ -43,39 +36,4 @@ export function customizedTime(time: FormattedTime, locale: Locale): string {
   const { hours, seconds, minutes } = locale.popup.track
 
   return `${formattedHours}${hours} ${formattedMinutes}${minutes} ${formattedSeconds}${seconds}`
-}
-
-export function customizedPeriod(
-  dates: TimePeriod[],
-  language: Language,
-): string {
-  if (!dates.length) return ''
-
-  moment.locale(language)
-
-  const { startDate, endDate } = dates.at(-1)
-
-  const formattedStartDate = moment(startDate).format(DATE_DAY_FORMAT)
-  const formattedStartTime = moment(startDate).format(DATE_TIME_FORMAT)
-  const formattedEndDate = moment(endDate).format(DATE_DAY_FORMAT)
-  const formattedEndTime = moment(endDate).format(DATE_TIME_FORMAT)
-
-  if (formattedStartDate === formattedEndDate) {
-    return `${formattedStartDate}, ${formattedStartTime} - ${formattedEndTime}`
-  }
-
-  return `${formattedStartDate} ${formattedStartTime} - ${formattedEndDate} ${formattedEndTime}`
-}
-
-export function totalElapsedTime(dates: TimePeriod[], locale: Locale): string {
-  const now = Date.now()
-
-  const totalTime = getTotalTimeForDate(now, dates)
-
-  const customTime = customizedTime(formatTime(totalTime, false), locale)
-
-  return customTime
-    .split(' ')
-    .map(item => (item.startsWith('0') ? '' : item))
-    .join(' ')
 }

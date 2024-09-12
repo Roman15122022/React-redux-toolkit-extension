@@ -20,7 +20,7 @@ module.exports = {
           light: '#ff6347',
           dark: '#b9006a',
         },
-        gray: '#c0c0c0'
+        gray: '#c0c0c0',
       },
       borderColor: {
         purple: {
@@ -31,7 +31,7 @@ module.exports = {
           light: '#ff6347',
           dark: '#b9006a',
         },
-        gray: '#c0c0c0'
+        gray: '#c0c0c0',
       },
       backgroundColor: {
         purple: {
@@ -42,9 +42,11 @@ module.exports = {
           light: '#ff6347',
           dark: '#b9006a',
         },
-        gray: '#c0c0c0'
+        gray: '#c0c0c0',
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar')({ preferredStrategy: 'pseudoelements' }),
+  ],
 }
