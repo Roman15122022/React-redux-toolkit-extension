@@ -1,11 +1,12 @@
 import React from 'react'
 import './options.css'
-import { FormControl, MenuItem, Select } from '@mui/material'
-import LightModeIcon from '@mui/icons-material/LightMode'
-import DarkModeIcon from '@mui/icons-material/DarkMode'
 
-import { Language } from '../../types/enums'
-import { Clicker } from '../../features/Clicker'
+import { TypeTittle } from '../../types'
+import ThemeSwitcher from '../../features/ThemeSwitcher'
+import ResetStatistics from '../../features/ResetStatistics'
+import LocaleSwitcher from '../../features/LocaleSwitcher'
+import Title from '../../components/Title'
+import Link from '../../components/Link'
 
 import { useOptions } from './useOptions'
 
@@ -15,50 +16,28 @@ const Options = (): JSX.Element => {
 
   return (
     <div>
-      <h1 className="font-bold theme-text text-2xl mt-4 ml-4">
-        {interfaceLang.settings.title}👨‍🎓
-      </h1>
+      <Title
+        title={`${interfaceLang.settings.title}👨‍🎓`}
+        variant={TypeTittle.LARGE}
+        classes="mt-4 ml-4"
+      />
       <div className="ml-8 mt-6">
-        <div className="flex items-center justify-between my-4">
-          <p className="text-lg theme-text font-semibold">
-            {interfaceLang.settings.darkTheme}
-          </p>
-          <div onClick={switchTheme} className="cursor-pointer">
-            {isDark ? (
-              <DarkModeIcon sx={{ fontSize: 28 }} color="secondary" />
-            ) : (
-              <LightModeIcon sx={{ fontSize: 28 }} color="warning" />
-            )}
-          </div>
-        </div>
-        <div className="flex items-center justify-between my-4">
-          <p className="text-lg theme-text font-semibold">
-            {interfaceLang.settings.language}
-          </p>
-          <FormControl>
-            <Select
-              value={language}
-              autoWidth
-              onChange={handleSelectLocale}
-              className="bg-secondary-light dark:bg-purple-dark light:text-white dark:text-white custom-select"
-              IconComponent={null}
-            >
-              <MenuItem value={Language.EN}>EN</MenuItem>
-              <MenuItem value={Language.UA}>UA</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
-        <Clicker locale={interfaceLang} />
+        <ThemeSwitcher
+          switchTheme={switchTheme}
+          isDark={isDark}
+          interfaceLang={interfaceLang}
+        />
+        <LocaleSwitcher
+          interfaceLang={interfaceLang}
+          language={language}
+          handleSelectLocale={handleSelectLocale}
+        />
+        <div className="border-t-2 mt-4 dark:border-white" />
+        <ResetStatistics interfaceLang={interfaceLang} />
       </div>
       <p className="theme-text text-right mt-6 opacity-60">
         {interfaceLang.settings.createdBy}
-        <a
-          className="font-bold text-secondary-light dark:text-purple-light opacity-100 hover:text-purple-dark dark:hover:text-secondary-dark transition-colors duration-300"
-          target="_blank"
-          href="https://github.com/Roman15122022"
-        >
-          @Roman15122022
-        </a>
+        <Link href="https://github.com/Roman15122022">@Roman15122022</Link>
       </p>
     </div>
   )

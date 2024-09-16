@@ -1,9 +1,10 @@
-import { ClassValue } from 'clsx'
+import { ClassValue } from 'clsx/clsx'
 
 import { TypeButton } from '../../types'
 
 export const variantButton: Record<TypeButton, ClassValue> = {
   [TypeButton.PRIMARY]: 'bg-secondary-light dark:bg-purple-dark',
-  [TypeButton.SECONDARY]: 'bg-gray',
-  [TypeButton.ERROR]: 'bg-black dark:bg-purple-light',
+  [TypeButton.SECONDARY]: 'bg-black dark:bg-purple-light',
+  [TypeButton.ERROR]:
+    'font-extrabold bg-black dark:bg-[#212830] border-2 dark:border-red-dark dark:text-red-dark dark:hover:bg-red-dark dark:hover:text-white',
 }

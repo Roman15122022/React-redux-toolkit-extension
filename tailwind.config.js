@@ -20,6 +20,10 @@ module.exports = {
           light: '#ff6347',
           dark: '#b9006a',
         },
+        red: {
+          light: '#D32F2F',
+          dark: '#9A0000',
+        },
         gray: '#c0c0c0',
       },
       borderColor: {
@@ -30,6 +34,10 @@ module.exports = {
         secondary: {
           light: '#ff6347',
           dark: '#b9006a',
+        },
+        red: {
+          light: '#D32F2F',
+          dark: '#9A0000',
         },
         gray: '#c0c0c0',
       },

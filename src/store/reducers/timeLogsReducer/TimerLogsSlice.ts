@@ -24,6 +24,10 @@ export const timerLogsSlice = createSlice({
     setLastStartDate(state, action: PayloadAction<number>) {
       state.lastStartDate = action.payload
     },
+    resetData(state) {
+      state.dates = []
+      state.lastStartDate = 0
+    },
   },
 })
 

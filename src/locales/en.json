@@ -6,7 +6,15 @@
     "button": "Click",
     "score": "You clicked ",
     "times": "time(s)",
-    "createdBy": "Created by "
+    "createdBy": "Created by ",
+    "resetStatistics": {
+      "title": "Reset all statistics",
+      "askTitle": "Are you sure?",
+      "reset": "Reset",
+      "yes": "Yes",
+      "no": "No",
+      "alert": "*WARNING! If you agree, ALL data will be deleted"
+    }
   },
   "popup": {
     "main": {

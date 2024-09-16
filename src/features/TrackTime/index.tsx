@@ -2,9 +2,9 @@ import React from 'react'
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite'
 import PauseCircleIcon from '@mui/icons-material/PauseCircle'
 
-import Button from '../Button'
+import StudyTimeInfoForDay from '../StudyTimeInfoForDay'
 import { TypeButton } from '../../types'
-import StudyTimeInfoForDay from '../../features/StudyTimeInfoForDay'
+import Button from '../../components/Button'
 
 import { useTrackTime } from './useTrackTime'
 
@@ -42,12 +42,9 @@ const TrackTime = (): JSX.Element => {
         )}
       </div>
       <div className="mt-8 flex justify-evenly items-center">
-        {!isActive && (
-          <Button onClick={handleStartSession} classes="px-6">
-            {locale.start}
-          </Button>
-        )}
-        {isActive && (
+        {!isActive ? (
+          <Button onClick={handleStartSession}>{locale.start}</Button>
+        ) : (
           <Button variant={TypeButton.ERROR} onClick={handleStopTimer}>
             {locale.stop}
           </Button>

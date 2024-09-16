@@ -23,3 +23,9 @@ export enum TypeButton {
   SECONDARY = 'secondary',
   ERROR = 'error',
 }
+
+export enum TypeTittle {
+  LARGE = 'large',
+  DEFAULT = 'default',
+  SMALL = 'small',
+}

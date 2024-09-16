@@ -1,7 +1,7 @@
 import React from 'react'
-import clsx from 'clsx'
 
-import { TypeButton } from '../../types/enums'
+import { cn } from '../../utils'
+import { TypeButton } from '../../types'
 
 import { ButtonProps } from './types'
 import { variantButton } from './constants'
@@ -17,8 +17,11 @@ const Button = ({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={clsx(
-        'px-4 py-2 text-white  hover:text-black hover:dark:bg-white hover:bg-white font-semibold rounded-lg shadow-md transition-colors duration-300',
+      className={cn(
+        'px-4 py-2 text-white disabled:opacity-70 font-semibold rounded-lg shadow-md transition-colors duration-300',
+        'disabled:opacity-70',
+        'hover:text-black hover:dark:bg-white hover:bg-white',
+        `${disabled ? 'pointer-events-none select-none' : ''}`,
         classes,
         variantButton[variant || TypeButton.PRIMARY],
       )}
