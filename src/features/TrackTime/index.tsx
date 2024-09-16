@@ -45,7 +45,7 @@ const TrackTime = (): JSX.Element => {
         {!isActive ? (
           <Button onClick={handleStartSession}>{locale.start}</Button>
         ) : (
-          <Button variant={TypeButton.ERROR} onClick={handleStopTimer}>
+          <Button variant={TypeButton.SECONDARY} onClick={handleStopTimer}>
             {locale.stop}
           </Button>
         )}
