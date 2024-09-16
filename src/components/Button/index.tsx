@@ -1,6 +1,6 @@
 import React from 'react'
-import clsx from 'clsx'
 
+import { cn } from '../../utils'
 import { TypeButton } from '../../types'
 
 import { ButtonProps } from './types'
@@ -17,7 +17,7 @@ const Button = ({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={clsx(
+      className={cn(
         'px-4 py-2 text-white hover:text-black hover:dark:bg-white hover:bg-white disabled:opacity-70 font-semibold rounded-lg shadow-md transition-colors duration-300',
         classes,
         variantButton[variant || TypeButton.PRIMARY],

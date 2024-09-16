@@ -40,7 +40,7 @@ const ResetStatistics = ({
             {!isReset ? (
               settings.resetStatistics.reset
             ) : (
-              <DoneIcon fontSize="small" />
+              <DoneIcon sx={{ fontSize: 16 }} />
             )}
           </Button>
         ) : (

@@ -1,5 +1,6 @@
 import React from 'react'
-import clsx from 'clsx'
+
+import { cn } from '../../utils'
 
 import { LinkProps } from './types'
 
@@ -8,7 +9,7 @@ const Link = ({ href, children, classes }: LinkProps): JSX.Element => {
     <a
       target="_blank"
       href={href}
-      className={clsx(
+      className={cn(
         classes,
         'font-bold text-secondary-light dark:text-purple-light opacity-100 hover:text-purple-dark dark:hover:text-secondary-dark transition-colors duration-300',
       )}

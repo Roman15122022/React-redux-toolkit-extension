@@ -1,4 +1,6 @@
+import { twMerge } from 'tailwind-merge'
 import moment from 'moment/moment'
+import { ClassValue, clsx } from 'clsx'
 
 import { Language } from '../types'
 import { DATE_DAY_OF_WEEK_FORMAT, dayOfWeekMap, TIME_IN_MS } from '../constants'
@@ -18,4 +20,8 @@ export function getTimeDifferenceByNow(date: number): number {
   const differenceInMilliseconds = now.diff(givenDate)
 
   return Math.floor(differenceInMilliseconds / TIME_IN_MS.SECOND)
+}
+
+export function cn(...args: ClassValue[]): string {
+  return twMerge(clsx(args))
 }

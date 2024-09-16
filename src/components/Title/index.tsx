@@ -1,6 +1,6 @@
 import React from 'react'
-import clsx from 'clsx'
 
+import { cn } from '../../utils'
 import { TypeTittle } from '../../types'
 
 import { TitleProps } from './types'
@@ -8,7 +8,7 @@ import { variantTitle } from './constants'
 
 const Title = function ({ title, variant, classes }: TitleProps): JSX.Element {
   return (
-    <h1 className={clsx(classes, variantTitle[variant || TypeTittle.DEFAULT])}>
+    <h1 className={cn(classes, variantTitle[variant || TypeTittle.DEFAULT])}>
       {title}
     </h1>
   )
