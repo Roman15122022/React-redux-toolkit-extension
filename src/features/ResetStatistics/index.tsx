@@ -6,10 +6,12 @@ import Title from '../../components/Title'
 import Button from '../../components/Button'
 
 import { useResetStatistics } from './useResetStatistics'
+import { ResetStatisticsProps } from './types'
 
-const ResetStatistics = (): JSX.Element => {
+const ResetStatistics = ({
+  interfaceLang: { settings },
+}: ResetStatisticsProps): JSX.Element => {
   const {
-    locale,
     isBtnActive,
     isReset,
     isDisabled,
@@ -21,7 +23,11 @@ const ResetStatistics = (): JSX.Element => {
     <div>
       <div className="flex items-center justify-between my-4">
         <Title
-          title={isBtnActive ? locale.askTitle : locale.title}
+          title={
+            isBtnActive
+              ? settings.resetStatistics.askTitle
+              : settings.resetStatistics.title
+          }
           variant={TypeTittle.SMALL}
         />
         {!isBtnActive ? (
@@ -31,25 +37,31 @@ const ResetStatistics = (): JSX.Element => {
             disabled={isDisabled}
             classes="w-24"
           >
-            {!isReset ? locale.reset : <DoneIcon fontSize="small" />}
+            {!isReset ? (
+              settings.resetStatistics.reset
+            ) : (
+              <DoneIcon fontSize="small" />
+            )}
           </Button>
         ) : (
           <div className="flex gap-3">
             <Button classes="w-16" onClick={handleToggleButtons}>
-              {locale.no}
+              {settings.resetStatistics.no}
             </Button>
             <Button
               classes="w-16"
               onClick={resetStatistics}
               variant={TypeButton.ERROR}
             >
-              {locale.yes}
+              {settings.resetStatistics.yes}
             </Button>
           </div>
         )}
       </div>
       {isBtnActive && (
-        <span className="text-red-600 font-bold">{locale.alert}</span>
+        <span className="text-red-600 font-bold">
+          {settings.resetStatistics.alert}
+        </span>
       )}
     </div>
   )

@@ -1,13 +1,10 @@
 import { useState } from 'react'
 
 import { timerLogsSlice } from '../../store/reducers/timeLogsReducer/TimerLogsSlice'
-import { useTranslate } from '../../hooks/useTranslate'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 
 export const useResetStatistics = () => {
-  const { interfaceLang } = useTranslate()
-
   const { dates } = useAppSelector(state => state.TimerLogsReducer)
   const { resetData } = timerLogsSlice.actions
   const dispatch = useAppDispatch()
@@ -27,7 +24,6 @@ export const useResetStatistics = () => {
   }
 
   return {
-    locale: interfaceLang.settings.resetStatistics,
     isBtnActive,
     isReset,
     isDisabled: !dates.length,
