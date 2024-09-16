@@ -5,7 +5,6 @@ import { TypeTittle } from '../../types'
 import ThemeSwitcher from '../../features/ThemeSwitcher'
 import ResetStatistics from '../../features/ResetStatistics'
 import LocaleSwitcher from '../../features/LocaleSwitcher'
-import { Clicker } from '../../features/Clicker'
 import Title from '../../components/Title'
 
 import { useOptions } from './useOptions'
@@ -32,7 +31,6 @@ const Options = (): JSX.Element => {
           language={language}
           handleSelectLocale={handleSelectLocale}
         />
-        <Clicker locale={interfaceLang} />
         <div className="border-t-2 mt-4 dark:border-white" />
         <ResetStatistics />
       </div>
