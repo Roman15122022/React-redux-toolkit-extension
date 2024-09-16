@@ -43,11 +43,9 @@ const TrackTime = (): JSX.Element => {
       </div>
       <div className="mt-8 flex justify-evenly items-center">
         {!isActive ? (
-          <Button onClick={handleStartSession} classes="px-6">
-            {locale.start}
-          </Button>
+          <Button onClick={handleStartSession}>{locale.start}</Button>
         ) : (
-          <Button variant={TypeButton.SECONDARY} onClick={handleStopTimer}>
+          <Button variant={TypeButton.ERROR} onClick={handleStopTimer}>
             {locale.stop}
           </Button>
         )}
