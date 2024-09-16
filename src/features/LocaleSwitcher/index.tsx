@@ -23,7 +23,7 @@ const LocaleSwitcher = ({
           autoWidth
           onChange={handleSelectLocale}
           className="bg-secondary-light dark:bg-purple-dark light:text-white dark:text-white custom-select"
-          IconComponent={undefined}
+          IconComponent={null}
         >
           <MenuItem value={Language.EN}>EN</MenuItem>
           <MenuItem value={Language.UA}>UA</MenuItem>

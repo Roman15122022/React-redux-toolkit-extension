@@ -21,7 +21,7 @@ const StudyTimeInfoForDay = ({ lastTime }: StudyTimeInfoProps): JSX.Element => {
         <div className="my-1.5 h-32 overflow-y-scroll scrollbar-thin scrollbar scrollbar-thumb-secondary-light dark:scrollbar-track-white dark:scrollbar-thumb-purple-dark dark:scrollbar-track-black">
           {periods
             .map((period, index) => (
-              <div key={period} className="flex items-center mt-1">
+              <div key={period + index} className="flex items-center mt-1">
                 <span>
                   {index + 1}. {locale.period}:
                 </span>

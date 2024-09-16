@@ -24,7 +24,7 @@ module.exports = {
           light: '#D32F2F',
           dark: '#9A0000',
         },
-        gray: '#c0c0c0',
+        gray: '#212830',
       },
       borderColor: {
         purple: {
