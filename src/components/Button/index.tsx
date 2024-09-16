@@ -18,7 +18,10 @@ const Button = ({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        'px-4 py-2 text-white hover:text-black hover:dark:bg-white hover:bg-white disabled:opacity-70 font-semibold rounded-lg shadow-md transition-colors duration-300',
+        'px-4 py-2 text-white disabled:opacity-70 font-semibold rounded-lg shadow-md transition-colors duration-300',
+        'disabled:opacity-70',
+        'hover:text-black hover:dark:bg-white hover:bg-white',
+        `${disabled ? 'pointer-events-none select-none' : ''}`,
         classes,
         variantButton[variant || TypeButton.PRIMARY],
       )}
