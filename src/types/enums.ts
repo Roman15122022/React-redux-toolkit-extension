@@ -22,10 +22,18 @@ export enum TypeButton {
   PRIMARY = 'primary',
   SECONDARY = 'secondary',
   ERROR = 'error',
+  LINK = 'link',
+  ACTIVE_LINK = 'activeLink',
 }
 
 export enum TypeTittle {
   LARGE = 'large',
   DEFAULT = 'default',
   SMALL = 'small',
+}
+
+export enum RoutesPath {
+  TRACKER = '/',
+  HISTORY = '/history',
+  STATISTICS = '/statistics',
 }

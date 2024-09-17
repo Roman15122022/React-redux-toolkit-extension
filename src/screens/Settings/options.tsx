@@ -6,7 +6,7 @@ import ThemeSwitcher from '../../features/ThemeSwitcher'
 import ResetStatistics from '../../features/ResetStatistics'
 import LocaleSwitcher from '../../features/LocaleSwitcher'
 import Title from '../../components/Title'
-import Link from '../../components/Link'
+import StyledLink from '../../components/StyledLink'
 
 import { useOptions } from './useOptions'
 
@@ -37,7 +37,9 @@ const Options = (): JSX.Element => {
       </div>
       <p className="theme-text text-right mt-6 opacity-60">
         {interfaceLang.settings.createdBy}
-        <Link href="https://github.com/Roman15122022">@Roman15122022</Link>
+        <StyledLink href="https://github.com/Roman15122022">
+          @Roman15122022
+        </StyledLink>
       </p>
     </div>
   )

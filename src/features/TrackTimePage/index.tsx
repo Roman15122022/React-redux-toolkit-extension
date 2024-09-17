@@ -8,7 +8,7 @@ import Button from '../../components/Button'
 
 import { useTrackTime } from './useTrackTime'
 
-const TrackTime = (): JSX.Element => {
+const TrackTimePage = (): JSX.Element => {
   const {
     locale,
     time: { formattedSeconds, formattedMinutes, formattedHours },
@@ -55,4 +55,4 @@ const TrackTime = (): JSX.Element => {
   )
 }
 
-export default TrackTime
+export default TrackTimePage
