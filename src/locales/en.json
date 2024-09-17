@@ -20,7 +20,8 @@
     "header": {
       "tracker": "Tracker",
       "history": "History",
-      "statistics": "Statistics"
+      "statistics": "Statistics",
+      "achievements": "Achievements"
     },
     "track": {
       "title": "Track your study time",

@@ -36,6 +36,11 @@ export const usePopup = () => {
       variant: getActiveRoute(RoutesPath.STATISTICS),
       name: interfaceLang.popup.header.statistics,
     },
+    {
+      route: () => handleClick(RoutesPath.ACHIEVEMENTS),
+      variant: getActiveRoute(RoutesPath.ACHIEVEMENTS),
+      name: interfaceLang.popup.header.achievements,
+    },
   ]
 
   return { links }

@@ -20,7 +20,8 @@
     "header": {
       "tracker": "Трекер",
       "history": "Історія",
-      "statistics": "Статистика"
+      "statistics": "Статистика",
+      "achievements": "Досягення"
     },
     "track": {
       "title": "Відслідковуй свій навчальний час!",

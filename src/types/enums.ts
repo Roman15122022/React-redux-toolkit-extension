@@ -36,4 +36,5 @@ export enum RoutesPath {
   TRACKER = '/',
   HISTORY = '/history',
   STATISTICS = '/statistics',
+  ACHIEVEMENTS = '/achievements',
 }
