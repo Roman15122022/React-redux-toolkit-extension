@@ -1,7 +1,7 @@
 import React from 'react'
 
 import './popup.css'
-import PopupRouter from '../../components/PopupRouter'
+import Index from '../../components/PopupRouter'
 import Button from '../../components/Button'
 
 import { usePopup } from './usePopup'
@@ -19,7 +19,7 @@ const Popup = (): JSX.Element => {
         ))}
       </div>
 
-      <PopupRouter />
+      <Index />
     </div>
   )
 }
