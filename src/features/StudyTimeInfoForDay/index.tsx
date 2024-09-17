@@ -7,7 +7,7 @@ const StudyTimeInfoForDay = ({ lastTime }: StudyTimeInfoProps): JSX.Element => {
   const { locale, periods, totalForDay } = useStudyTimeInfoForDay()
 
   return (
-    <div className="mt-2 font-semibold text-sm">
+    <div className="mt-2.5 font-semibold text-sm">
       {lastTime ? (
         <div className="flex items-center">
           <span>{locale.lastTime}:</span>
