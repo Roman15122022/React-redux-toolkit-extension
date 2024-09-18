@@ -17,10 +17,14 @@
     }
   },
   "popup": {
-    "main": {
-      "title": "Track your study time"
+    "header": {
+      "tracker": "Tracker",
+      "history": "History",
+      "statistics": "Statistics",
+      "achievements": "Achievements"
     },
     "track": {
+      "title": "Track your study time",
       "start": "Start session",
       "stop": "Finish session",
       "pause": "Pause",

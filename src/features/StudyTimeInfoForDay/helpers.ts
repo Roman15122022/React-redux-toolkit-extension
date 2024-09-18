@@ -1,4 +1,4 @@
-import { customizedTime, formatTime } from '../TrackTime/helpers'
+import { customizedTime, formatTime } from '../TrackTimePage/helpers'
 import { Language, Locale, TimePeriod } from '../../types'
 import { formatLanguageDate, getTotalTimeForDate } from '../../helpers'
 import { DATE_DAY_FORMAT, DATE_TIME_FORMAT } from '../../constants'

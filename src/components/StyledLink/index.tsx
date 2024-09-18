@@ -4,7 +4,7 @@ import { cn } from '../../utils'
 
 import { LinkProps } from './types'
 
-const Link = ({ href, children, classes }: LinkProps): JSX.Element => {
+const StyledLink = ({ href, children, classes }: LinkProps): JSX.Element => {
   return (
     <a
       target="_blank"
@@ -19,4 +19,4 @@ const Link = ({ href, children, classes }: LinkProps): JSX.Element => {
   )
 }
 
-export default Link
+export default StyledLink

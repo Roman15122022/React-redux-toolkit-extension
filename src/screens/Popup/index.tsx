@@ -1,4 +1,5 @@
 import { PersistGate } from 'redux-persist/integration/react'
+import { HashRouter as Router } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { createRoot } from 'react-dom/client'
 import React from 'react'
@@ -21,7 +22,9 @@ function init(): void {
   root.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Popup />
+        <Router>
+          <Popup />
+        </Router>
       </PersistGate>
     </Provider>,
   )
