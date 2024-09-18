@@ -12,3 +12,11 @@ export function getUniqStudyDays(
 
   return [...new Set(newData)].sort()
 }
+
+export function getNormalizeName(name: string): string {
+  const arr = name.trim().split(' ')
+
+  const result = arr.slice(0, 2).join(' ')
+
+  return result.replace(/,/g, '')
+}
