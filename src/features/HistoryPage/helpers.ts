@@ -6,11 +6,11 @@ export function getUniqStudyDays(
   dates: TimePeriod[],
   lang: Language,
 ): Array<string> {
-  const newData = dates
-    .sort((date, prevDate) => date.endDate - prevDate.endDate)
-    .map(date => {
-      return formatLanguageDate(date.endDate, DATE_SHORT_DAY_FORMAT, lang)
-    })
+  const sortedDates = [...dates].sort((a, b) => a.endDate - b.endDate)
+
+  const newData = sortedDates.map(date => {
+    return formatLanguageDate(date.endDate, DATE_SHORT_DAY_FORMAT, lang)
+  })
 
   return [...new Set(newData)]
 }
