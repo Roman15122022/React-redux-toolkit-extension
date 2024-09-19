@@ -41,10 +41,12 @@ export function customizedPeriod(
   return `${formattedStartDate} ${formattedStartTime} - ${formattedEndDate} ${formattedEndTime}`
 }
 
-export function totalElapsedTime(dates: TimePeriod[], locale: Locale): string {
-  const now = Date.now()
-
-  const totalTime = getTotalTimeForDate(now, dates)
+export function totalElapsedTime(
+  dates: TimePeriod[],
+  locale: Locale,
+  currentDate: number,
+): string {
+  const totalTime = getTotalTimeForDate(currentDate, dates)
 
   const customTime = customizedTime(formatTime(totalTime, false), locale)
 

@@ -1,5 +1,6 @@
 import React from 'react'
 
+import StudyTimeInfoForDay from '../StudyTimeInfoForDay'
 import { TypeButton } from '../../types'
 import Container from '../../components/Container'
 import Button from '../../components/Button'
@@ -7,13 +8,14 @@ import Button from '../../components/Button'
 import { useHistoryPage } from './useHistoryPage'
 
 const HistoryPage = (): JSX.Element => {
-  const { historyDates } = useHistoryPage()
+  const { historyDates, selectedDate } = useHistoryPage()
 
   return (
     <Container>
       <div className="flex gap-2 flex-wrap">
         {historyDates.map(({ name, onClick, isSelected }) => (
           <Button
+            key={name}
             onClick={onClick}
             variant={isSelected ? TypeButton.SECONDARY : TypeButton.PRIMARY}
           >
@@ -21,6 +23,7 @@ const HistoryPage = (): JSX.Element => {
           </Button>
         ))}
       </div>
+      <StudyTimeInfoForDay date={selectedDate} />
     </Container>
   )
 }

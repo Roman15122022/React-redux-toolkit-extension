@@ -14,6 +14,7 @@ const TrackTimePage = (): JSX.Element => {
     locale,
     time: { formattedSeconds, formattedMinutes, formattedHours },
     lastTime,
+    date,
     handleStopTimer,
     handleStartFromButton,
     handlePauseTimer,
@@ -51,7 +52,7 @@ const TrackTimePage = (): JSX.Element => {
           </Button>
         )}
       </div>
-      <StudyTimeInfoForDay lastTime={lastTime} />
+      <StudyTimeInfoForDay lastTime={lastTime} date={date} />
     </Container>
   )
 }

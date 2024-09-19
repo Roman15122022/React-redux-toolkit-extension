@@ -3,8 +3,11 @@ import React from 'react'
 import { useStudyTimeInfoForDay } from './useStudyTimeInfoForDay'
 import { StudyTimeInfoProps } from './types'
 
-const StudyTimeInfoForDay = ({ lastTime }: StudyTimeInfoProps): JSX.Element => {
-  const { locale, periods, totalForDay } = useStudyTimeInfoForDay()
+const StudyTimeInfoForDay = ({
+  lastTime,
+  date,
+}: StudyTimeInfoProps): JSX.Element => {
+  const { locale, periods, totalForDay } = useStudyTimeInfoForDay(date)
 
   return (
     <div className="mt-5 font-semibold text-sm">
