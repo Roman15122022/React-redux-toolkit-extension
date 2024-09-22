@@ -1,10 +1,12 @@
 import { useState } from 'react'
 
+import { fillArr } from '../../utils'
 import { useTranslate } from '../../hooks/useTranslate'
 import { useAppSelector } from '../../hooks/useAppSelector'
 
 import { HistoryDate } from './types'
 import { getNormalizeName, getUniqStudyDays } from './helpers'
+import { LIMIT_BUTTON_PAGE } from './constants'
 
 export const useHistoryPage = () => {
   const { dates } = useAppSelector(state => state.TimerLogsReducer)
@@ -33,9 +35,16 @@ export const useHistoryPage = () => {
     },
   )
 
+  function handleGetPages(): Array<number> {
+    const pages = Math.ceil(historyDates.length / LIMIT_BUTTON_PAGE)
+
+    return fillArr(pages)
+  }
+
   return {
     interfaceLang,
     historyDates,
     selectedDate,
+    pages: handleGetPages(),
   }
 }
