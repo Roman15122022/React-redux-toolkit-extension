@@ -22,3 +22,14 @@ export function getNormalizeName(name: string): string {
 
   return result.replace(/,/g, '')
 }
+
+export function getSegment<T>(
+  arr: Array<T>,
+  segmentSize: number,
+  segmentNumber: number,
+): Array<T> {
+  const startIndex = (segmentNumber - 1) * segmentSize
+  const endIndex = startIndex + segmentSize
+
+  return arr.slice(startIndex, endIndex)
+}

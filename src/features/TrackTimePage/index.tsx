@@ -52,7 +52,7 @@ const TrackTimePage = (): JSX.Element => {
           </Button>
         )}
       </div>
-      <StudyTimeInfoForDay lastTime={lastTime} date={date} />
+      <StudyTimeInfoForDay lastTime={lastTime} date={date} isLastTimeNeeded />
     </Container>
   )
 }

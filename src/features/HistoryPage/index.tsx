@@ -8,7 +8,8 @@ import Button from '../../components/Button'
 import { useHistoryPage } from './useHistoryPage'
 
 const HistoryPage = (): JSX.Element => {
-  const { historyDates, selectedDate, pages } = useHistoryPage()
+  const { historyDates, selectedDate, pages, currentPage, setCurrentPage } =
+    useHistoryPage()
 
   return (
     <Container>
@@ -26,10 +27,20 @@ const HistoryPage = (): JSX.Element => {
       </div>
       <div className="mt-2 mr-2 flex gap-2 justify-end">
         {pages.map(page => (
-          <div key={page}>{page}</div>
+          <Button
+            variant={
+              currentPage === page ? TypeButton.CURRENT_PAGE : TypeButton.PAGE
+            }
+            disabled={currentPage === page}
+            classes="px-2 py-2 rounded-xl"
+            key={page}
+            onClick={() => setCurrentPage(page)}
+          >
+            {page}
+          </Button>
         ))}
       </div>
-      <StudyTimeInfoForDay date={selectedDate} />
+      <StudyTimeInfoForDay date={selectedDate} isLastTimeNeeded={false} />
     </Container>
   )
 }

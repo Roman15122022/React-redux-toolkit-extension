@@ -5,6 +5,7 @@ import { useTranslate } from '../../hooks/useTranslate'
 import { useAppSelector } from '../../hooks/useAppSelector'
 
 import { HistoryDate } from './types'
+import { getSegment } from './helpers'
 import { getNormalizeName, getUniqStudyDays } from './helpers'
 import { LIMIT_BUTTON_PAGE } from './constants'
 
@@ -14,6 +15,7 @@ export const useHistoryPage = () => {
   const { interfaceLang, language } = useTranslate()
 
   const [selectedDate, setSelectedDate] = useState<number>(0)
+  const [currentPage, setCurrentPage] = useState<number>(1)
 
   function handleSelectDate(date: string): void {
     const fullDate = new Date(date).getTime()
@@ -43,8 +45,10 @@ export const useHistoryPage = () => {
 
   return {
     interfaceLang,
-    historyDates,
+    historyDates: getSegment(historyDates, LIMIT_BUTTON_PAGE, currentPage),
     selectedDate,
     pages: handleGetPages(),
+    currentPage,
+    setCurrentPage,
   }
 }

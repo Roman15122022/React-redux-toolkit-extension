@@ -1,1 +1,1 @@
-export const LIMIT_BUTTON_PAGE = 8
+export const LIMIT_BUTTON_PAGE = 12
