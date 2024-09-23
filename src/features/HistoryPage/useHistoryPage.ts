@@ -17,22 +17,22 @@ export const useHistoryPage = () => {
   const [selectedDate, setSelectedDate] = useState<number>(0)
   const [currentPage, setCurrentPage] = useState<number>(1)
 
-  function handleSelectDate(date: string): void {
+  function handleSelectDate(date: number): void {
     const fullDate = new Date(date).getTime()
 
     setSelectedDate(fullDate)
   }
 
-  function isSelectedDate(date: string): boolean {
+  function isSelectedDate(date: number): boolean {
     return selectedDate === new Date(date).getTime()
   }
 
   const historyDates: HistoryDate[] = getUniqStudyDays(dates, language).map(
     date => {
       return {
-        name: getNormalizeName(date),
-        onClick: () => handleSelectDate(date),
-        isSelected: isSelectedDate(date),
+        name: getNormalizeName(date.localizeName),
+        onClick: () => handleSelectDate(date.date),
+        isSelected: isSelectedDate(date.date),
       }
     },
   )

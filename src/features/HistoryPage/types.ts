@@ -3,3 +3,8 @@ export type HistoryDate = {
   onClick: () => void
   isSelected: boolean
 }
+
+export type DateInfo = {
+  localizeName: string
+  date: number
+}

@@ -12,20 +12,23 @@ const HistoryPage = (): JSX.Element => {
     useHistoryPage()
 
   return (
-    <Container>
-      <div className="flex gap-2 flex-wrap justify-center">
-        {historyDates.map(({ name, onClick, isSelected }) => (
-          <Button
-            key={name}
-            onClick={onClick}
-            variant={isSelected ? TypeButton.SECONDARY : TypeButton.PRIMARY}
-            classes="w-20"
-          >
-            {name}
-          </Button>
-        ))}
+    <Container classes="mr-2 ">
+      <div className="h-[118px]">
+        <div className="flex gap-2 flex-wrap justify-start">
+          {historyDates.map(({ name, onClick, isSelected }) => (
+            <Button
+              key={name}
+              onClick={onClick}
+              variant={isSelected ? TypeButton.SECONDARY : TypeButton.PRIMARY}
+              classes="w-[85px]"
+            >
+              {name}
+            </Button>
+          ))}
+        </div>
       </div>
-      <div className="mt-2 mr-2 flex gap-2 justify-end">
+
+      <div className="mt-3 flex gap-2 justify-start">
         {pages.map(page => (
           <Button
             variant={
