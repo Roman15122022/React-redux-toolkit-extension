@@ -28,11 +28,11 @@ export const useHistoryPage = () => {
   }
 
   const historyDates: HistoryDate[] = getUniqStudyDays(dates, language).map(
-    date => {
+    ({ localizeName, date }) => {
       return {
-        name: getNormalizeName(date.localizeName),
-        onClick: () => handleSelectDate(date.date),
-        isSelected: isSelectedDate(date.date),
+        name: getNormalizeName(localizeName),
+        onClick: () => handleSelectDate(date),
+        isSelected: isSelectedDate(date),
       }
     },
   )
