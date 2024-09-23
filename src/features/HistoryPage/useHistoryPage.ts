@@ -3,9 +3,9 @@ import { useState } from 'react'
 import { fillArr } from '../../utils'
 import { useTranslate } from '../../hooks/useTranslate'
 import { useAppSelector } from '../../hooks/useAppSelector'
+import { getSegment } from '../../helpers'
 
 import { HistoryDate } from './types'
-import { getSegment } from './helpers'
 import { getNormalizeName, getUniqStudyDays } from './helpers'
 import { LIMIT_BUTTON_PAGE } from './constants'
 
