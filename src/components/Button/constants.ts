@@ -19,5 +19,5 @@ export const variantButton: Record<TypeButton, ClassValue> = {
   [TypeButton.PAGE]:
     'font-semibold px-2.5 py-1 rounded-3xl text-theme border-2 border-white dark:border-black',
   [TypeButton.CURRENT_PAGE]:
-    'font-semibold px-2.5 py-1 rounded-3xl text-secondary-light border-2 border-secondary-dark dark:border-secondary-dark',
+    'font-semibold px-2.5 py-1 rounded-3xl text-secondary-light dark:text-purple-light border-2 border-secondary-light dark:border-purple-dark',
 }
