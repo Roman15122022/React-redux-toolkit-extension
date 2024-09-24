@@ -34,6 +34,9 @@
       "lastTime": "The last session lasted",
       "period": "Period",
       "totalForDay": "Total time study for day"
+    },
+    "history": {
+      "noHistory": "History is empty!"
     }
   }
 }

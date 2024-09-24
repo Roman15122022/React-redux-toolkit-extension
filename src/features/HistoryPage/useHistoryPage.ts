@@ -27,15 +27,15 @@ export const useHistoryPage = () => {
     return selectedDate === new Date(date).getTime()
   }
 
-  const historyDates: HistoryDate[] = getUniqStudyDays(dates, language).map(
-    ({ localizeName, date }) => {
+  const historyDates: HistoryDate[] = getUniqStudyDays(dates, language)
+    .reverse()
+    .map(({ localizeName, date }) => {
       return {
         name: getNormalizeName(localizeName),
         onClick: () => handleSelectDate(date),
         isSelected: isSelectedDate(date),
       }
-    },
-  )
+    })
 
   function handleGetPages(): Array<number> {
     const pages = Math.ceil(historyDates.length / LIMIT_BUTTON_PAGE)

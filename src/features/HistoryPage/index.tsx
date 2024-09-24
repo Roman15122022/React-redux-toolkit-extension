@@ -1,15 +1,32 @@
 import React from 'react'
 
 import StudyTimeInfoForDay from '../StudyTimeInfoForDay'
-import { TypeButton } from '../../types'
+import { TypeButton, TypeTittle } from '../../types'
+import Title from '../../components/Title'
 import Container from '../../components/Container'
 import Button from '../../components/Button'
 
 import { useHistoryPage } from './useHistoryPage'
 
 const HistoryPage = (): JSX.Element => {
-  const { historyDates, selectedDate, pages, currentPage, setCurrentPage } =
-    useHistoryPage()
+  const {
+    interfaceLang,
+    historyDates,
+    selectedDate,
+    pages,
+    currentPage,
+    setCurrentPage,
+  } = useHistoryPage()
+
+  if (!historyDates.length) {
+    return (
+      <Title
+        variant={TypeTittle.SMALL}
+        classes="mt-5 text-center"
+        title={interfaceLang.popup.history.noHistory}
+      />
+    )
+  }
 
   return (
     <Container classes="mr-2 ">
