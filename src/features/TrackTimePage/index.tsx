@@ -4,6 +4,7 @@ import PauseCircleIcon from '@mui/icons-material/PauseCircle'
 
 import StudyTimeInfoForDay from '../StudyTimeInfoForDay'
 import { TypeButton } from '../../types'
+import Container from '../../components/Container'
 import Button from '../../components/Button'
 
 import { useTrackTime } from './useTrackTime'
@@ -13,6 +14,7 @@ const TrackTimePage = (): JSX.Element => {
     locale,
     time: { formattedSeconds, formattedMinutes, formattedHours },
     lastTime,
+    date,
     handleStopTimer,
     handleStartFromButton,
     handlePauseTimer,
@@ -22,7 +24,7 @@ const TrackTimePage = (): JSX.Element => {
   } = useTrackTime()
 
   return (
-    <div className="mx-4 mt-8">
+    <Container>
       <div className="relative">
         <div className="text-5xl theme-text text-center">
           {formattedHours}:{formattedMinutes}:{formattedSeconds}
@@ -50,8 +52,8 @@ const TrackTimePage = (): JSX.Element => {
           </Button>
         )}
       </div>
-      <StudyTimeInfoForDay lastTime={lastTime} />
-    </div>
+      <StudyTimeInfoForDay lastTime={lastTime} date={date} isLastTimeNeeded />
+    </Container>
   )
 }
 

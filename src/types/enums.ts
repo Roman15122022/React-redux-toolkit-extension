@@ -24,6 +24,8 @@ export enum TypeButton {
   ERROR = 'error',
   LINK = 'link',
   ACTIVE_LINK = 'activeLink',
+  PAGE = 'page',
+  CURRENT_PAGE = 'currentPage',
 }
 
 export enum TypeTittle {

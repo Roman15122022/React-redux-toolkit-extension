@@ -1,3 +1,5 @@
 export type StudyTimeInfoProps = {
-  lastTime: string
+  lastTime?: string
+  date: number
+  isLastTimeNeeded: boolean
 }

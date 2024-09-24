@@ -25,3 +25,13 @@ export function getTimeDifferenceByNow(date: number): number {
 export function cn(...args: ClassValue[]): string {
   return twMerge(clsx(args))
 }
+
+export function fillArr(count: number): Array<number> {
+  const arr = []
+
+  for (let i = 1; i <= count; i++) {
+    arr.push(i)
+  }
+
+  return arr
+}

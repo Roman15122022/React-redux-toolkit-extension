@@ -14,9 +14,11 @@ export const TIME_IN_SECONDS = {
   DAY: 60 * 60 * 24,
 }
 
-export const DATE_FULL_FORMAT = 'MMMM Do YYYY, h:mm:ss a'
+export const DATE_FULL_FORMAT = 'D MMM YYYY'
 
 export const DATE_DAY_FORMAT = 'L'
+
+export const DATE_SHORT_DAY_FORMAT = 'll'
 
 export const DATE_TIME_FORMAT = 'LTS'
 

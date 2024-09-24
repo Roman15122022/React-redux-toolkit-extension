@@ -39,6 +39,8 @@ export const useTrackTime = () => {
   } = useTimer(getTimeDifferenceByNow(startDate), elapsedTime, storeStateTimer)
 
   function handleStopTimer(): void {
+    /*    const dateS = new Date(2024, 3, 11, 13, 0, 0)
+    const dateE = new Date(2024, 3, 11, 15, 0, 0)*/
     dispatch(
       addTimeLogs({
         activityName: '',
@@ -113,5 +115,6 @@ export const useTrackTime = () => {
     isActive: stateTimer.isActive,
     handleStartFromButton,
     lastTime,
+    date: Date.now(),
   }
 }

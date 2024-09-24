@@ -32,3 +32,14 @@ export function formatLanguageDate(
 ): string {
   return moment(date).locale(language).format(format)
 }
+
+export function getSegment<T>(
+  arr: Array<T>,
+  segmentSize: number,
+  segmentNumber: number,
+): Array<T> {
+  const startIndex = (segmentNumber - 1) * segmentSize
+  const endIndex = startIndex + segmentSize
+
+  return arr.slice(startIndex, endIndex)
+}
