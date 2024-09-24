@@ -38,9 +38,25 @@ export const useTrackTime = () => {
     initializeTimer,
   } = useTimer(getTimeDifferenceByNow(startDate), elapsedTime, storeStateTimer)
 
+  //function for test
+
+  /* const test = (): void => {
+    for (let i = 0; i <= 12; i++) {
+      const dateS = new Date(2024, i, 7, 13, 0, 0)
+      const dateE = new Date(2024, i, 7, 15, 0, 0)
+      dispatch(
+        addTimeLogs({
+          activityName: '',
+          startDate: dateS.getTime(),
+          endDate: dateE.getTime(),
+          dayOfWeek: getDayOfWeekNumber(),
+          totalTimeForSession: 7200 + i * 32,
+        }),
+      )
+    }
+  }*/
+
   function handleStopTimer(): void {
-    /*    const dateS = new Date(2024, 3, 11, 13, 0, 0)
-    const dateE = new Date(2024, 3, 11, 15, 0, 0)*/
     dispatch(
       addTimeLogs({
         activityName: '',

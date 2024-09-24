@@ -1,6 +1,7 @@
 import React from 'react'
 
 import StudyTimeInfoForDay from '../StudyTimeInfoForDay'
+import PaginationHistoryPages from '../PaginationHistoryPages'
 import { TypeButton, TypeTittle } from '../../types'
 import Title from '../../components/Title'
 import Container from '../../components/Container'
@@ -44,22 +45,11 @@ const HistoryPage = (): JSX.Element => {
           ))}
         </div>
       </div>
-
-      <div className="mt-3 flex gap-2 justify-start">
-        {pages.map(page => (
-          <Button
-            variant={
-              currentPage === page ? TypeButton.CURRENT_PAGE : TypeButton.PAGE
-            }
-            disabled={currentPage === page}
-            classes="px-2 py-2 rounded-xl"
-            key={page}
-            onClick={() => setCurrentPage(page)}
-          >
-            {page}
-          </Button>
-        ))}
-      </div>
+      <PaginationHistoryPages
+        pages={pages}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+      />
       <StudyTimeInfoForDay date={selectedDate} isLastTimeNeeded={false} />
     </Container>
   )

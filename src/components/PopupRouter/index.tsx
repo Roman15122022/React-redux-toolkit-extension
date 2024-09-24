@@ -12,8 +12,8 @@ const PopupRouter = (): JSX.Element => {
     <Routes>
       <Route path={RoutesPath.TRACKER} element={<TrackTimePage />} />
       <Route path={RoutesPath.HISTORY} element={<HistoryPage />} />
-      <Route path={RoutesPath.STATISTICS} element={<StatisticsPage />} />
       <Route path={RoutesPath.ACHIEVEMENTS} element={<AchievementsPage />} />
+      <Route path={RoutesPath.STATISTICS} element={<StatisticsPage />} />
     </Routes>
   )
 }

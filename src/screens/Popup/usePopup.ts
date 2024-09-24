@@ -32,14 +32,14 @@ export const usePopup = () => {
       name: interfaceLang.popup.header.history,
     },
     {
-      route: () => handleClick(RoutesPath.STATISTICS),
-      variant: getActiveRoute(RoutesPath.STATISTICS),
-      name: interfaceLang.popup.header.statistics,
-    },
-    {
       route: () => handleClick(RoutesPath.ACHIEVEMENTS),
       variant: getActiveRoute(RoutesPath.ACHIEVEMENTS),
       name: interfaceLang.popup.header.achievements,
+    },
+    {
+      route: () => handleClick(RoutesPath.STATISTICS),
+      variant: getActiveRoute(RoutesPath.STATISTICS),
+      name: interfaceLang.popup.header.statistics,
     },
   ]
 
