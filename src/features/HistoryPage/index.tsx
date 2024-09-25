@@ -50,7 +50,11 @@ const HistoryPage = (): JSX.Element => {
         setCurrentPage={setCurrentPage}
         currentPage={currentPage}
       />
-      <StudyTimeInfoForDay date={selectedDate} isLastTimeNeeded={false} />
+      <StudyTimeInfoForDay
+        date={selectedDate}
+        isLastTimeNeeded={false}
+        classes="mt-3"
+      />
     </Container>
   )
 }

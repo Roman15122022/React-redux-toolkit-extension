@@ -33,7 +33,8 @@
       "seconds": "s",
       "lastTime": "The last session lasted",
       "period": "Period",
-      "totalForDay": "Total time study for day"
+      "totalForDay": "Total time study for day",
+      "label": "Activity"
     },
     "history": {
       "noHistory": "History is empty!"

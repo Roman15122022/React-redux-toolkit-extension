@@ -5,6 +5,7 @@ import { StopStartButtonProps } from './types'
 import { SIZE_ICON } from './constants'
 
 const StopStartButton = ({
+  isActive,
   isPaused,
   handleStartFromButton,
   handlePauseTimer,
@@ -16,13 +17,13 @@ const StopStartButton = ({
   )
 
   return (
-    <div>
+    isActive && (
       <div className="absolute top-2 right-12">
         <button onClick={handleClick}>
           <IconButton sx={{ fontSize: SIZE_ICON }} />
         </button>
       </div>
-    </div>
+    )
   )
 }
 

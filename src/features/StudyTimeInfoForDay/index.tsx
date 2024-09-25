@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { cn } from '../../utils'
+
 import { useStudyTimeInfoForDay } from './useStudyTimeInfoForDay'
 import { StudyTimeInfoProps } from './types'
 
@@ -7,11 +9,12 @@ const StudyTimeInfoForDay = ({
   lastTime,
   date,
   isLastTimeNeeded,
+  classes,
 }: StudyTimeInfoProps): JSX.Element => {
   const { locale, periods, totalForDay } = useStudyTimeInfoForDay(date)
 
   return (
-    <div className="mt-5 font-semibold text-sm">
+    <div className={cn(classes, 'mt-5 font-semibold text-sm')}>
       {isLastTimeNeeded &&
         (lastTime ? (
           <div className="flex items-center">
