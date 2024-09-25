@@ -21,7 +21,6 @@ const InputNameActivity = ({
           sx={{
             width: 150,
             height: 39,
-            fontSize: 14,
             padding: 0,
             '& .MuiOutlinedInput-notchedOutline': {
               borderColor: 'purple', // Color outline
@@ -31,11 +30,12 @@ const InputNameActivity = ({
             },
             '& .MuiInputLabel-root': {
               color: 'white',
-              marginLeft: '2px',
+              marginLeft: '3px',
+              fontSize: '13px',
             },
             '& .MuiInputLabel-root.Mui-focused': {
               color: 'purple', //  Color label focus
-              marginLeft: '2px',
+              marginLeft: '3px',
             },
             '& .MuiInputBase-input': {
               color: 'white', // Color Text

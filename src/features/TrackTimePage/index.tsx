@@ -44,7 +44,7 @@ const TrackTimePage = (): JSX.Element => {
         ) : (
           <div className="flex gap-3 justify-center items-center">
             <InputNameActivity nameLabel={locale.label} />
-            <Button classes="mt-1" onClick={handleStartSession}>
+            <Button classes="mt-2" onClick={handleStartSession}>
               {locale.start}
             </Button>
           </div>
