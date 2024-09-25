@@ -1,8 +1,7 @@
 import React from 'react'
-import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite'
-import PauseCircleIcon from '@mui/icons-material/PauseCircle'
 
 import StudyTimeInfoForDay from '../StudyTimeInfoForDay'
+import StopStartButton from '../StopStartButton'
 import { TypeButton } from '../../types'
 import Container from '../../components/Container'
 import Button from '../../components/Button'
@@ -30,17 +29,11 @@ const TrackTimePage = (): JSX.Element => {
           {formattedHours}:{formattedMinutes}:{formattedSeconds}
         </div>
         {isActive && (
-          <div className="absolute top-2 right-12">
-            {isPaused ? (
-              <button onClick={handleStartFromButton}>
-                <PlayCircleFilledWhiteIcon sx={{ fontSize: 36 }} />
-              </button>
-            ) : (
-              <button onClick={handlePauseTimer}>
-                <PauseCircleIcon sx={{ fontSize: 36 }} />
-              </button>
-            )}
-          </div>
+          <StopStartButton
+            isPaused={isPaused}
+            handlePauseTimer={handlePauseTimer}
+            handleStartFromButton={handleStartFromButton}
+          />
         )}
       </div>
       <div className="mt-8 flex justify-evenly items-center">
