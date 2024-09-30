@@ -21,6 +21,8 @@ const TrackTimePage = (): JSX.Element => {
     handleStartSession,
     isPaused,
     isActive,
+    isError,
+    handleOnChanges,
   } = useTrackTime()
 
   return (
@@ -43,7 +45,11 @@ const TrackTimePage = (): JSX.Element => {
           </Button>
         ) : (
           <div className="flex gap-3 justify-center items-center">
-            <InputNameActivity nameLabel={locale.label} />
+            <InputNameActivity
+              nameLabel={locale.label}
+              onChanges={handleOnChanges}
+              isError={isError}
+            />
             <Button classes="mt-2" onClick={handleStartSession}>
               {locale.start}
             </Button>

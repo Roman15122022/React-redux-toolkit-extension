@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { SyntheticEvent, useEffect, useLayoutEffect, useState } from 'react'
 
 import { getDayOfWeekNumber, getTimeDifferenceByNow } from '../../utils'
 import { timerLogsSlice } from '../../store/reducers/timeLogsReducer/TimerLogsSlice'
@@ -15,6 +15,8 @@ export const useTrackTime = () => {
   const { interfaceLang } = useTranslate()
 
   const [lastTime, setLastTime] = useState<string>('')
+  const [inputText, setInputText] = useState<string>('')
+  const [isError, setIsError] = useState<boolean>(false)
 
   const {
     stateTimer: storeStateTimer,
@@ -55,6 +57,10 @@ export const useTrackTime = () => {
       )
     }
   }*/
+  const handleOnChanges = (_event: SyntheticEvent, value: string) => {
+    setInputText(value)
+    setIsError(false)
+  }
 
   function handleStopTimer(): void {
     dispatch(
@@ -89,6 +95,13 @@ export const useTrackTime = () => {
   }
 
   function handleStartSession(): void {
+    if (!inputText.trim()) {
+      setIsError(true)
+
+      return
+    }
+
+    setInputText('')
     const now = Date.now()
     dispatch(setStartDate(now))
     dispatch(setLastStartDate(now))
@@ -132,5 +145,7 @@ export const useTrackTime = () => {
     handleStartFromButton,
     lastTime,
     date: Date.now(),
+    handleOnChanges,
+    isError,
   }
 }
