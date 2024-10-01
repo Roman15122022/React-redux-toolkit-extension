@@ -38,6 +38,9 @@
     },
     "history": {
       "noHistory": "Історія порожня!"
+    },
+    "achievements": {
+      "noAchievements": "Досягнень поки що немає"
     }
   }
 }

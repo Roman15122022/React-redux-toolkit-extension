@@ -38,6 +38,9 @@
     },
     "history": {
       "noHistory": "History is empty!"
+    },
+    "achievements": {
+      "noAchievements": "No achievements yet"
     }
   }
 }
