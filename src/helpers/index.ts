@@ -43,3 +43,9 @@ export function getSegment<T>(
 
   return arr.slice(startIndex, endIndex)
 }
+
+export function getUniqNamesActivity(dates: TimePeriod[]): Array<string> {
+  const names = dates.map(date => date.activityName).filter(date => date !== '')
+
+  return [...new Set(names)]
+}

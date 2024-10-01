@@ -10,12 +10,12 @@ const InputNameActivity = ({
   onChanges,
   isError,
 }: InputNameActivityProps): JSX.Element => {
-  const { styles } = useInputNameActivity(isError)
+  const { styles, options } = useInputNameActivity(isError)
 
   return (
     <Autocomplete
       freeSolo
-      options={['1', '2']}
+      options={options}
       onInputChange={onChanges}
       renderInput={params => (
         <TextField {...params} label={nameLabel} error={isError} sx={styles} />

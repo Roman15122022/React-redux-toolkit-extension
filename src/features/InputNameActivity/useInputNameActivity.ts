@@ -1,8 +1,10 @@
 import { ThemeVariants } from '../../types'
 import { useAppSelector } from '../../hooks/useAppSelector'
+import { getUniqNamesActivity } from '../../helpers'
 
 export const useInputNameActivity = (isError: boolean) => {
   const { theme } = useAppSelector(state => state.SettingReducer)
+  const { dates } = useAppSelector(state => state.TimerLogsReducer)
 
   const isDark = theme === ThemeVariants.DARK
 
@@ -46,5 +48,6 @@ export const useInputNameActivity = (isError: boolean) => {
 
   return {
     styles,
+    options: getUniqNamesActivity(dates),
   }
 }
