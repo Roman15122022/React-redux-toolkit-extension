@@ -23,11 +23,14 @@ export const useTrackTime = () => {
     startDate,
     elapsedTime,
   } = useAppSelector(state => state.CurrentTimerReducer)
-  const { lastStartDate } = useAppSelector(state => state.TimerLogsReducer)
+  const { lastStartDate, lastNameActivity } = useAppSelector(
+    state => state.TimerLogsReducer,
+  )
 
   const { setStateTimer, setStartDate, setElapsedTime } =
     currentTimerSlice.actions
-  const { setLastStartDate, addTimeLogs } = timerLogsSlice.actions
+  const { setLastNameActivity, setLastStartDate, addTimeLogs } =
+    timerLogsSlice.actions
 
   const dispatch = useAppDispatch()
 
@@ -65,7 +68,7 @@ export const useTrackTime = () => {
   function handleStopTimer(): void {
     dispatch(
       addTimeLogs({
-        activityName: '',
+        activityName: lastNameActivity,
         startDate: lastStartDate,
         endDate: Date.now(),
         dayOfWeek: getDayOfWeekNumber(),
@@ -101,10 +104,10 @@ export const useTrackTime = () => {
       return
     }
 
-    setInputText('')
     const now = Date.now()
     dispatch(setStartDate(now))
     dispatch(setLastStartDate(now))
+    dispatch(setLastNameActivity(inputText))
 
     setLastTime('')
     handleStartTimer()
@@ -144,6 +147,7 @@ export const useTrackTime = () => {
     isActive: stateTimer.isActive,
     handleStartFromButton,
     lastTime,
+    lastNameActivity,
     date: Date.now(),
     handleOnChanges,
     isError,
