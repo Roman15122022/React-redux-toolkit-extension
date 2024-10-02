@@ -23,6 +23,7 @@ const TrackTimePage = (): JSX.Element => {
     isPaused,
     isActive,
     isError,
+    currentLength,
     handleOnChanges,
   } = useTrackTime()
 
@@ -54,6 +55,7 @@ const TrackTimePage = (): JSX.Element => {
           <div className="flex gap-3 justify-center items-center">
             <InputNameActivity
               nameLabel={locale.label}
+              currentLength={currentLength}
               onChanges={handleOnChanges}
               isError={isError}
             />

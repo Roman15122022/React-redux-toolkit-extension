@@ -68,7 +68,7 @@ export const useTrackTime = () => {
   function handleStopTimer(): void {
     dispatch(
       addTimeLogs({
-        activityName: lastNameActivity,
+        activityName: lastNameActivity.trim(),
         startDate: lastStartDate,
         endDate: Date.now(),
         dayOfWeek: getDayOfWeekNumber(),
@@ -83,6 +83,7 @@ export const useTrackTime = () => {
     stopAndResetTimer()
 
     setLastTime(customizedTime(formatTime(seconds), interfaceLang))
+    setInputText('')
   }
 
   function handleStartTimer(): void {
@@ -151,5 +152,6 @@ export const useTrackTime = () => {
     date: Date.now(),
     handleOnChanges,
     isError,
+    currentLength: inputText.length,
   }
 }
