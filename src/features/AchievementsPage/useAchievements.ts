@@ -15,18 +15,20 @@ export const useAchievements = () => {
 
   const { interfaceLang } = useTranslate()
 
-  const achievements: Achievements[] = getUniqNamesActivity(dates).map(item => {
-    const totalTimeInSeconds = getTotalTimeForActivityName(item, dates)
-    const isSpec = totalTimeInSeconds > SPECIALIST * TIME_IN_SECONDS.HOUR
+  const achievements: Achievements[] = getUniqNamesActivity(dates)
+    .map(item => {
+      const totalTimeInSeconds = getTotalTimeForActivityName(item, dates)
+      const isSpec = totalTimeInSeconds > SPECIALIST * TIME_IN_SECONDS.HOUR
 
-    return {
-      name: item,
-      totalTime: getCustomizedTime(totalTimeInSeconds, interfaceLang),
-      percents: getPercentByTime(totalTimeInSeconds, isSpec),
-      isSpec,
-      totalTimeInSeconds,
-    }
-  })
+      return {
+        name: item,
+        totalTime: getCustomizedTime(totalTimeInSeconds, interfaceLang),
+        percents: getPercentByTime(totalTimeInSeconds, isSpec),
+        isSpec,
+        totalTimeInSeconds,
+      }
+    })
+    .sort((a, b) => b.totalTimeInSeconds - a.totalTimeInSeconds)
 
   return {
     locale: interfaceLang.popup.achievements,

@@ -23,10 +23,10 @@ const AchievementsPage = (): JSX.Element => {
   }
 
   return (
-    <Container>
-      <div className="mt-10">
+    <Container classes="mr-0">
+      <div className="mt-10 h-[300px] overflow-y-scroll scrollbar-thin scrollbar scrollbar-thumb-secondary-light dark:scrollbar-track-white dark:scrollbar-thumb-purple-dark dark:scrollbar-track-black">
         {achievements.map((subject, index) => (
-          <div key={subject.name} className="mt-4">
+          <div key={subject.name} className="mt-4 w-[95%]">
             <span className="text-sm font-bold">
               {index + 1}. {subject.name}: {subject.totalTime}
             </span>
