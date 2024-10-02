@@ -25,6 +25,17 @@ export function getTotalTimeForDate(
   }, 0)
 }
 
+export function getTotalTimeForActivityName(
+  name: string,
+  dates: TimePeriod[],
+): number {
+  return dates
+    .filter(date => date.activityName === name)
+    .reduce((acc, { totalTimeForSession }) => {
+      return acc + totalTimeForSession
+    }, 0)
+}
+
 export function formatLanguageDate(
   date: number,
   format: string,

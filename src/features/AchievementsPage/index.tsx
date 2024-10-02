@@ -7,9 +7,9 @@ import Container from '../../components/Container'
 import { useAchievements } from './useAchievements'
 
 const AchievementsPage = (): JSX.Element => {
-  const { locale, activities } = useAchievements()
+  const { locale, achievements } = useAchievements()
 
-  if (!activities.length) {
+  if (!achievements.length) {
     return (
       <Title
         variant={TypeTittle.SMALL}
@@ -21,7 +21,16 @@ const AchievementsPage = (): JSX.Element => {
 
   return (
     <Container>
-      <div></div>
+      <div>
+        {achievements.map(subject => (
+          <div key={subject.name}>
+            <span>
+              {subject.name}: {subject.totalTime}
+              {subject.percents}
+            </span>
+          </div>
+        ))}
+      </div>
     </Container>
   )
 }
