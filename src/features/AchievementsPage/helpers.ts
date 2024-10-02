@@ -27,3 +27,9 @@ export function getPercentByTime(
 
   return parseFloat(((totalTime / specialistInSecond) * 100).toFixed(2))
 }
+
+export function getHours(totalTime: number): string {
+  const hours = totalTime / 3600
+
+  return hours.toFixed(2)
+}

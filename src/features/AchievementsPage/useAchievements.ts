@@ -18,13 +18,13 @@ export const useAchievements = () => {
   const achievements: Achievements[] = getUniqNamesActivity(dates).map(item => {
     const totalTimeInSeconds = getTotalTimeForActivityName(item, dates)
     const isSpec = totalTimeInSeconds > SPECIALIST * TIME_IN_SECONDS.HOUR
-    console.log(isSpec)
 
     return {
       name: item,
       totalTime: getCustomizedTime(totalTimeInSeconds, interfaceLang),
       percents: getPercentByTime(totalTimeInSeconds, isSpec),
       isSpec,
+      totalTimeInSeconds,
     }
   })
 

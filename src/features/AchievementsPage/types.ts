@@ -3,4 +3,5 @@ export type Achievements = {
   totalTime: string
   percents: number
   isSpec: boolean
+  totalTimeInSeconds: number
 }
