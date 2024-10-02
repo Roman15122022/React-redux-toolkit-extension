@@ -6,8 +6,8 @@ import ProgressBar from '../../components/ProgressBar'
 import Container from '../../components/Container'
 
 import { useAchievements } from './useAchievements'
-import { EXPERT, SPECIALIST } from './constants'
 import { getHours } from './helpers'
+import { EXPERT, SPECIALIST } from './constants'
 
 const AchievementsPage = (): JSX.Element => {
   const { locale, achievements } = useAchievements()
