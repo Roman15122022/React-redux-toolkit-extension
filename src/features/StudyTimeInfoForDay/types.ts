@@ -6,3 +6,8 @@ export type StudyTimeInfoProps = {
   isLastTimeNeeded: boolean
   classes?: ClassValue
 }
+
+export type Periods = {
+  period: string
+  activityName: string
+}

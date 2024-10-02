@@ -27,15 +27,15 @@ const StudyTimeInfoForDay = ({
           <div className="text-white dark:text-black select-none">1</div>
         ))}
       {periods.length > 0 && (
-        <div className="mt-2 h-32 overflow-y-scroll scrollbar-thin scrollbar scrollbar-thumb-secondary-light dark:scrollbar-track-white dark:scrollbar-thumb-purple-dark dark:scrollbar-track-black">
+        <div className="mt-2 h-[125px] overflow-y-scroll scrollbar-thin scrollbar scrollbar-thumb-secondary-light dark:scrollbar-track-white dark:scrollbar-thumb-purple-dark dark:scrollbar-track-black">
           {periods
-            .map((period, index) => (
+            .map(({ period, activityName }, index) => (
               <div
                 key={period + index}
                 className="flex items-center mt-1 last:mb-1.5"
               >
                 <span>
-                  {index + 1}. {locale.period}:
+                  {index + 1}. {activityName}:
                 </span>
                 <span className="ml-2 text-secondary-light dark:text-purple-light">
                   {period}

@@ -4,7 +4,6 @@ import StudyTimeInfoForDay from '../StudyTimeInfoForDay'
 import StopStartButton from '../StopStartButton'
 import InputNameActivity from '../InputNameActivity'
 import { TypeButton } from '../../types'
-import Title from '../../components/Title'
 import Container from '../../components/Container'
 import Button from '../../components/Button'
 
@@ -40,18 +39,15 @@ const TrackTimePage = (): JSX.Element => {
           handleStartFromButton={handleStartFromButton}
         />
       </div>
-      <div
-        className={`mt-${isActive ? 4 : 8} flex justify-evenly items-center`}
-      >
+      <div className="mt-8 flex justify-evenly items-center">
         {isActive ? (
-          <div className="flex flex-col gap-3 justify-center items-center">
-            <Title title={lastNameActivity} />
+          <div className="flex gap-3 justify-center items-center">
             <Button
               classes="mt-1"
               variant={TypeButton.SECONDARY}
               onClick={handleStopTimer}
             >
-              {locale.stop}
+              {locale.stop}: {lastNameActivity}
             </Button>
           </div>
         ) : (
