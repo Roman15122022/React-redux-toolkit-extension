@@ -30,7 +30,7 @@ const HistoryPage = (): JSX.Element => {
   }
 
   return (
-    <Container classes="mr-2 ">
+    <Container>
       <div className="h-[118px]">
         <div className="flex gap-2 flex-wrap justify-start">
           {historyDates.map(({ name, onClick, isSelected }) => (
