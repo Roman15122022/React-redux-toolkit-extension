@@ -1,8 +1,8 @@
 import React from 'react'
-import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite'
-import PauseCircleIcon from '@mui/icons-material/PauseCircle'
 
 import StudyTimeInfoForDay from '../StudyTimeInfoForDay'
+import StopStartButton from '../StopStartButton'
+import InputNameActivity from '../InputNameActivity'
 import { TypeButton } from '../../types'
 import Container from '../../components/Container'
 import Button from '../../components/Button'
@@ -14,6 +14,7 @@ const TrackTimePage = (): JSX.Element => {
     locale,
     time: { formattedSeconds, formattedMinutes, formattedHours },
     lastTime,
+    lastNameActivity,
     date,
     handleStopTimer,
     handleStartFromButton,
@@ -21,6 +22,9 @@ const TrackTimePage = (): JSX.Element => {
     handleStartSession,
     isPaused,
     isActive,
+    isError,
+    currentLength,
+    handleOnChanges,
   } = useTrackTime()
 
   return (
@@ -29,27 +33,36 @@ const TrackTimePage = (): JSX.Element => {
         <div className="text-5xl theme-text text-center">
           {formattedHours}:{formattedMinutes}:{formattedSeconds}
         </div>
-        {isActive && (
-          <div className="absolute top-2 right-12">
-            {isPaused ? (
-              <button onClick={handleStartFromButton}>
-                <PlayCircleFilledWhiteIcon sx={{ fontSize: 36 }} />
-              </button>
-            ) : (
-              <button onClick={handlePauseTimer}>
-                <PauseCircleIcon sx={{ fontSize: 36 }} />
-              </button>
-            )}
-          </div>
-        )}
+        <StopStartButton
+          isActive={isActive}
+          isPaused={isPaused}
+          handlePauseTimer={handlePauseTimer}
+          handleStartFromButton={handleStartFromButton}
+        />
       </div>
       <div className="mt-8 flex justify-evenly items-center">
-        {!isActive ? (
-          <Button onClick={handleStartSession}>{locale.start}</Button>
+        {isActive ? (
+          <div className="flex gap-3 justify-center items-center">
+            <Button
+              classes="mt-1"
+              variant={TypeButton.SECONDARY}
+              onClick={handleStopTimer}
+            >
+              {locale.stop}: {lastNameActivity}
+            </Button>
+          </div>
         ) : (
-          <Button variant={TypeButton.SECONDARY} onClick={handleStopTimer}>
-            {locale.stop}
-          </Button>
+          <div className="flex gap-3 justify-center items-center">
+            <InputNameActivity
+              nameLabel={locale.label}
+              currentLength={currentLength}
+              onChanges={handleOnChanges}
+              isError={isError}
+            />
+            <Button classes="mt-2" onClick={handleStartSession}>
+              {locale.start}
+            </Button>
+          </div>
         )}
       </div>
       <StudyTimeInfoForDay lastTime={lastTime} date={date} isLastTimeNeeded />

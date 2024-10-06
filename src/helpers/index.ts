@@ -25,6 +25,17 @@ export function getTotalTimeForDate(
   }, 0)
 }
 
+export function getTotalTimeForActivityName(
+  name: string,
+  dates: TimePeriod[],
+): number {
+  return dates
+    .filter(date => date.activityName === name)
+    .reduce((acc, { totalTimeForSession }) => {
+      return acc + totalTimeForSession
+    }, 0)
+}
+
 export function formatLanguageDate(
   date: number,
   format: string,
@@ -42,4 +53,10 @@ export function getSegment<T>(
   const endIndex = startIndex + segmentSize
 
   return arr.slice(startIndex, endIndex)
+}
+
+export function getUniqNamesActivity(dates: TimePeriod[]): Array<string> {
+  const names = dates.map(date => date.activityName).filter(date => date !== '')
+
+  return [...new Set(names)]
 }

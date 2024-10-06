@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { SyntheticEvent, useEffect, useLayoutEffect, useState } from 'react'
 
 import { getDayOfWeekNumber, getTimeDifferenceByNow } from '../../utils'
 import { timerLogsSlice } from '../../store/reducers/timeLogsReducer/TimerLogsSlice'
@@ -15,17 +15,22 @@ export const useTrackTime = () => {
   const { interfaceLang } = useTranslate()
 
   const [lastTime, setLastTime] = useState<string>('')
+  const [inputText, setInputText] = useState<string>('')
+  const [isError, setIsError] = useState<boolean>(false)
 
   const {
     stateTimer: storeStateTimer,
     startDate,
     elapsedTime,
   } = useAppSelector(state => state.CurrentTimerReducer)
-  const { lastStartDate } = useAppSelector(state => state.TimerLogsReducer)
+  const { lastStartDate, lastNameActivity } = useAppSelector(
+    state => state.TimerLogsReducer,
+  )
 
   const { setStateTimer, setStartDate, setElapsedTime } =
     currentTimerSlice.actions
-  const { setLastStartDate, addTimeLogs } = timerLogsSlice.actions
+  const { setLastNameActivity, setLastStartDate, addTimeLogs } =
+    timerLogsSlice.actions
 
   const dispatch = useAppDispatch()
 
@@ -38,12 +43,32 @@ export const useTrackTime = () => {
     initializeTimer,
   } = useTimer(getTimeDifferenceByNow(startDate), elapsedTime, storeStateTimer)
 
+  //function for test
+
+  /* const test = (): void => {
+    for (let i = 0; i <= 12; i++) {
+      const dateS = new Date(2024, i, 7, 13, 0, 0)
+      const dateE = new Date(2024, i, 7, 15, 0, 0)
+      dispatch(
+        addTimeLogs({
+          activityName: '',
+          startDate: dateS.getTime(),
+          endDate: dateE.getTime(),
+          dayOfWeek: getDayOfWeekNumber(),
+          totalTimeForSession: 7200 + i * 32,
+        }),
+      )
+    }
+  }*/
+  const handleOnChanges = (_event: SyntheticEvent, value: string) => {
+    setInputText(value)
+    setIsError(false)
+  }
+
   function handleStopTimer(): void {
-    /*    const dateS = new Date(2024, 3, 11, 13, 0, 0)
-    const dateE = new Date(2024, 3, 11, 15, 0, 0)*/
     dispatch(
       addTimeLogs({
-        activityName: '',
+        activityName: lastNameActivity.trim(),
         startDate: lastStartDate,
         endDate: Date.now(),
         dayOfWeek: getDayOfWeekNumber(),
@@ -58,6 +83,7 @@ export const useTrackTime = () => {
     stopAndResetTimer()
 
     setLastTime(customizedTime(formatTime(seconds), interfaceLang))
+    setInputText('')
   }
 
   function handleStartTimer(): void {
@@ -73,9 +99,16 @@ export const useTrackTime = () => {
   }
 
   function handleStartSession(): void {
+    if (!inputText.trim()) {
+      setIsError(true)
+
+      return
+    }
+
     const now = Date.now()
     dispatch(setStartDate(now))
     dispatch(setLastStartDate(now))
+    dispatch(setLastNameActivity(inputText))
 
     setLastTime('')
     handleStartTimer()
@@ -115,6 +148,10 @@ export const useTrackTime = () => {
     isActive: stateTimer.isActive,
     handleStartFromButton,
     lastTime,
+    lastNameActivity,
     date: Date.now(),
+    handleOnChanges,
+    isError,
+    currentLength: inputText.length,
   }
 }

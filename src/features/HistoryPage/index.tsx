@@ -1,18 +1,36 @@
 import React from 'react'
 
 import StudyTimeInfoForDay from '../StudyTimeInfoForDay'
-import { TypeButton } from '../../types'
+import PaginationHistoryPages from '../PaginationHistoryPages'
+import { TypeButton, TypeTittle } from '../../types'
+import Title from '../../components/Title'
 import Container from '../../components/Container'
 import Button from '../../components/Button'
 
 import { useHistoryPage } from './useHistoryPage'
 
 const HistoryPage = (): JSX.Element => {
-  const { historyDates, selectedDate, pages, currentPage, setCurrentPage } =
-    useHistoryPage()
+  const {
+    interfaceLang,
+    historyDates,
+    selectedDate,
+    pages,
+    currentPage,
+    setCurrentPage,
+  } = useHistoryPage()
+
+  if (!historyDates.length) {
+    return (
+      <Title
+        variant={TypeTittle.SMALL}
+        classes="mt-5 text-center"
+        title={interfaceLang.popup.history.noHistory}
+      />
+    )
+  }
 
   return (
-    <Container classes="mr-2 ">
+    <Container>
       <div className="h-[118px]">
         <div className="flex gap-2 flex-wrap justify-start">
           {historyDates.map(({ name, onClick, isSelected }) => (
@@ -27,23 +45,16 @@ const HistoryPage = (): JSX.Element => {
           ))}
         </div>
       </div>
-
-      <div className="mt-3 flex gap-2 justify-start">
-        {pages.map(page => (
-          <Button
-            variant={
-              currentPage === page ? TypeButton.CURRENT_PAGE : TypeButton.PAGE
-            }
-            disabled={currentPage === page}
-            classes="px-2 py-2 rounded-xl"
-            key={page}
-            onClick={() => setCurrentPage(page)}
-          >
-            {page}
-          </Button>
-        ))}
-      </div>
-      <StudyTimeInfoForDay date={selectedDate} isLastTimeNeeded={false} />
+      <PaginationHistoryPages
+        pages={pages}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+      />
+      <StudyTimeInfoForDay
+        date={selectedDate}
+        isLastTimeNeeded={false}
+        classes="mt-3"
+      />
     </Container>
   )
 }

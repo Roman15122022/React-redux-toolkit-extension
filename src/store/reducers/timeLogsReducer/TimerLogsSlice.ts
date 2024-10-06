@@ -8,6 +8,7 @@ import { TimerLogs } from './types'
 const initialState: TimerLogs = {
   dates: [],
   lastStartDate: 0,
+  lastNameActivity: '',
 }
 
 export const timerLogsSlice = createSlice({
@@ -23,6 +24,9 @@ export const timerLogsSlice = createSlice({
     },
     setLastStartDate(state, action: PayloadAction<number>) {
       state.lastStartDate = action.payload
+    },
+    setLastNameActivity(state, action: PayloadAction<string>) {
+      state.lastNameActivity = action.payload
     },
     resetData(state) {
       state.dates = []
