@@ -1,7 +1,7 @@
 import React from 'react'
 
 const StatisticsPage = (): JSX.Element => {
-  return <div>Statistics</div>
+  return <div>Statistics soon!</div>
 }
 
 export default StatisticsPage
