@@ -1,8 +1,8 @@
 import React from 'react'
 
-import StudyTimeInfoForDay from '../StudyTimeInfoForDay'
-import PaginationHistoryPages from '../PaginationHistoryPages'
 import { TypeButton, TypeTittle } from '../../types'
+import StudyTimeInfoForDay from '../../features/StudyTimeInfoForDay'
+import PaginationHistoryPages from '../../features/PaginationHistoryPages'
 import Title from '../../components/Title'
 import Container from '../../components/Container'
 import Button from '../../components/Button'

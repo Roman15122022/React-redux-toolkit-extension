@@ -2,10 +2,10 @@ import { Route, Routes } from 'react-router-dom'
 import React from 'react'
 
 import { RoutesPath } from '../../types'
-import TrackTimePage from '../../features/TrackTimePage'
-import StatisticsPage from '../../features/StatisticsPage'
-import HistoryPage from '../../features/HistoryPage'
-import AchievementsPage from '../../features/AchievementsPage'
+import TrackTimePage from '../../NavigationPages/TrackTimePage'
+import StatisticsPage from '../../NavigationPages/StatisticsPage'
+import HistoryPage from '../../NavigationPages/HistoryPage'
+import AchievementsPage from '../../NavigationPages/AchievementsPage'
 
 const PopupRouter = (): JSX.Element => {
   return (
