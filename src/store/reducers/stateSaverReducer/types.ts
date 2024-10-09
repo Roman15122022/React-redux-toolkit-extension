@@ -1,9 +1,10 @@
-import { Sort } from '../../../types'
+import { RoutesPath, Sort } from '../../../types'
 
 export interface StateSaver {
   activityNameInput: string
   historyPage: StateHistoryPage
   sortAchievement: Sort
+  activeRouteLink: RoutesPath
 }
 
 export type StateHistoryPage = {

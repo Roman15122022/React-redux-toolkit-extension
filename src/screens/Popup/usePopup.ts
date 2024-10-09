@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { RoutesPath, TypeButton } from '../../types'
 import { useTranslate } from '../../hooks/useTranslate'
 import useTheme from '../../hooks/useTheme'
+import { useStateSaver } from '../../hooks/useStateSaver'
 import { Links } from '../../components/Button/types'
 
 export const usePopup = () => {
@@ -11,13 +12,14 @@ export const usePopup = () => {
   const { interfaceLang } = useTranslate()
   const location = useLocation()
   const navigate = useNavigate()
-
+  const { saveActiveRoute } = useStateSaver()
   function getActiveRoute(path: RoutesPath): TypeButton {
     return location.pathname === path ? TypeButton.ACTIVE_LINK : TypeButton.LINK
   }
 
   function handleClick(page: RoutesPath): void {
     navigate(page)
+    saveActiveRoute(page)
   }
 
   const links: Links[] = [

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { Sort } from '../../../types'
+import { RoutesPath, Sort } from '../../../types'
 
 import { StateHistoryPage, StateSaver } from './types'
 
@@ -11,6 +11,7 @@ const initialState: StateSaver = {
     selectedDate: 0,
   },
   sortAchievement: Sort.TIME,
+  activeRouteLink: RoutesPath.TRACKER,
 }
 
 export const stateSaverSlice = createSlice({
@@ -25,6 +26,9 @@ export const stateSaverSlice = createSlice({
     },
     saveSortAchievement(state, action: PayloadAction<Sort>): void {
       state.sortAchievement = action.payload
+    },
+    saveActiveRoute(state, action: PayloadAction<RoutesPath>) {
+      state.activeRouteLink = action.payload
     },
   },
 })
