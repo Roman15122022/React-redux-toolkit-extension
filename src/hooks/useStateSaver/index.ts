@@ -1,7 +1,7 @@
 import { useAppSelector } from '../useAppSelector'
 import { stateSaverSlice } from '../../store/reducers/stateSaverReducer/StateSaverSlice'
 import { useAppDispatch } from '../useAppDispatch'
-import { Sort } from '../../types'
+import { RoutesPath, Sort } from '../../types'
 import { StateHistoryPage } from '../../store/reducers/stateSaverReducer/types'
 
 export const useStateSaver = () => {
@@ -28,6 +28,10 @@ export const useStateSaver = () => {
     dispatch(saveSortAchievement(sort))
   }
 
+  const setActiveRoute = (route: RoutesPath): void => {
+    dispatch(saveActiveRoute(route))
+  }
+
   return {
     activityNameInput,
     historyPage,
@@ -36,6 +40,6 @@ export const useStateSaver = () => {
     setSelectedNameInput,
     setHistoryState,
     setTypeOfSortAchievement,
-    saveActiveRoute,
+    setActiveRoute,
   }
 }

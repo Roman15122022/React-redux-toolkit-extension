@@ -5,13 +5,13 @@ import { RoutesPath, Sort } from '../../../types'
 import { StateHistoryPage, StateSaver } from './types'
 
 const initialState: StateSaver = {
+  activeRouteLink: RoutesPath.TRACKER,
   activityNameInput: '',
   historyPage: {
     selectedPage: 1,
     selectedDate: 0,
   },
   sortAchievement: Sort.TIME,
-  activeRouteLink: RoutesPath.TRACKER,
 }
 
 export const stateSaverSlice = createSlice({
