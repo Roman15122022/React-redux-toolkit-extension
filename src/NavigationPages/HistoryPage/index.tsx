@@ -1,8 +1,8 @@
 import React from 'react'
 
-import StudyTimeInfoForDay from '../StudyTimeInfoForDay'
-import PaginationHistoryPages from '../PaginationHistoryPages'
 import { TypeButton, TypeTittle } from '../../types'
+import StudyTimeInfoForDay from '../../features/StudyTimeInfoForDay'
+import PaginationHistoryPages from '../../features/PaginationHistoryPages'
 import Title from '../../components/Title'
 import Container from '../../components/Container'
 import Button from '../../components/Button'
@@ -16,7 +16,8 @@ const HistoryPage = (): JSX.Element => {
     selectedDate,
     pages,
     currentPage,
-    setCurrentPage,
+    fullMonthName,
+    handleSetCurrentPage,
   } = useHistoryPage()
 
   if (!historyDates.length) {
@@ -47,13 +48,21 @@ const HistoryPage = (): JSX.Element => {
       </div>
       <PaginationHistoryPages
         pages={pages}
-        setCurrentPage={setCurrentPage}
+        setCurrentPage={handleSetCurrentPage}
         currentPage={currentPage}
       />
+      {!!selectedDate ? (
+        <span className="text-[14px] font-[700]">{fullMonthName}</span>
+      ) : (
+        <span className="text-white text-[14px] font-[700] font-bold dark:text-black select-none">
+          1
+        </span>
+      )}
       <StudyTimeInfoForDay
         date={selectedDate}
         isLastTimeNeeded={false}
-        classes="mt-3"
+        classes="mt-0"
+        sxList="mt-0"
       />
     </Container>
   )

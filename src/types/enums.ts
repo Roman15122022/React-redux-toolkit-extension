@@ -40,3 +40,9 @@ export enum RoutesPath {
   STATISTICS = '/statistics',
   ACHIEVEMENTS = '/achievements',
 }
+
+export enum Sort {
+  ALPHABET = 'alphabet',
+  TIME = 'time',
+  REVERSE_TIME = 'reverseTime',
+}

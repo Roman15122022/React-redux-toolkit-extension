@@ -5,6 +5,7 @@ export type StudyTimeInfoProps = {
   date: number
   isLastTimeNeeded: boolean
   classes?: ClassValue
+  sxList?: ClassValue
 }
 
 export type Periods = {

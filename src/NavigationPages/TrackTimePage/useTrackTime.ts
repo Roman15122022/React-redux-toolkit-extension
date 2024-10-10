@@ -45,13 +45,13 @@ export const useTrackTime = () => {
 
   //function for test
 
-  /* const test = (): void => {
-    for (let i = 0; i <= 12; i++) {
-      const dateS = new Date(2024, i, 7, 13, 0, 0)
-      const dateE = new Date(2024, i, 7, 15, 0, 0)
+  /*const test = (): void => {
+    for (let i = 0; i <= 1; i++) {
+      const dateS = new Date(2024, i, 10, 13, 0, 0)
+      const dateE = new Date(2024, i, 10, 15, 0, 0)
       dispatch(
         addTimeLogs({
-          activityName: '',
+          activityName: i % 2 === 0 ? 'Programming' : 'English',
           startDate: dateS.getTime(),
           endDate: dateE.getTime(),
           dayOfWeek: getDayOfWeekNumber(),
