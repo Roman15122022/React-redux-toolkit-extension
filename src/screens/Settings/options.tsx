@@ -3,6 +3,7 @@ import './options.css'
 
 import { TypeTittle } from '../../types'
 import ThemeSwitcher from '../../features/ThemeSwitcher'
+import SaveStateToggler from '../../features/SaveStateToggler'
 import ResetStatistics from '../../features/ResetStatistics'
 import LocaleSwitcher from '../../features/LocaleSwitcher'
 import Title from '../../components/Title'
@@ -32,6 +33,7 @@ const Options = (): JSX.Element => {
           language={language}
           handleSelectLocale={handleSelectLocale}
         />
+        <SaveStateToggler isDark={isDark} interfaceLang={interfaceLang} />
         <div className="border-t-2 mt-4 dark:border-white" />
         <ResetStatistics interfaceLang={interfaceLang} />
       </div>

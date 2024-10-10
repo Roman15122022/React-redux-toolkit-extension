@@ -7,6 +7,7 @@ import { Setting } from './types'
 const initialState: Setting = {
   language: Language.EN,
   theme: ThemeVariants.DARK,
+  saveStateAfterClose: true,
 }
 
 export const settingSlice = createSlice({
@@ -18,6 +19,9 @@ export const settingSlice = createSlice({
     },
     toggleTheme(state, action: PayloadAction<ThemeVariants>) {
       state.theme = action.payload
+    },
+    toggleSaveState(state, action: PayloadAction<boolean>) {
+      state.saveStateAfterClose = action.payload
     },
   },
 })

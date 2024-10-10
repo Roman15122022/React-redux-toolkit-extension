@@ -7,6 +7,10 @@
     "score": "You clicked ",
     "times": "time(s)",
     "createdBy": "Created by ",
+    "saveState": {
+      "title": "Save state at closing",
+      "description": "If you choose to save the state on closing, then after closing the extension, it remembers its state: the active tab, sorting of achievements, the selected date in history, etc. and when you open it, it opens in the same place with the same parameters and states"
+    },
     "resetStatistics": {
       "title": "Reset all statistics",
       "askTitle": "Are you sure?",
