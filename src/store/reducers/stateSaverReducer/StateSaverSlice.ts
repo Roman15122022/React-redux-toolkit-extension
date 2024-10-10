@@ -30,6 +30,9 @@ export const stateSaverSlice = createSlice({
     saveActiveRoute(state, action: PayloadAction<RoutesPath>) {
       state.activeRouteLink = action.payload
     },
+    resetState(state) {
+      Object.assign(state, initialState)
+    },
   },
 })
 
