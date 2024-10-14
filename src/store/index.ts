@@ -12,6 +12,7 @@ import {
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 
 import TimerLogsReducer from './reducers/timeLogsReducer/TimerLogsSlice'
+import StateSaverReducer from './reducers/stateSaverReducer/StateSaverSlice'
 import SettingReducer from './reducers/settingReducer/SettingSlice'
 import CurrentTimerReducer from './reducers/currentTimerReducer/CurrentTimerSlice'
 import ClickerReducer from './reducers/clickerReducer/ClickerSlice'
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   SettingReducer,
   CurrentTimerReducer,
   TimerLogsReducer,
+  StateSaverReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

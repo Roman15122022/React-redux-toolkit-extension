@@ -1,9 +1,9 @@
 import React from 'react'
 
-import StudyTimeInfoForDay from '../StudyTimeInfoForDay'
-import StopStartButton from '../StopStartButton'
-import InputNameActivity from '../InputNameActivity'
 import { TypeButton } from '../../types'
+import StudyTimeInfoForDay from '../../features/StudyTimeInfoForDay'
+import StopStartButton from '../../features/StopStartButton'
+import InputNameActivity from '../../features/InputNameActivity'
 import Container from '../../components/Container'
 import Button from '../../components/Button'
 

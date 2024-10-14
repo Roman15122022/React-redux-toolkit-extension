@@ -10,11 +10,12 @@ const StudyTimeInfoForDay = ({
   date,
   isLastTimeNeeded,
   classes,
+  sxList,
 }: StudyTimeInfoProps): JSX.Element => {
   const { locale, periods, totalForDay } = useStudyTimeInfoForDay(date)
 
   return (
-    <div className={cn(classes, 'mt-5 font-semibold text-sm')}>
+    <div className={cn('mt-5 font-semibold text-sm', classes)}>
       {isLastTimeNeeded &&
         (lastTime ? (
           <div className="flex items-center">
@@ -27,7 +28,12 @@ const StudyTimeInfoForDay = ({
           <div className="text-white dark:text-black select-none">1</div>
         ))}
       {periods.length > 0 && (
-        <div className="mt-2 -mr-3 h-[125px] overflow-y-scroll scrollbar-thin scrollbar scrollbar-thumb-secondary-light dark:scrollbar-track-white dark:scrollbar-thumb-purple-dark dark:scrollbar-track-black">
+        <div
+          className={cn(
+            'mt-2 -mr-3 h-[125px] overflow-y-scroll scrollbar-thin scrollbar scrollbar-thumb-secondary-light dark:scrollbar-track-white dark:scrollbar-thumb-purple-dark dark:scrollbar-track-black',
+            sxList,
+          )}
+        >
           {periods
             .map(({ period, activityName }, index) => (
               <div
