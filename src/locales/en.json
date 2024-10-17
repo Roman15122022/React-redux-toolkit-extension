@@ -46,6 +46,18 @@
     "achievements": {
       "noAchievements": "No achievements yet",
       "info": "In his book ‘Geniuses and Underdogs’, Malcolm Gladwell formulates the ‘10,000 Hour Rule’: to achieve world-class performance in any field, you need about 10,000 hours of practice - about 3 hours a day for 10 years. Gladwell argues that success depends more on purposeful practice and environment than on innate talent.\n\nThe examples of Mozart, The Beatles, Bill Gates, and Bobby Fischer confirm this rule. Mozart wrote his first major concerto at the age of 21, after ten years of composing practice. Bobby Fischer became a grandmaster in nine years, and Bill Gates spent about 10,000 hours on programming. So, 10,000 is the number that defines the highest skill. Believe it or not, check it out on your own experience."
+    },
+    "statistics": {
+      "noStatistics": "No data yet",
+      "allTime": "",
+      "totalSessions": "",
+      "averagePerDay": "",
+      "averageSessionTime": "",
+      "maxSessionTime": "",
+      "minSessionTime": "",
+      "theMostProductDay": "",
+      "theMostUnProductDay": "",
+      "theMostProductivePeriodOfDay": ""
     }
   }
 }
