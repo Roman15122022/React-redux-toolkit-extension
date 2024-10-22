@@ -1,4 +1,8 @@
 {
+  "notification": {
+    "title": "Навчання - світло",
+    "message": "Ваш сеанс навчання вже: "
+  },
   "settings": {
     "title": "Налаштування",
     "darkTheme": "Тема",

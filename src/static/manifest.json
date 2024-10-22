@@ -5,14 +5,18 @@
   "version": "1.0.0",
   "action": {
     "default_popup": "popup.html",
-    "default_title": "React Boilerplate",
+    "default_title": "TrackerR",
     "default_icon": "icon.png"
   },
-  "permissions": ["storage"],
+  "permissions": ["storage", "notifications", "alarms"],
   "icons": {
     "16": "icon.png",
     "48": "icon.png",
     "128": "icon.png"
   },
-  "options_page": "options.html"
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  }
 }

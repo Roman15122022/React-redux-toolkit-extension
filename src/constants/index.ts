@@ -35,3 +35,5 @@ export const dayOfWeekMap: Record<DayOfWeek, number> = {
   [DayOfWeek.FRIDAY]: 6,
   [DayOfWeek.SATURDAY]: 7,
 }
+
+export const CHROME_ALARM = 'chromeAlarm'

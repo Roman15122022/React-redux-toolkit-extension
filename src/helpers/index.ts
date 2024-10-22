@@ -60,3 +60,13 @@ export function getUniqNamesActivity(dates: TimePeriod[]): Array<string> {
 
   return [...new Set(names)]
 }
+
+export function createNotification(title: string, msg: string): void {
+  chrome.notifications.create({
+    type: 'basic',
+    iconUrl: 'icon.png',
+    title: title,
+    message: msg,
+    priority: 2,
+  })
+}

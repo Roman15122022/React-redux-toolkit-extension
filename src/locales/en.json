@@ -1,4 +1,8 @@
 {
+  "notification": {
+    "title": "Knowledge is power",
+    "message": "Another hour of training has passed, don't forget to rest!"
+  },
   "settings": {
     "title": "Settings",
     "darkTheme": "Theme",
@@ -49,15 +53,15 @@
     },
     "statistics": {
       "noStatistics": "No data yet",
-      "allTime": "",
-      "totalSessions": "",
-      "averagePerDay": "",
-      "averageSessionTime": "",
-      "maxSessionTime": "",
-      "minSessionTime": "",
-      "theMostProductDay": "",
-      "theMostUnProductDay": "",
-      "theMostProductivePeriodOfDay": ""
+      "allTime": "All the time spent:",
+      "totalSessions": "Total of sessions:",
+      "averagePerDay": "Average time per day:",
+      "averageSessionTime": "Average time per session:",
+      "maxSessionTime": "The longest session duration:",
+      "minSessionTime": "The shortest session duration:",
+      "theMostProductDay": "The most productive day of the week",
+      "theMostUnProductDay": "The least productive day of the week:",
+      "theMostProductivePeriodOfDay": "The most productive period of the day:"
     }
   }
 }
