@@ -1,7 +1,10 @@
-async function updateAlarmBasedOnTimer(isActive: boolean): Promise<void> {
+async function updateAlarmBasedOnTimer(
+  isActive: boolean,
+  periodInMin: number,
+): Promise<void> {
   if (isActive) {
     chrome.alarms.create('chromeAlarm', {
-      periodInMinutes: 60, // period
+      periodInMinutes: periodInMin,
     })
     console.log('Created')
 
@@ -11,22 +14,22 @@ async function updateAlarmBasedOnTimer(isActive: boolean): Promise<void> {
   await chrome.alarms.clear('chromeAlarm')
   console.log('Clear')
 }
-function createNotification(): void {
+function createNotification(period: number): void {
   chrome.notifications.create({
     type: 'basic',
     iconUrl: 'icon.png',
     title: 'Knowledge is power',
-    message: "Another hour of training has passed, don't forget to rest!",
+    message: `Another ${period} minute(s) of training has passed, don't forget to rest!`,
     priority: 2,
   })
 }
 
 async function checkTimerAndSendNotification(): Promise<void> {
   chrome.storage.local.get('timerState', async result => {
-    await updateAlarmBasedOnTimer(result.timerState.isActive)
+    await updateAlarmBasedOnTimer(result.timerState.isActive, 1)
 
     if (result.timerState.isActive) {
-      createNotification()
+      createNotification(1)
     }
   })
 }
@@ -34,7 +37,7 @@ async function checkTimerAndSendNotification(): Promise<void> {
 chrome.storage.onChanged.addListener(async (changes, area) => {
   if (area === 'local' && changes.timerState) {
     const { isActive } = changes.timerState.newValue
-    await updateAlarmBasedOnTimer(isActive)
+    await updateAlarmBasedOnTimer(isActive, 1)
   }
 })
 
