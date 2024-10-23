@@ -15,6 +15,12 @@
       "title": "Save state at closing",
       "description": "If you choose to save the state on closing, then after closing the extension, it remembers its state: the active tab, sorting of achievements, the selected date in history, etc. and when you open it, it opens in the same place with the same parameters and states"
     },
+    "notification": {
+      "turnOffOn": "Reminders (notifications)",
+      "notificationDesc": "This feature will remind you to take a break after a specified period of time has passed. You can set the frequency of notifications in minutes. Once the timer is activated, you will receive a notification every minute(s) you select, reminding you that it is time for a rest or break.",
+      "period": "Period",
+      "minutes": "min"
+    },
     "resetStatistics": {
       "title": "Reset all statistics",
       "askTitle": "Are you sure?",

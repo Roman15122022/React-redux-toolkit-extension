@@ -4,7 +4,7 @@ async function updateAlarmBasedOnTimer(
 ): Promise<void> {
   if (isActive) {
     chrome.alarms.create('chromeAlarm', {
-      periodInMinutes: periodInMin,
+      periodInMinutes: periodInMin || 60,
     })
     console.log('Created')
 
@@ -19,7 +19,7 @@ function createNotification(period: number): void {
     type: 'basic',
     iconUrl: 'icon.png',
     title: 'Knowledge is power',
-    message: `Another ${period} minute(s) of training has passed, don't forget to rest!`,
+    message: `Another ${period || 60} minute(s) of training has passed, don't forget to rest!`,
     priority: 2,
   })
 }

@@ -20,3 +20,8 @@ export type TimePeriod = {
 export interface ChromeStorageProps {
   [ChromeKeys.CHROME_STATE_TIMER]: { isActive: boolean; isPause: boolean }
 }
+
+export type NotificationSettingState = {
+  isNotificationActive: boolean
+  periodInMinutes: number
+}
