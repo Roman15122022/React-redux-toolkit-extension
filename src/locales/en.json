@@ -19,7 +19,10 @@
       "turnOffOn": "Reminders (notifications)",
       "notificationDesc": "This feature will remind you to take a break after a specified period of time has passed. You can set the frequency of notifications in minutes. Once the timer is activated, you will receive a notification every minute(s) you select, reminding you that it is time for a rest or break.",
       "period": "Period",
-      "minutes": "min"
+      "minutes": "min",
+      "labelInput": "Time(min)",
+      "errorFirst": "The period is number cannot be more than 24 hours",
+      "errorSecond": "Can't be 0"
     },
     "resetStatistics": {
       "title": "Reset all statistics",
