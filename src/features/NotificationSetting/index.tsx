@@ -5,7 +5,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import DoneIcon from '@mui/icons-material/Done'
 import ClearIcon from '@mui/icons-material/Clear'
 
-import { TypeTittle } from '../../types'
+import { TypeButton, TypeTittle } from '../../types'
 import Title from '../../components/Title'
 import Button from '../../components/Button'
 
@@ -82,6 +82,7 @@ const NotificationSetting = ({
               <Button
                 classes="mt-[10px] py-1"
                 onClick={handleCancelChangingMode}
+                variant={TypeButton.PRIMARY}
               >
                 <ClearIcon sx={{ fontSize: 13 }} />
               </Button>
@@ -89,6 +90,7 @@ const NotificationSetting = ({
                 disabled={isError}
                 classes="mt-[10px] py-1"
                 onClick={handleSubmitNewPeriod}
+                variant={TypeButton.SECONDARY}
               >
                 <DoneIcon sx={{ fontSize: 13 }} />
               </Button>
