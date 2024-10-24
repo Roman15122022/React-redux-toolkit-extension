@@ -35,7 +35,7 @@ async function checkTimerAndSendNotification(): Promise<void> {
       )
 
       if (resultTimerState.timerState.isActive) {
-        createNotification(1)
+        createNotification(resultNot.notificationState.periodInMinutes)
       }
     })
   })
