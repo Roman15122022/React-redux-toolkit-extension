@@ -8,7 +8,7 @@ import { variantTitle } from './constants'
 
 const Title = function ({ title, variant, classes }: TitleProps): JSX.Element {
   return (
-    <h1 className={cn(classes, variantTitle[variant || TypeTittle.DEFAULT])}>
+    <h1 className={cn(variantTitle[variant || TypeTittle.DEFAULT], classes)}>
       {title}
     </h1>
   )

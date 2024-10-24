@@ -5,6 +5,7 @@ import { TypeTittle } from '../../types'
 import ThemeSwitcher from '../../features/ThemeSwitcher'
 import SaveStateToggler from '../../features/SaveStateToggler'
 import ResetStatistics from '../../features/ResetStatistics'
+import NotificationSetting from '../../features/NotificationSetting'
 import LocaleSwitcher from '../../features/LocaleSwitcher'
 import Title from '../../components/Title'
 import StyledLink from '../../components/StyledLink'
@@ -34,6 +35,7 @@ const Options = (): JSX.Element => {
           handleSelectLocale={handleSelectLocale}
         />
         <SaveStateToggler isDark={isDark} interfaceLang={interfaceLang} />
+        <NotificationSetting isDark={isDark} interfaceLang={interfaceLang} />
         <div className="border-t-2 mt-4 dark:border-white" />
         <ResetStatistics interfaceLang={interfaceLang} />
       </div>

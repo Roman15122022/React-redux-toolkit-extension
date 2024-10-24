@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { StateTimer } from '../../../types'
+import { ChromeKeys, ChromeStorageProps, StateTimer } from '../../../types'
 
 import { CurrentTimer } from './types'
 
@@ -22,6 +22,18 @@ export const currentTimerSlice = createSlice({
     },
     setStateTimer(state, action: PayloadAction<StateTimer>) {
       state.stateTimer = action.payload
+
+      const isActive = action.payload?.isActive ?? false
+      const storageData: ChromeStorageProps = {
+        [ChromeKeys.CHROME_STATE_TIMER]: action.payload || {
+          isActive: false,
+          isPause: false,
+        },
+      }
+
+      chrome.storage.local.set(storageData, () => {
+        console.log(isActive ? 'Timer on' : 'Timer off')
+      })
     },
   },
 })
