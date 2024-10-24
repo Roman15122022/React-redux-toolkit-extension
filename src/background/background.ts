@@ -25,19 +25,33 @@ function createNotification(period: number): void {
 }
 
 async function checkTimerAndSendNotification(): Promise<void> {
-  chrome.storage.local.get('timerState', async result => {
-    await updateAlarmBasedOnTimer(result.timerState.isActive, 1)
+  chrome.storage.local.get('timerState', resultTimerState => {
+    chrome.storage.local.get('notificationState', async resultNot => {
+      if (!resultNot.notificationState.isNotificationActive) return
 
-    if (result.timerState.isActive) {
-      createNotification(1)
-    }
+      await updateAlarmBasedOnTimer(
+        resultTimerState.timerState.isActive,
+        resultNot.notificationState.periodInMinutes,
+      )
+
+      if (resultTimerState.timerState.isActive) {
+        createNotification(1)
+      }
+    })
   })
 }
 
 chrome.storage.onChanged.addListener(async (changes, area) => {
   if (area === 'local' && changes.timerState) {
     const { isActive } = changes.timerState.newValue
-    await updateAlarmBasedOnTimer(isActive, 1)
+    chrome.storage.local.get('notificationState', async result => {
+      if (!result.notificationState.isNotificationActive) return
+
+      await updateAlarmBasedOnTimer(
+        isActive,
+        result.notificationState.periodInMinutes,
+      )
+    })
   }
 })
 
