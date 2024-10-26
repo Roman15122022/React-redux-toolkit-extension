@@ -25,7 +25,5 @@
 }
 
 body {
-  height: 400px;
-  width: 400px;
   @apply bg-white dark:bg-black;
 }

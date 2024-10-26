@@ -17,13 +17,13 @@ const Options = (): JSX.Element => {
     useOptions()
 
   return (
-    <div>
+    <div className="w-[500px] m-auto mt-4">
       <Title
         title={`${interfaceLang.settings.title}👨‍🎓`}
         variant={TypeTittle.LARGE}
-        classes="mt-4 ml-4"
+        classes="text-center"
       />
-      <div className="ml-8 mt-6">
+      <div className="mt-6">
         <ThemeSwitcher
           switchTheme={switchTheme}
           isDark={isDark}
@@ -39,7 +39,7 @@ const Options = (): JSX.Element => {
         <div className="border-t-2 mt-4 dark:border-white" />
         <ResetStatistics interfaceLang={interfaceLang} />
       </div>
-      <p className="theme-text text-right mt-6 opacity-60">
+      <p className="theme-text text-center mt-8 opacity-60">
         {interfaceLang.settings.createdBy}
         <StyledLink href="https://github.com/Roman15122022">
           @Roman15122022
