@@ -7,6 +7,8 @@ import {
 } from '../../NavigationPages/TrackTimePage/helpers'
 import { DATE_SHORT_DAY_FORMAT } from '../../constants'
 
+import { DaysBasedOnProduct, MinMaxSessions } from './types'
+
 function getTotalTime(data: TimePeriod[]): number {
   return data.reduce((acc, { totalTimeForSession }) => {
     acc += totalTimeForSession
@@ -23,15 +25,19 @@ function getTotalDays(data: TimePeriod[]): number {
   return [...new Set(arrDates)].length
 }
 
+function getFinalCustomizedTime(totalTime: number, locale: Locale): string {
+  const formattedTime = formatTime(totalTime, false)
+
+  return customizedTime(formattedTime, locale)
+}
+
 export function getCustomizeAllTime(
   data: TimePeriod[],
   locale: Locale,
 ): string {
   const totalTime = getTotalTime(data)
 
-  const formattedTime = formatTime(totalTime)
-
-  return customizedTime(formattedTime, locale)
+  return getFinalCustomizedTime(totalTime, locale)
 }
 
 export function getCountSessions(data: TimePeriod[]): string {
@@ -44,9 +50,7 @@ export function getAveragePerDay(data: TimePeriod[], locale: Locale): string {
 
   const average = Math.round(totalTime / totalDays)
 
-  const formattedTime = formatTime(average, false)
-
-  return customizedTime(formattedTime, locale)
+  return getFinalCustomizedTime(average, locale)
 }
 
 export function getAveragePerSession(
@@ -57,7 +61,37 @@ export function getAveragePerSession(
   const totalTime = getTotalTime(data)
   const average = Math.round(totalTime / totalSessions)
 
-  const formattedTime = formatTime(average, false)
+  return getFinalCustomizedTime(average, locale)
+}
 
-  return customizedTime(formattedTime, locale)
+export function getMinMaxSessionTime(
+  data: TimePeriod[],
+  locale: Locale,
+): MinMaxSessions {
+  const sessions = data.map(item => item.totalTimeForSession)
+
+  let [minTimeSessionCounter] = sessions
+  let [maxTimeSessionCounter] = sessions
+
+  sessions.forEach(session => {
+    if (session > maxTimeSessionCounter) {
+      maxTimeSessionCounter = session
+    }
+
+    if (session < minTimeSessionCounter) {
+      minTimeSessionCounter = session
+    }
+  })
+
+  return {
+    minTimeSession: getFinalCustomizedTime(minTimeSessionCounter, locale),
+    maxTimeSession: getFinalCustomizedTime(maxTimeSessionCounter, locale),
+  }
+}
+
+export function getDaysBasedOnProduct(
+  data: TimePeriod[],
+  locale: Locale,
+): DaysBasedOnProduct {
+  return { mostProductDay: 0, mostUnProductDay: 0 }
 }

@@ -9,6 +9,7 @@ import {
   getAveragePerSession,
   getCountSessions,
   getCustomizeAllTime,
+  getMinMaxSessionTime,
 } from './helpers'
 
 export const useTextStatistics = () => {
@@ -35,6 +36,11 @@ export const useTextStatistics = () => {
     [dates, interfaceLang],
   )
 
+  const { minTimeSession, maxTimeSession } = useMemo(
+    () => getMinMaxSessionTime(dates, interfaceLang),
+    [dates, interfaceLang],
+  )
+
   const statisticsFields: StatisticsFields[] = [
     {
       name: locale.allTime,
@@ -54,11 +60,11 @@ export const useTextStatistics = () => {
     },
     {
       name: locale.maxSessionTime,
-      value: '123',
+      value: maxTimeSession,
     },
     {
       name: locale.minSessionTime,
-      value: '123',
+      value: minTimeSession,
     },
     {
       name: locale.theMostProductDay,
