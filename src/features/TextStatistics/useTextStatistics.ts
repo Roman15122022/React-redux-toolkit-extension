@@ -9,6 +9,7 @@ import {
   getAveragePerSession,
   getCountSessions,
   getCustomizeAllTime,
+  getDaysBasedOnProduct,
   getMinMaxSessionTime,
 } from './helpers'
 
@@ -41,6 +42,11 @@ export const useTextStatistics = () => {
     [dates, interfaceLang],
   )
 
+  const { mostProductDay, mostUnProductDay } = useMemo(
+    () => getDaysBasedOnProduct(dates, interfaceLang),
+    [dates, interfaceLang],
+  )
+
   const statisticsFields: StatisticsFields[] = [
     {
       name: locale.allTime,
@@ -68,11 +74,11 @@ export const useTextStatistics = () => {
     },
     {
       name: locale.theMostProductDay,
-      value: '123',
+      value: mostProductDay,
     },
     {
       name: locale.theMostUnProductDay,
-      value: '123',
+      value: mostUnProductDay,
     },
     {
       name: locale.theMostProductivePeriodOfDay,

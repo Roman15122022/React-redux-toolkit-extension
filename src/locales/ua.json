@@ -68,9 +68,18 @@
       "averageSessionTime": "Середній час за сесію:",
       "maxSessionTime": "Найбільша тривалість сесії:",
       "minSessionTime": "Найменша тривалість сесії:",
-      "theMostProductDay": "Найбільш продуктивниий день тижня:",
-      "theMostUnProductDay": "Найменш продуктивниий  день тижня:",
+      "theMostProductDay": "Найбільш продуктивниий день:",
+      "theMostUnProductDay": "Найменш продуктивниий день:",
       "theMostProductivePeriodOfDay": "Найпродуктивніший період дня:"
+    },
+    "dayOfWeek": {
+      "sunday": "Неділя",
+      "monday": "Понеділок",
+      "tuesday": "Вівторок",
+      "wednesday": "Середа",
+      "thursday": "Четвер",
+      "friday": "П’ятниця",
+      "saturday": "Субота"
     }
   }
 }

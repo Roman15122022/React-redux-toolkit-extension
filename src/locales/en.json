@@ -68,9 +68,18 @@
       "averageSessionTime": "Average time per session:",
       "maxSessionTime": "The longest session duration:",
       "minSessionTime": "The shortest session duration:",
-      "theMostProductDay": "The most productive day of the week",
-      "theMostUnProductDay": "The least productive day of the week:",
+      "theMostProductDay": "The most productive day:",
+      "theMostUnProductDay": "The least productive day:",
       "theMostProductivePeriodOfDay": "The most productive period of the day:"
+    },
+    "dayOfWeek": {
+      "sunday": "Sunday",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday"
     }
   }
 }

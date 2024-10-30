@@ -10,7 +10,7 @@ export type MinMaxSessions = {
 }
 
 export type DaysBasedOnProduct = {
-  mostProductDay: number
+  mostProductDay: string
 
-  mostUnProductDay: number
+  mostUnProductDay: string
 }

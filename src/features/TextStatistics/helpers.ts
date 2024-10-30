@@ -40,6 +40,20 @@ export function getCustomizeAllTime(
   return getFinalCustomizedTime(totalTime, locale)
 }
 
+function getDictionaryWeekDays(locale: Locale): Record<number, string> {
+  const dayOfWeekDictionary = locale.popup.dayOfWeek
+
+  return {
+    1: dayOfWeekDictionary.sunday,
+    2: dayOfWeekDictionary.monday,
+    3: dayOfWeekDictionary.tuesday,
+    4: dayOfWeekDictionary.wednesday,
+    5: dayOfWeekDictionary.thursday,
+    6: dayOfWeekDictionary.friday,
+    7: dayOfWeekDictionary.saturday,
+  }
+}
+
 export function getCountSessions(data: TimePeriod[]): string {
   return data.length.toString()
 }
@@ -93,5 +107,26 @@ export function getDaysBasedOnProduct(
   data: TimePeriod[],
   locale: Locale,
 ): DaysBasedOnProduct {
-  return { mostProductDay: 0, mostUnProductDay: 0 }
+  const dictionaryDayTime = data.reduce(
+    (acc, { dayOfWeek, totalTimeForSession }) => {
+      acc[dayOfWeek] = (acc[dayOfWeek] || 0) + totalTimeForSession
+
+      return acc
+    },
+    {},
+  )
+
+  const sortedDataByDays = Object.keys(dictionaryDayTime).sort((a, b) => {
+    return dictionaryDayTime[b] - dictionaryDayTime[a]
+  })
+
+  const dictionaryWeekDays = getDictionaryWeekDays(locale)
+
+  const mostProductDay = dictionaryWeekDays[sortedDataByDays.at(0)]
+  const mostUnProductDay = dictionaryWeekDays[sortedDataByDays.at(-1)]
+
+  return {
+    mostProductDay,
+    mostUnProductDay,
+  }
 }
