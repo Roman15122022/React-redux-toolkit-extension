@@ -12,6 +12,7 @@ const initialState: StateSaver = {
     selectedDate: 0,
   },
   sortAchievement: Sort.TIME,
+  isHintActive: false,
 }
 
 export const stateSaverSlice = createSlice({
@@ -29,6 +30,9 @@ export const stateSaverSlice = createSlice({
     },
     saveActiveRoute(state, action: PayloadAction<RoutesPath>) {
       state.activeRouteLink = action.payload
+    },
+    saveHintState(state, action: PayloadAction<boolean>) {
+      state.isHintActive = action.payload
     },
     resetState(state) {
       Object.assign(state, initialState)

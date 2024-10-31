@@ -5,6 +5,7 @@ export interface StateSaver {
   historyPage: StateHistoryPage
   sortAchievement: Sort
   activeRouteLink: RoutesPath
+  isHintActive: boolean
 }
 
 export type StateHistoryPage = {
