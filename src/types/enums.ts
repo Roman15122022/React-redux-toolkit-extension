@@ -46,3 +46,8 @@ export enum Sort {
   TIME = 'time',
   REVERSE_TIME = 'reverseTime',
 }
+
+export enum ChromeKeys {
+  CHROME_STATE_TIMER = 'timerState',
+  CHROME_STATE_NOTIFICATION = 'notificationState',
+}

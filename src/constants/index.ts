@@ -22,6 +22,8 @@ export const DATE_SHORT_DAY_FORMAT = 'll'
 
 export const DATE_TIME_FORMAT = 'LTS'
 
+export const DATE_SHORT_TIME_FORMAT = 'LT'
+
 export const DATE_DAY_OF_WEEK_FORMAT = 'dddd'
 
 export const MAX_SIZE_DATES = 1000
@@ -35,3 +37,5 @@ export const dayOfWeekMap: Record<DayOfWeek, number> = {
   [DayOfWeek.FRIDAY]: 6,
   [DayOfWeek.SATURDAY]: 7,
 }
+
+export const CHROME_ALARM = 'chromeAlarm'

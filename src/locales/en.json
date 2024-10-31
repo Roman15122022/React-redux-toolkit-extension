@@ -1,4 +1,8 @@
 {
+  "notification": {
+    "title": "Knowledge is power",
+    "message": "Another hour of training has passed, don't forget to rest!"
+  },
   "settings": {
     "title": "Settings",
     "darkTheme": "Theme",
@@ -10,6 +14,15 @@
     "saveState": {
       "title": "Save state at closing",
       "description": "If you choose to save the state on closing, then after closing the extension, it remembers its state: the active tab, sorting of achievements, the selected date in history, etc. and when you open it, it opens in the same place with the same parameters and states"
+    },
+    "notification": {
+      "turnOffOn": "Reminders (notifications)",
+      "notificationDesc": "This feature will remind you to take a break after a specified period of time has passed. You can set the frequency of notifications in minutes. Once the timer is activated, you will receive a notification every minute(s) you select, reminding you that it is time for a rest or break.",
+      "period": "Period",
+      "minutes": "min",
+      "labelInput": "Time(min)",
+      "errorFirst": "The period is number cannot be more than 24 hours",
+      "errorSecond": "Can't be 0"
     },
     "resetStatistics": {
       "title": "Reset all statistics",
@@ -46,6 +59,38 @@
     "achievements": {
       "noAchievements": "No achievements yet",
       "info": "In his book ‘Geniuses and Underdogs’, Malcolm Gladwell formulates the ‘10,000 Hour Rule’: to achieve world-class performance in any field, you need about 10,000 hours of practice - about 3 hours a day for 10 years. Gladwell argues that success depends more on purposeful practice and environment than on innate talent.\n\nThe examples of Mozart, The Beatles, Bill Gates, and Bobby Fischer confirm this rule. Mozart wrote his first major concerto at the age of 21, after ten years of composing practice. Bobby Fischer became a grandmaster in nine years, and Bill Gates spent about 10,000 hours on programming. So, 10,000 is the number that defines the highest skill. Believe it or not, check it out on your own experience."
+    },
+    "statistics": {
+      "noStatistics": "No statistics available yet",
+      "hint": "This button toggles the display of hints. On this page, you can see your progress statistics.",
+      "allTime": "Total time spent:",
+      "descriptionAllTime": "How much total time has been logged by this tracker",
+      "totalSessions": "Total sessions:",
+      "descriptionTotalSessions": "How many sessions have occurred in total",
+      "averagePerDay": "Average time per day:",
+      "descriptionAveragePerDay": "Average amount of time spent in one day",
+      "averageSessionTime": "Average session time:",
+      "descriptionAverageSessionTime": "Average amount of time spent in one session",
+      "maxSessionTime": "Longest session duration:",
+      "descriptionMaxSessionTime": "How long the longest session lasted",
+      "minSessionTime": "Shortest session duration:",
+      "descriptionMinSessionTime": "How long the shortest session lasted",
+      "theMostProductDay": "Most productive day:",
+      "descriptionTheMostProductDay": "The day you spend the most time studying relative to logged time",
+      "theMostUnProductDay": "Least productive day:",
+      "descriptionTheMostUnProductDay": "The day you spend the least time studying relative to logged time",
+      "theMostProductivePeriodOfDay": "Most productive period of the day:",
+      "descriptionTheMostProductivePeriodOfDay": "This is a period calculated based on your sessions and shows the most active time segment"
+    },
+
+    "dayOfWeek": {
+      "sunday": "Sunday",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday"
     }
   }
 }

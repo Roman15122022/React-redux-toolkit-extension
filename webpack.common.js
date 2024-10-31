@@ -9,6 +9,7 @@ module.exports = {
   entry: {
     popup: path.resolve('src/screens/Popup/index.tsx'),
     options: path.resolve('src/screens/Settings/index.tsx'),
+    background: path.resolve('src/background/background.ts'),
   },
   module: {
     rules: [

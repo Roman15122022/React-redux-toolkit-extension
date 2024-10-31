@@ -12,6 +12,7 @@ export const useStateSaver = () => {
     saveSortAchievement,
     saveActivityName,
     saveActiveRoute,
+    saveHintState,
   } = stateSaverSlice.actions
 
   const dispatch = useAppDispatch()
@@ -32,6 +33,10 @@ export const useStateSaver = () => {
     dispatch(saveActiveRoute(route))
   }
 
+  const setIsActiveHint = (value: boolean): void => {
+    dispatch(saveHintState(value))
+  }
+
   return {
     activityNameInput,
     historyPage,
@@ -41,5 +46,6 @@ export const useStateSaver = () => {
     setHistoryState,
     setTypeOfSortAchievement,
     setActiveRoute,
+    setIsActiveHint,
   }
 }
