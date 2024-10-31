@@ -62,15 +62,25 @@
     },
     "statistics": {
       "noStatistics": "Статистики ще немає",
+      "hint": "Ця кнопка перемикач для включання/відключання підказок. На цій сторінці відображається статистика вашого прогрессу",
       "allTime": "Усього затраченого часу:",
+      "descriptionAllTime": "Скільки усього часу було залоговано цим трекером",
       "totalSessions": "Усього сесій:",
+      "descriptionTotalSessions": "Скільки сесій усього відбулося",
       "averagePerDay": "Середній час за день:",
+      "descriptionAveragePerDay": "Середня кількість часу за один день",
       "averageSessionTime": "Середній час за сесію:",
+      "descriptionAverageSessionTime": "Середня кількість часу за одну сесію",
       "maxSessionTime": "Найбільша тривалість сесії:",
+      "descriptionMaxSessionTime": "Скільки тривала найбільш довга за часом сесія",
       "minSessionTime": "Найменша тривалість сесії:",
+      "descriptionMinSessionTime": "Скільки тривала найменш коротка за часом сесія",
       "theMostProductDay": "Найбільш продуктивниий день:",
+      "descriptionTheMostProductDay": "День у який ви проводите найбільше часу за навчання відносно залогованого часу",
       "theMostUnProductDay": "Найменш продуктивниий день:",
-      "theMostProductivePeriodOfDay": "Найпродуктивніший період дня:"
+      "descriptionTheMostUnProductDay": "День у який ви проводите найменше часу за навчання відносно залогованого часу",
+      "theMostProductivePeriodOfDay": "Найпродуктивніший період дня:",
+      "descriptionTheMostProductivePeriodOfDay": "Це період який вираховується на базі ваших сесій та показує найбільш активний відрізок часу"
     },
     "dayOfWeek": {
       "sunday": "Неділя",

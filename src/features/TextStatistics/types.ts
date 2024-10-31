@@ -1,6 +1,11 @@
+export type TextStatisticsProps = {
+  isHintActive: boolean
+}
+
 export type StatisticsFields = {
   name: string
   value: string
+  description: string
 }
 
 export type MinMaxSessions = {

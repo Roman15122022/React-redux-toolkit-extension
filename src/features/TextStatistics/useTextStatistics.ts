@@ -17,7 +17,7 @@ import {
 export const useTextStatistics = () => {
   const { dates } = useAppSelector(state => state.TimerLogsReducer)
 
-  const { interfaceLang } = useTranslate()
+  const { interfaceLang, language } = useTranslate()
 
   const locale = interfaceLang.popup.statistics
 
@@ -49,7 +49,7 @@ export const useTextStatistics = () => {
   )
 
   const mostProductivePeriod = useMemo(
-    () => findMostProductiveThreeHourPeriod(dates),
+    () => findMostProductiveThreeHourPeriod(dates, language),
     [dates],
   )
 
@@ -57,38 +57,47 @@ export const useTextStatistics = () => {
     {
       name: locale.allTime,
       value: allTime,
+      description: locale.descriptionAllTime,
     },
     {
       name: locale.totalSessions,
       value: countSessions,
+      description: locale.descriptionTotalSessions,
     },
     {
       name: locale.averagePerDay,
       value: averagePerDay,
+      description: locale.descriptionAveragePerDay,
     },
     {
       name: locale.averageSessionTime,
       value: averagePerSession,
+      description: locale.descriptionAverageSessionTime,
     },
     {
       name: locale.maxSessionTime,
       value: maxTimeSession,
+      description: locale.descriptionMaxSessionTime,
     },
     {
       name: locale.minSessionTime,
       value: minTimeSession,
+      description: locale.descriptionMinSessionTime,
     },
     {
       name: locale.theMostProductDay,
       value: `${mostProductDay}`,
+      description: locale.descriptionTheMostProductDay,
     },
     {
       name: locale.theMostUnProductDay,
       value: `${mostUnProductDay}`,
+      description: locale.descriptionTheMostUnProductDay,
     },
     {
       name: locale.theMostProductivePeriodOfDay,
       value: mostProductivePeriod,
+      description: locale.descriptionTheMostProductivePeriodOfDay,
     },
   ]
 

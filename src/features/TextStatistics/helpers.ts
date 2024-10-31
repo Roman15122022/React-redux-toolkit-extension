@@ -1,11 +1,16 @@
 import moment from 'moment'
 
-import { Locale, TimePeriod } from '../../types'
+import { Language, Locale, TimePeriod } from '../../types'
 import {
   customizedTime,
   formatTime,
 } from '../../NavigationPages/TrackTimePage/helpers'
-import { DATE_SHORT_DAY_FORMAT, DATE_SHORT_TIME_FORMAT } from '../../constants'
+import { convertToAmericanFormat } from '../../helpers'
+import {
+  DATE_SHORT_DAY_FORMAT,
+  DATE_SHORT_TIME_FORMAT,
+  MAX_SIZE_DATES,
+} from '../../constants'
 
 import { DaysBasedOnProduct, MinMaxSessions } from './types'
 
@@ -55,7 +60,13 @@ function getDictionaryWeekDays(locale: Locale): Record<number, string> {
 }
 
 export function getCountSessions(data: TimePeriod[]): string {
-  return data.length.toString()
+  const count = data.length
+
+  if (count === MAX_SIZE_DATES) {
+    return `${count}(max)`
+  }
+
+  return count.toString()
 }
 
 export function getAveragePerDay(data: TimePeriod[], locale: Locale): string {
@@ -145,7 +156,10 @@ function minutesToTime(minutes: number): string {
   return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`
 }
 
-export function findMostProductiveThreeHourPeriod(data: TimePeriod[]): string {
+export function findMostProductiveThreeHourPeriod(
+  data: TimePeriod[],
+  language: Language,
+): string {
   const periods = data.reduce(
     (acc, { totalTimeForSession, startDate, endDate }) => {
       const start = moment(startDate)
@@ -215,5 +229,9 @@ export function findMostProductiveThreeHourPeriod(data: TimePeriod[]): string {
   const bestStartTime = minutesToTime(bestInterval[0])
   const bestEndTime = minutesToTime(bestInterval[1])
 
-  return `${bestStartTime}${bestStartTime === bestEndTime ? '' : `-${bestEndTime}`}`
+  if (language === Language.EN) {
+    return `${convertToAmericanFormat(bestStartTime)}${bestStartTime === bestEndTime ? '' : ` - ${convertToAmericanFormat(bestEndTime)}`}`
+  }
+
+  return `${bestStartTime}${bestStartTime === bestEndTime ? '' : ` - ${bestEndTime}`}`
 }
