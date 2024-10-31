@@ -5,7 +5,7 @@ import {
   customizedTime,
   formatTime,
 } from '../../NavigationPages/TrackTimePage/helpers'
-import { DATE_SHORT_DAY_FORMAT } from '../../constants'
+import { DATE_SHORT_DAY_FORMAT, DATE_SHORT_TIME_FORMAT } from '../../constants'
 
 import { DaysBasedOnProduct, MinMaxSessions } from './types'
 
@@ -127,6 +127,93 @@ export function getDaysBasedOnProduct(
 
   return {
     mostProductDay,
-    mostUnProductDay,
+    mostUnProductDay:
+      mostUnProductDay === mostProductDay ? '-' : mostUnProductDay,
   }
+}
+
+function timeToMinutes(time: string): number {
+  const [hours, minutes] = time.split(':').map(Number)
+
+  return hours * 60 + minutes
+}
+
+function minutesToTime(minutes: number): string {
+  const hours = Math.floor(minutes / 60)
+  const mins = minutes % 60
+
+  return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`
+}
+
+export function findMostProductiveThreeHourPeriod(data: TimePeriod[]): string {
+  const periods = data.reduce(
+    (acc, { totalTimeForSession, startDate, endDate }) => {
+      const start = moment(startDate)
+        .locale('uk')
+        .format(DATE_SHORT_TIME_FORMAT)
+      const end = moment(endDate).locale('uk').format(DATE_SHORT_TIME_FORMAT)
+
+      const period = `${start}-${end}`
+
+      acc[period] = (acc[period] || 0) + totalTimeForSession
+
+      return acc
+    },
+    {},
+  )
+
+  const productivityArray = Array(1440).fill(0)
+
+  for (const period in periods) {
+    const [start, end] = period.split('-')
+    const startMinutes = timeToMinutes(start)
+    const endMinutes = timeToMinutes(end)
+    const productivityInMinutes = Math.floor(periods[period] / 60)
+
+    for (let i = 0; i < 1440; i++) {
+      const minuteIndex = (startMinutes + i) % 1440
+
+      if (
+        i <
+        (endMinutes < startMinutes
+          ? 1440 - startMinutes + endMinutes
+          : endMinutes - startMinutes)
+      ) {
+        productivityArray[minuteIndex] += productivityInMinutes
+      }
+    }
+  }
+
+  let maxProductivity = 0
+  let bestInterval: [number, number] = [0, 0]
+
+  for (let start = 0; start < 1440; start++) {
+    for (let duration = 60; duration <= 180; duration++) {
+      const end = (start + duration) % 1440
+      let totalProductivity = 0
+
+      if (end > start) {
+        for (let i = start; i < end; i++) {
+          totalProductivity += productivityArray[i]
+        }
+      } else {
+        for (let i = start; i < 1440; i++) {
+          totalProductivity += productivityArray[i]
+        }
+        for (let i = 0; i < end; i++) {
+          totalProductivity += productivityArray[i]
+        }
+      }
+
+      if (totalProductivity > maxProductivity) {
+        maxProductivity = totalProductivity
+        bestInterval = [start, end]
+      }
+    }
+  }
+
+  const bestStartTime = minutesToTime(bestInterval[0])
+  const bestEndTime = minutesToTime(bestInterval[1])
+
+  return `${bestStartTime}${bestStartTime === bestEndTime ? '' : `-${bestEndTime}`}`
 }

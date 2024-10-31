@@ -5,6 +5,7 @@ import { useAppSelector } from '../../hooks/useAppSelector'
 
 import { StatisticsFields } from './types'
 import {
+  findMostProductiveThreeHourPeriod,
   getAveragePerDay,
   getAveragePerSession,
   getCountSessions,
@@ -47,6 +48,11 @@ export const useTextStatistics = () => {
     [dates, interfaceLang],
   )
 
+  const mostProductivePeriod = useMemo(
+    () => findMostProductiveThreeHourPeriod(dates),
+    [dates],
+  )
+
   const statisticsFields: StatisticsFields[] = [
     {
       name: locale.allTime,
@@ -74,15 +80,15 @@ export const useTextStatistics = () => {
     },
     {
       name: locale.theMostProductDay,
-      value: mostProductDay,
+      value: `${mostProductDay}`,
     },
     {
       name: locale.theMostUnProductDay,
-      value: mostUnProductDay,
+      value: `${mostUnProductDay}`,
     },
     {
       name: locale.theMostProductivePeriodOfDay,
-      value: '123',
+      value: mostProductivePeriod,
     },
   ]
 

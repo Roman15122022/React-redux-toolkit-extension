@@ -11,7 +11,7 @@ const TextStatistics = (): JSX.Element => {
         return (
           <div
             key={name}
-            className="py-1 font-bold text-[14px] flex justify-between items-center border-b dark:border-purple-light"
+            className="py-1.5 font-bold text-[14px] flex justify-between items-center border-b dark:border-white hover:dark:border-purple-light cursor-pointer"
           >
             <span>{name}</span>
             <span className="text-secondary-light dark:text-purple-light">
