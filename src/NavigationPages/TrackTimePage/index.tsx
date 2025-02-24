@@ -3,6 +3,7 @@ import React from 'react'
 import { TypeButton } from '../../types'
 import StudyTimeInfoForDay from '../../features/StudyTimeInfoForDay'
 import StopStartButton from '../../features/StopStartButton'
+import { MoodSelect } from '../../features/MoodSelect'
 import InputNameActivity from '../../features/InputNameActivity'
 import Container from '../../components/Container'
 import Button from '../../components/Button'
@@ -59,6 +60,7 @@ const TrackTimePage = (): JSX.Element => {
               onChanges={handleOnChanges}
               isError={isError}
             />
+            <MoodSelect value={3} onChange={() => {}} />
             <Button classes="mt-2" onClick={handleStartSession}>
               {locale.start}
             </Button>
