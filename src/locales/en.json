@@ -79,7 +79,7 @@
       "descriptionTheMostProductDay": "The day you spend the most time studying relative to logged time",
       "theMostUnProductDay": "Least productive day:",
       "descriptionTheMostUnProductDay": "The day you spend the least time studying relative to logged time",
-      "theMostProductivePeriodOfDay": "Most productive period of the day:",
+      "theMostProductivePeriodOfDay": "Most productive period:",
       "descriptionTheMostProductivePeriodOfDay": "This is a period calculated based on your sessions and shows the most active time segment"
     },
 
