@@ -6,22 +6,35 @@ import SentimentSatisfiedRoundedIcon from '@mui/icons-material/SentimentSatisfie
 import SentimentNeutralRoundedIcon from '@mui/icons-material/SentimentNeutralRounded'
 import SentimentDissatisfiedRoundedIcon from '@mui/icons-material/SentimentDissatisfiedRounded'
 
+import useTheme from '../../hooks/useTheme'
+
 import { MoodSelectOptions } from './types'
-import { SX_SELECTOR } from './constants'
+import { MoodColorDictionary } from './constants'
 
 export const MoodSelect = ({
   value,
   onChange,
 }: MoodSelectOptions): JSX.Element => {
+  const { theme } = useTheme()
+
   return (
     <FormControl>
       <Select
-        value={value.toString()}
+        value={value}
         autoWidth
         onChange={onChange}
-        className="mt-2 w-[52px] h-[40px] rounded-[15px] bg-secondary-light dark:bg-purple-dark light:text-white dark:text-white"
+        className="mt-2 w-[52px] h-[40px] light:text-white dark:text-white"
         IconComponent={null}
-        sx={SX_SELECTOR}
+        sx={{
+          '& .MuiSelect-select': {
+            paddingRight: '0px !important',
+          },
+          '& .MuiOutlinedInput-input': {
+            paddingRight: '0px !important',
+          },
+          border: `2px solid ${MoodColorDictionary[value][theme]}`,
+          borderRadius: '4px',
+        }}
       >
         <MenuItem value={1}>
           <SentimentVeryDissatisfiedRoundedIcon color="error" />
@@ -30,7 +43,7 @@ export const MoodSelect = ({
           <SentimentDissatisfiedRoundedIcon color="warning" />
         </MenuItem>
         <MenuItem value={3}>
-          <SentimentNeutralRoundedIcon />
+          <SentimentNeutralRoundedIcon color="inherit" />
         </MenuItem>
         <MenuItem value={4}>
           <SentimentSatisfiedRoundedIcon color="info" />

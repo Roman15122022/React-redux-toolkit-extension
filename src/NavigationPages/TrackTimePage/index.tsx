@@ -26,6 +26,8 @@ const TrackTimePage = (): JSX.Element => {
     isError,
     currentLength,
     handleOnChanges,
+    mood,
+    handleChangeMood,
   } = useTrackTime()
 
   return (
@@ -60,7 +62,7 @@ const TrackTimePage = (): JSX.Element => {
               onChanges={handleOnChanges}
               isError={isError}
             />
-            <MoodSelect value={3} onChange={() => {}} />
+            <MoodSelect key={mood} value={mood} onChange={handleChangeMood} />
             <Button classes="mt-2" onClick={handleStartSession}>
               {locale.start}
             </Button>
