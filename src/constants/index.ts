@@ -26,7 +26,7 @@ export const DATE_SHORT_TIME_FORMAT = 'LT'
 
 export const DATE_DAY_OF_WEEK_FORMAT = 'dddd'
 
-export const MAX_SIZE_DATES = 1000
+export const MAX_SIZE_DATES = 3000
 
 export const dayOfWeekMap: Record<DayOfWeek, number> = {
   [DayOfWeek.SUNDAY]: 1,
