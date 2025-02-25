@@ -15,6 +15,7 @@ export type TimePeriod = {
   endDate: number
   dayOfWeek: number
   totalTimeForSession: number
+  mood: string
 }
 
 export interface ChromeStorageProps {

@@ -9,6 +9,7 @@ const initialState: TimerLogs = {
   dates: [],
   lastStartDate: 0,
   lastNameActivity: '',
+  lastMood: '3',
 }
 
 export const timerLogsSlice = createSlice({
@@ -27,6 +28,9 @@ export const timerLogsSlice = createSlice({
     },
     setLastNameActivity(state, action: PayloadAction<string>) {
       state.lastNameActivity = action.payload
+    },
+    setLastMood(state, action: PayloadAction<string>) {
+      state.lastMood = action.payload
     },
     resetData(state) {
       state.dates = []

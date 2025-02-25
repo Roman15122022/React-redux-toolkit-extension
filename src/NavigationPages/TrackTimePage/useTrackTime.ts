@@ -1,4 +1,5 @@
 import { SyntheticEvent, useEffect, useLayoutEffect, useState } from 'react'
+import { SelectChangeEvent } from '@mui/material'
 
 import { getDayOfWeekNumber, getTimeDifferenceByNow } from '../../utils'
 import { timerLogsSlice } from '../../store/reducers/timeLogsReducer/TimerLogsSlice'
@@ -14,22 +15,23 @@ import { customizedTime, formatTime } from './helpers'
 export const useTrackTime = () => {
   const { interfaceLang } = useTranslate()
 
-  const [lastTime, setLastTime] = useState<string>('')
-  const [inputText, setInputText] = useState<string>('')
-  const [isError, setIsError] = useState<boolean>(false)
-
   const {
     stateTimer: storeStateTimer,
     startDate,
     elapsedTime,
   } = useAppSelector(state => state.CurrentTimerReducer)
-  const { lastStartDate, lastNameActivity } = useAppSelector(
+  const { lastStartDate, lastNameActivity, lastMood } = useAppSelector(
     state => state.TimerLogsReducer,
   )
 
+  const [lastTime, setLastTime] = useState<string>('')
+  const [mood, setMood] = useState<string>(lastMood || '3')
+  const [inputText, setInputText] = useState<string>('')
+  const [isError, setIsError] = useState<boolean>(false)
+
   const { setStateTimer, setStartDate, setElapsedTime } =
     currentTimerSlice.actions
-  const { setLastNameActivity, setLastStartDate, addTimeLogs } =
+  const { setLastNameActivity, setLastStartDate, addTimeLogs, setLastMood } =
     timerLogsSlice.actions
 
   const dispatch = useAppDispatch()
@@ -73,6 +75,7 @@ export const useTrackTime = () => {
         endDate: Date.now(),
         dayOfWeek: getDayOfWeekNumber(),
         totalTimeForSession: elapsedTime,
+        mood: lastMood,
       }),
     )
 
@@ -109,6 +112,7 @@ export const useTrackTime = () => {
     dispatch(setStartDate(now))
     dispatch(setLastStartDate(now))
     dispatch(setLastNameActivity(inputText))
+    dispatch(setLastMood(mood))
 
     setLastTime('')
     handleStartTimer()
@@ -119,6 +123,12 @@ export const useTrackTime = () => {
     dispatch(setElapsedTime(seconds))
 
     pauseTimer()
+  }
+
+  function handleChangeMood(event: SelectChangeEvent) {
+    const newMood = event.target.value
+
+    setMood(newMood)
   }
 
   useLayoutEffect(() => {
@@ -153,5 +163,7 @@ export const useTrackTime = () => {
     handleOnChanges,
     isError,
     currentLength: inputText.length,
+    mood,
+    handleChangeMood,
   }
 }

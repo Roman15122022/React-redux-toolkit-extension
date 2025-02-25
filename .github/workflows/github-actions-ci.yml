@@ -43,13 +43,6 @@ jobs:
       - name: List files in working directory 🗂
         run: ls -alh
 
-      - name: Upload build folder as artifact 📦
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-zip
-          path: ./dist
-
-
   # release:
   #   runs-on: ubuntu-latest
   #   if: github.ref == 'refs/heads/master'
