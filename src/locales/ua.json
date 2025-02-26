@@ -66,6 +66,8 @@
       "allTime": "Усього затраченого часу:",
       "descriptionAllTime": "Скільки усього часу було залоговано цим трекером",
       "totalSessions": "Усього сесій:",
+      "averageMood": "Настрій в середньому:",
+      "descriptionMood": "Середній рівень настрою за період сессій",
       "descriptionTotalSessions": "Скільки сесій усього відбулося",
       "averagePerDay": "Середній час за день:",
       "descriptionAveragePerDay": "Середня кількість часу за один день",
@@ -80,7 +82,14 @@
       "theMostUnProductDay": "Найменш продуктивниий день:",
       "descriptionTheMostUnProductDay": "День у який ви проводите найменше часу за навчання відносно залогованого часу",
       "theMostProductivePeriodOfDay": "Найпродуктивніший період дня:",
-      "descriptionTheMostProductivePeriodOfDay": "Це період який вираховується на базі ваших сесій та показує найбільш активний відрізок часу"
+      "descriptionTheMostProductivePeriodOfDay": "Це період який вираховується на базі ваших сесій та показує найбільш активний відрізок часу",
+      "moods": {
+        "veryDissatisfied": "Погане",
+        "dissatisfied": "Не дуже",
+        "neutral": "Нейтральне",
+        "satisfied": "Хороше",
+        "verySatisfied": "Відмінне"
+      }
     },
     "dayOfWeek": {
       "sunday": "Неділя",

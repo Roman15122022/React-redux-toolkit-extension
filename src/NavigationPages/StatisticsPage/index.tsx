@@ -11,8 +11,14 @@ import Container from '../../components/Container'
 import { useStatisticsPage } from './useStatisticsPage'
 
 const StatisticsPage = (): JSX.Element => {
-  const { locale, isDataAvailable, colorHint, handleToggleHint, isHintActive } =
-    useStatisticsPage()
+  const {
+    locale,
+    isDataAvailable,
+    colorHint,
+    handleToggleHint,
+    isHintActive,
+    dates,
+  } = useStatisticsPage()
 
   if (!isDataAvailable)
     return (
@@ -38,7 +44,7 @@ const StatisticsPage = (): JSX.Element => {
           </button>
         </Tooltip>
       </div>
-      <TextStatistics isHintActive={isHintActive} />
+      <TextStatistics isHintActive={isHintActive} dates={dates} />
     </Container>
   )
 }

@@ -66,6 +66,8 @@
       "allTime": "Total time spent:",
       "descriptionAllTime": "How much total time has been logged by this tracker",
       "totalSessions": "Total sessions:",
+      "averageMood": "Average mood:",
+      "descriptionMood": "Average mood level for sessions",
       "descriptionTotalSessions": "How many sessions have occurred in total",
       "averagePerDay": "Average time per day:",
       "descriptionAveragePerDay": "Average amount of time spent in one day",
@@ -80,7 +82,14 @@
       "theMostUnProductDay": "Least productive day:",
       "descriptionTheMostUnProductDay": "The day you spend the least time studying relative to logged time",
       "theMostProductivePeriodOfDay": "Most productive period:",
-      "descriptionTheMostProductivePeriodOfDay": "This is a period calculated based on your sessions and shows the most active time segment"
+      "descriptionTheMostProductivePeriodOfDay": "This is a period calculated based on your sessions and shows the most active time segment",
+      "moods": {
+        "veryDissatisfied": "Very dissatisfied",
+        "dissatisfied": "Dissatisfied",
+        "neutral": "Neutral",
+        "satisfied": "Satisfied",
+        "verySatisfied": "Very satisfied"
+      }
     },
 
     "dayOfWeek": {

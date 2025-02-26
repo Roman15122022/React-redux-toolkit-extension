@@ -23,7 +23,7 @@ export const MoodSelect = ({
         value={value}
         autoWidth
         onChange={onChange}
-        className="mt-2 w-[52px] h-[40px] light:text-white dark:text-white"
+        className="mt-2 w-[54px] h-[40px] light:text-white dark:text-white"
         IconComponent={null}
         sx={{
           '& .MuiSelect-select': {

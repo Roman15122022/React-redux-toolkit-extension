@@ -235,3 +235,26 @@ export function findMostProductiveThreeHourPeriod(
 
   return `${bestStartTime}${bestStartTime === bestEndTime ? '' : ` - ${bestEndTime}`}`
 }
+
+export function getAverageMood(data: TimePeriod[]): number {
+  const sumMood = data.reduce((acc, item) => {
+    return (acc += Number(item.mood) || 3)
+  }, 0)
+
+  return Math.round(sumMood / data.length)
+}
+
+export function getDictionaryTooltipsForMood(
+  locale: Locale['popup']['statistics'],
+): Record<number, string> {
+  const { dissatisfied, neutral, veryDissatisfied, verySatisfied, satisfied } =
+    locale.moods
+
+  return {
+    '1': veryDissatisfied,
+    '2': dissatisfied,
+    '3': neutral,
+    '4': satisfied,
+    '5': verySatisfied,
+  }
+}

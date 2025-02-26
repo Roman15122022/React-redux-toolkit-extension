@@ -31,5 +31,6 @@ export const useStatisticsPage = () => {
     isHintActive,
     colorHint: isHintActive ? 'text-secondary-light dark:text-purple-dark' : '',
     handleToggleHint,
+    dates,
   }
 }

@@ -4,8 +4,11 @@ import { Tooltip } from '@mui/material'
 import { useTextStatistics } from './useTextStatistics'
 import { TextStatisticsProps } from './types'
 
-const TextStatistics = ({ isHintActive }: TextStatisticsProps): JSX.Element => {
-  const { statisticsFields } = useTextStatistics()
+const TextStatistics = ({
+  isHintActive,
+  dates,
+}: TextStatisticsProps): JSX.Element => {
+  const { statisticsFields } = useTextStatistics(dates)
 
   return (
     <div className="mt-2">

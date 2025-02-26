@@ -1,5 +1,8 @@
+import { TimePeriod } from '../../types'
+
 export type TextStatisticsProps = {
   isHintActive: boolean
+  dates: TimePeriod[]
 }
 
 export type StatisticsFields = {

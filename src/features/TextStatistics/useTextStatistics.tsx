@@ -1,25 +1,28 @@
-import { useMemo } from 'react'
+import React, { useMemo } from 'react'
+import { Tooltip } from '@mui/material'
 
+import { TimePeriod } from '../../types'
 import { useTranslate } from '../../hooks/useTranslate'
-import { useAppSelector } from '../../hooks/useAppSelector'
+import { MoodDictionary } from '../../constants/specConstants'
 
-import { StatisticsFields } from './types'
 import {
   findMostProductiveThreeHourPeriod,
+  getAverageMood,
   getAveragePerDay,
   getAveragePerSession,
   getCountSessions,
   getCustomizeAllTime,
   getDaysBasedOnProduct,
+  getDictionaryTooltipsForMood,
   getMinMaxSessionTime,
 } from './helpers'
 
-export const useTextStatistics = () => {
-  const { dates } = useAppSelector(state => state.TimerLogsReducer)
-
+export const useTextStatistics = (dates: TimePeriod[]) => {
   const { interfaceLang, language } = useTranslate()
 
   const locale = interfaceLang.popup.statistics
+
+  const moodDictionaryTooltips = getDictionaryTooltipsForMood(locale)
 
   const allTime = useMemo(
     () => getCustomizeAllTime(dates, interfaceLang),
@@ -53,7 +56,9 @@ export const useTextStatistics = () => {
     [dates],
   )
 
-  const statisticsFields: StatisticsFields[] = [
+  const averageMood = useMemo(() => getAverageMood(dates), [dates])
+
+  const statisticsFields = [
     {
       name: locale.allTime,
       value: allTime,
@@ -63,6 +68,15 @@ export const useTextStatistics = () => {
       name: locale.totalSessions,
       value: countSessions,
       description: locale.descriptionTotalSessions,
+    },
+    {
+      name: locale.averageMood,
+      value: (
+        <Tooltip title={moodDictionaryTooltips[averageMood] || ''}>
+          {MoodDictionary[averageMood]}
+        </Tooltip>
+      ),
+      description: locale.descriptionMood,
     },
     {
       name: locale.averagePerDay,
