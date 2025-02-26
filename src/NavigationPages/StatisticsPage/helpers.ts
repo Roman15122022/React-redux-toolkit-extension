@@ -6,7 +6,9 @@ export function getDatesByPeriod(
   dates: TimePeriod[],
   period: Period,
 ): TimePeriod[] {
-  if (period === '0') {
+  const periodStr = String(period)
+
+  if (periodStr === '0') {
     return dates
   }
 
@@ -21,7 +23,6 @@ export function getDatesByPeriod(
   const endOfToday = startOfToday + 24 * 60 * 60 * 1000 - 1
 
   let startTime: number
-  const periodStr = String(period)
 
   switch (periodStr) {
     case '1':
