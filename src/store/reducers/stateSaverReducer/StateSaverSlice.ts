@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { RoutesPath, Sort } from '../../../types'
+import { Period } from '../../../NavigationPages/StatisticsPage/types'
 
 import { StateHistoryPage, StateSaver } from './types'
 
@@ -13,6 +14,7 @@ const initialState: StateSaver = {
   },
   sortAchievement: Sort.TIME,
   isHintActive: false,
+  periodStat: '0',
 }
 
 export const stateSaverSlice = createSlice({
@@ -33,6 +35,9 @@ export const stateSaverSlice = createSlice({
     },
     saveHintState(state, action: PayloadAction<boolean>) {
       state.isHintActive = action.payload
+    },
+    savePeriod(state, action: PayloadAction<Period>) {
+      state.periodStat = action.payload
     },
     resetState(state) {
       Object.assign(state, initialState)

@@ -61,11 +61,20 @@
       "info": "In his book ‘Geniuses and Underdogs’, Malcolm Gladwell formulates the ‘10,000 Hour Rule’: to achieve world-class performance in any field, you need about 10,000 hours of practice - about 3 hours a day for 10 years. Gladwell argues that success depends more on purposeful practice and environment than on innate talent.\n\nThe examples of Mozart, The Beatles, Bill Gates, and Bobby Fischer confirm this rule. Mozart wrote his first major concerto at the age of 21, after ten years of composing practice. Bobby Fischer became a grandmaster in nine years, and Bill Gates spent about 10,000 hours on programming. So, 10,000 is the number that defines the highest skill. Believe it or not, check it out on your own experience."
     },
     "statistics": {
+      "choosePeriod": {
+        "period": "Period",
+        "day": "Day",
+        "week": "Week",
+        "month": "Month",
+        "allTime": "All time"
+      },
       "noStatistics": "No statistics available yet",
       "hint": "This button toggles the display of hints. On this page, you can see your progress statistics.",
       "allTime": "Total time spent:",
       "descriptionAllTime": "How much total time has been logged by this tracker",
       "totalSessions": "Total sessions:",
+      "averageMood": "Average mood:",
+      "descriptionMood": "Average mood level for sessions",
       "descriptionTotalSessions": "How many sessions have occurred in total",
       "averagePerDay": "Average time per day:",
       "descriptionAveragePerDay": "Average amount of time spent in one day",
@@ -80,7 +89,14 @@
       "theMostUnProductDay": "Least productive day:",
       "descriptionTheMostUnProductDay": "The day you spend the least time studying relative to logged time",
       "theMostProductivePeriodOfDay": "Most productive period:",
-      "descriptionTheMostProductivePeriodOfDay": "This is a period calculated based on your sessions and shows the most active time segment"
+      "descriptionTheMostProductivePeriodOfDay": "This is a period calculated based on your sessions and shows the most active time segment",
+      "moods": {
+        "veryDissatisfied": "Very dissatisfied",
+        "dissatisfied": "Dissatisfied",
+        "neutral": "Neutral",
+        "satisfied": "Satisfied",
+        "verySatisfied": "Very satisfied"
+      }
     },
 
     "dayOfWeek": {

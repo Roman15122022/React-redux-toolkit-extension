@@ -1,4 +1,5 @@
 import { RoutesPath, Sort } from '../../../types'
+import { Period } from '../../../NavigationPages/StatisticsPage/types'
 
 export interface StateSaver {
   activityNameInput: string
@@ -6,6 +7,7 @@ export interface StateSaver {
   sortAchievement: Sort
   activeRouteLink: RoutesPath
   isHintActive: boolean
+  periodStat: Period
 }
 
 export type StateHistoryPage = {
