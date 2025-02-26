@@ -5,6 +5,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import { cn } from '../../utils'
 import { TypeTittle } from '../../types'
 import TextStatistics from '../../features/TextStatistics'
+import { SelectStatPeriod } from '../../features/SelectStatPeriod'
 import Title from '../../components/Title'
 import Container from '../../components/Container'
 
@@ -18,6 +19,8 @@ const StatisticsPage = (): JSX.Element => {
     handleToggleHint,
     isHintActive,
     dates,
+    period,
+    handleChangePeriod,
   } = useStatisticsPage()
 
   if (!isDataAvailable)
@@ -31,7 +34,8 @@ const StatisticsPage = (): JSX.Element => {
 
   return (
     <Container classes="mt-4">
-      <div className="flex gap-3 justify-end items-center">
+      <div className="flex gap-3 justify-between items-center">
+        <SelectStatPeriod value={period} onChange={handleChangePeriod} />
         <Tooltip title={locale.hint}>
           <button onClick={handleToggleHint}>
             <HelpOutlineIcon

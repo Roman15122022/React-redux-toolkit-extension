@@ -1,8 +1,12 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
+import { SelectChangeEvent } from '@mui/material'
 
 import { useTranslate } from '../../hooks/useTranslate'
 import { useStateSaver } from '../../hooks/useStateSaver'
 import { useAppSelector } from '../../hooks/useAppSelector'
+
+import { Period } from './types'
+import { getDatesByPeriod } from './helpers'
 
 export const useStatisticsPage = () => {
   const { dates } = useAppSelector(state => state.TimerLogsReducer)
@@ -16,6 +20,7 @@ export const useStatisticsPage = () => {
   const [isHintActive, setIsHintActive] = useState<boolean>(
     startValueHint ?? false,
   )
+  const [period, setPeriod] = useState<Period>('0')
 
   const handleToggleHint = (): void => {
     setIsHintActive(prevState => {
@@ -25,12 +30,22 @@ export const useStatisticsPage = () => {
     })
   }
 
+  const handleChangePeriod = (event: SelectChangeEvent) => {
+    setPeriod(event.target.value as Period)
+  }
+
+  const dataByPeriod = useMemo(() => {
+    return getDatesByPeriod(dates, period)
+  }, [dates, period])
+
   return {
     locale: interfaceLang.popup.statistics,
     isDataAvailable: dates.length > 0,
     isHintActive,
     colorHint: isHintActive ? 'text-secondary-light dark:text-purple-dark' : '',
     handleToggleHint,
-    dates,
+    dates: dataByPeriod,
+    period,
+    handleChangePeriod,
   }
 }
