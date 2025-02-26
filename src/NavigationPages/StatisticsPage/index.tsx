@@ -48,7 +48,11 @@ const StatisticsPage = (): JSX.Element => {
           </button>
         </Tooltip>
       </div>
-      <TextStatistics isHintActive={isHintActive} dates={dates} />
+      <TextStatistics
+        isHintActive={isHintActive}
+        dates={dates}
+        period={period}
+      />
     </Container>
   )
 }

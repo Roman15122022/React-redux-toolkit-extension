@@ -115,5 +115,8 @@ export const useTextStatistics = (dates: TimePeriod[]) => {
     },
   ]
 
-  return { statisticsFields }
+  return {
+    statisticsFields,
+    unnecessaryForDay: [locale.theMostProductDay, locale.theMostUnProductDay],
+  }
 }

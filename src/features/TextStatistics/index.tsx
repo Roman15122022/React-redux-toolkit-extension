@@ -7,12 +7,16 @@ import { TextStatisticsProps } from './types'
 const TextStatistics = ({
   isHintActive,
   dates,
+  period,
 }: TextStatisticsProps): JSX.Element => {
-  const { statisticsFields } = useTextStatistics(dates)
+  const { statisticsFields, unnecessaryForDay } = useTextStatistics(dates)
 
   return (
     <div className="mt-2">
       {statisticsFields.map(({ name, value, description }) => {
+        if (period.toString() === '1' && unnecessaryForDay.includes(name))
+          return
+
         return (
           <div
             key={name}
