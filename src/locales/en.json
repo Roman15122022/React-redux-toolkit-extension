@@ -68,6 +68,12 @@
         "month": "Month",
         "allTime": "All time"
       },
+      "graphs": {
+        "more": "More",
+        "graphsTitles": {
+          "moodPie": "Pie graph moods"
+        }
+      },
       "noStatistics": "No statistics available yet",
       "hint": "This button toggles the display of hints. On this page, you can see your progress statistics.",
       "allTime": "Total time spent:",
