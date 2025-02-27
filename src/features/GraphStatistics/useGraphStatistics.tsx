@@ -25,6 +25,7 @@ export const useGraphStatistics = (dates: TimePeriod[]) => {
       icon: <PieChartIcon />,
       title: locale.graphsTitles.moodPie,
       onClick: () => setChartType(ChartType.MOOD_PIE),
+      isActive: chartType === ChartType.MOOD_PIE,
     },
   ]
 
@@ -38,5 +39,6 @@ export const useGraphStatistics = (dates: TimePeriod[]) => {
     toggleDrawer,
     chartTypes,
     currentGraph: graphsDictionary[chartType] || null,
+    currentTitle: chartTypes.find(item => item.isActive).title,
   }
 }
