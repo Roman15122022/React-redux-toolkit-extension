@@ -58,6 +58,7 @@ export const useTrackTime = () => {
           endDate: dateE.getTime(),
           dayOfWeek: getDayOfWeekNumber(),
           totalTimeForSession: 7200 + i * 32,
+          mood: Math.ceil(Math.random() * 5).toString(),
         }),
       )
     }
