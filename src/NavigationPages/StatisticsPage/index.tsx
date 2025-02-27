@@ -4,7 +4,6 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 
 import { cn } from '../../utils'
 import { TypeTittle } from '../../types'
-import TextStatistics from '../../features/TextStatistics'
 import { SelectStatPeriod } from '../../features/SelectStatPeriod'
 import Title from '../../components/Title'
 import Container from '../../components/Container'
@@ -17,10 +16,10 @@ const StatisticsPage = (): JSX.Element => {
     isDataAvailable,
     colorHint,
     handleToggleHint,
-    isHintActive,
-    dates,
     period,
     handleChangePeriod,
+    statComponentByState,
+    selectStatStateVariants,
   } = useStatisticsPage()
 
   if (!isDataAvailable)
@@ -36,23 +35,32 @@ const StatisticsPage = (): JSX.Element => {
     <Container classes="mt-4">
       <div className="flex gap-3 justify-between items-center">
         <SelectStatPeriod value={period} onChange={handleChangePeriod} />
-        <Tooltip title={locale.hint}>
-          <button onClick={handleToggleHint}>
-            <HelpOutlineIcon
-              fontSize="small"
-              className={cn(
-                'hover:text-secondary-light dark:hover:text-purple-dark cursor-pointer',
-                colorHint,
-              )}
-            />
-          </button>
-        </Tooltip>
+        <div className="flex gap-4">
+          <div className="flex">
+            {selectStatStateVariants.map(({ icon, onClick, isActive, id }) => (
+              <div
+                className={`cursor-pointer ${isActive ? 'bg-secondary-light dark:bg-purple-dark' : ''} py-1 pb-1.5 px-3 border-[1px] border-secondary-light dark:border-purple-dark ${id === 1 && 'rounded-l-lg'} ${id === 2 && 'rounded-r-lg'}`}
+                key={id}
+                onClick={onClick}
+              >
+                {icon}
+              </div>
+            ))}
+          </div>
+          <Tooltip title={locale.hint}>
+            <button onClick={handleToggleHint}>
+              <HelpOutlineIcon
+                fontSize="small"
+                className={cn(
+                  'hover:text-secondary-light dark:hover:text-purple-dark cursor-pointer',
+                  colorHint,
+                )}
+              />
+            </button>
+          </Tooltip>
+        </div>
       </div>
-      <TextStatistics
-        isHintActive={isHintActive}
-        dates={dates}
-        period={period}
-      />
+      {statComponentByState}
     </Container>
   )
 }

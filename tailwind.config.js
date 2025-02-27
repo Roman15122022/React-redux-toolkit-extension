@@ -29,7 +29,7 @@ module.exports = {
       borderColor: {
         purple: {
           light: '#ab2bc0',
-          dark: '#631870',
+          dark: '#4E1358',
         },
         secondary: {
           light: '#ff6347',
