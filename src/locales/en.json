@@ -71,7 +71,13 @@
       "graphs": {
         "more": "More",
         "graphsTitles": {
-          "moodPie": "Pie graph moods"
+          "moodPie": "Pie graph moods",
+          "moodLine": "Line graph time/moods"
+        },
+        "moodsLine": {
+          "title": "Time learning over Mood",
+          "labelMood": "Mood",
+          "labelTime": "Time learning (sec)"
         }
       },
       "noStatistics": "No statistics available yet",

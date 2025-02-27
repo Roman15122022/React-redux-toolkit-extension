@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import ShowChartIcon from '@mui/icons-material/ShowChart'
 import PieChartIcon from '@mui/icons-material/PieChart'
 
 import { PieChartMood } from '../PieChartMood'
+import { LineChartMood } from '../LineChartMood'
 import { TimePeriod } from '../../types'
 import { useTranslate } from '../../hooks/useTranslate'
 
@@ -27,10 +29,18 @@ export const useGraphStatistics = (dates: TimePeriod[]) => {
       onClick: () => setChartType(ChartType.MOOD_PIE),
       isActive: chartType === ChartType.MOOD_PIE,
     },
+    {
+      id: 2,
+      icon: <ShowChartIcon />,
+      title: locale.graphsTitles.moodLine,
+      onClick: () => setChartType(ChartType.MOOD_LINE),
+      isActive: chartType === ChartType.MOOD_LINE,
+    },
   ]
 
   const graphsDictionary = {
     [ChartType.MOOD_PIE]: <PieChartMood dates={dates} />,
+    [ChartType.MOOD_LINE]: <LineChartMood dates={dates} />,
   }
 
   return {
