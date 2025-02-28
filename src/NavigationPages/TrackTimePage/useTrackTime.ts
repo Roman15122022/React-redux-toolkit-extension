@@ -51,8 +51,11 @@ export const useTrackTime = () => {
     const moodUser = Math.ceil(Math.random() * 5)
 
     for (let i = 0; i <= 5; i++) {
-      const dateS = new Date(2024, i, 10, 13, 0, 0)
-      const dateE = new Date(2024, i, 10, 15, 0, 0)
+      const startTimeRandom = Math.floor(Math.random() * (19 - 9 + 1)) + 9
+      const randomMonth = Math.floor(Math.random() * (12 - 1 + 1)) + 1
+
+      const dateS = new Date(2024, i, randomMonth, startTimeRandom, 0, 0)
+      const dateE = new Date(2024, i, randomMonth, startTimeRandom + 3, 0, 0)
       dispatch(
         addTimeLogs({
           activityName: i % 2 === 0 ? 'Programming' : 'English',
