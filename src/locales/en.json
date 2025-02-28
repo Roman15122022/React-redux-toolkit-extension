@@ -73,11 +73,17 @@
         "more": "More",
         "graphsTitles": {
           "moodPie": "Pie graph moods",
-          "moodLine": "Line graph time/moods"
+          "moodLine": "Line graph time/moods",
+          "dayWeekLine": "Line graph time/day week"
         },
         "moodsLine": {
           "title": "Time learning over Mood",
           "labelMood": "Mood",
+          "labelTime": "Time learning (sec)"
+        },
+        "dayWeekLine": {
+          "title": "Time learning over Day pf week",
+          "labelMood": "Day of week",
           "labelTime": "Time learning (sec)"
         }
       },

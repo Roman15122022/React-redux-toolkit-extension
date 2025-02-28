@@ -4,6 +4,7 @@ import PieChartIcon from '@mui/icons-material/PieChart'
 
 import { PieChartMood } from '../PieChartMood'
 import { LineChartMood } from '../LineChartMood'
+import { LineChartDayOfWeek } from '../LineChartDayOfWeek'
 import { TimePeriod } from '../../types'
 import { useTranslate } from '../../hooks/useTranslate'
 
@@ -36,11 +37,19 @@ export const useGraphStatistics = (dates: TimePeriod[]) => {
       onClick: () => setChartType(ChartType.MOOD_LINE),
       isActive: chartType === ChartType.MOOD_LINE,
     },
+    {
+      id: 3,
+      icon: <ShowChartIcon />,
+      title: locale.graphsTitles.dayWeekLine,
+      onClick: () => setChartType(ChartType.DAY_WEEK_LINE),
+      isActive: chartType === ChartType.DAY_WEEK_LINE,
+    },
   ]
 
   const graphsDictionary = {
     [ChartType.MOOD_PIE]: <PieChartMood dates={dates} />,
     [ChartType.MOOD_LINE]: <LineChartMood dates={dates} />,
+    [ChartType.DAY_WEEK_LINE]: <LineChartDayOfWeek dates={dates} />,
   }
 
   return {
