@@ -37,6 +37,11 @@ export const usePopup = () => {
       name: interfaceLang.popup.header.tracker,
     },
     {
+      route: () => handleClick(RoutesPath.AI_HELPER),
+      variant: getActiveRoute(RoutesPath.AI_HELPER),
+      name: interfaceLang.popup.header.aiHelper,
+    },
+    {
       route: () => handleClick(RoutesPath.HISTORY),
       variant: getActiveRoute(RoutesPath.HISTORY),
       name: interfaceLang.popup.header.history,

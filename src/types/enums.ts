@@ -39,6 +39,7 @@ export enum RoutesPath {
   HISTORY = '/history',
   STATISTICS = '/statistics',
   ACHIEVEMENTS = '/achievements',
+  AI_HELPER = '/ai-helper',
 }
 
 export enum Sort {

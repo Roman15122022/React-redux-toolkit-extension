@@ -11,14 +11,13 @@ const Popup = (): JSX.Element => {
 
   return (
     <div className="theme-text">
-      <div className="my-2 flex justify-center gap-2">
+      <div className="my-2 flex justify-center">
         {links.map(({ route, variant, name }) => (
           <Button key={name} onClick={route} variant={variant}>
             {name}
           </Button>
         ))}
       </div>
-
       <PopupRouter />
     </div>
   )

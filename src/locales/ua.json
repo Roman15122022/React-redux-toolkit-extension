@@ -36,6 +36,7 @@
   "popup": {
     "header": {
       "tracker": "Трекер",
+      "aiHelper": "ШІ",
       "history": "Історія",
       "statistics": "Статистика",
       "achievements": "Досягення"
