@@ -48,7 +48,9 @@ export const useTrackTime = () => {
   //function for test
 
   /*const test = (): void => {
-    for (let i = 0; i <= 1; i++) {
+    const moodUser = Math.ceil(Math.random() * 5)
+
+    for (let i = 0; i <= 5; i++) {
       const dateS = new Date(2024, i, 10, 13, 0, 0)
       const dateE = new Date(2024, i, 10, 15, 0, 0)
       dispatch(
@@ -57,8 +59,8 @@ export const useTrackTime = () => {
           startDate: dateS.getTime(),
           endDate: dateE.getTime(),
           dayOfWeek: getDayOfWeekNumber(),
-          totalTimeForSession: 7200 + i * 32,
-          mood: Math.ceil(Math.random() * 5).toString(),
+          totalTimeForSession: 7200 + i * 32 * moodUser,
+          mood: moodUser.toString(),
         }),
       )
     }
