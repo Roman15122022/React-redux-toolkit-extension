@@ -8,7 +8,7 @@ import Container from '../../components/Container'
 import { useAIHelper } from './useAIHelper'
 
 export const AIHelper = (): JSX.Element => {
-  const { dates } = useAIHelper()
+  const { locale, dates } = useAIHelper()
 
   if (!dates.length) {
     return (
@@ -22,16 +22,13 @@ export const AIHelper = (): JSX.Element => {
 
   return (
     <Container>
-      <div className="font-semibold italic">
-        Ця модель навчається на ваших данних і с кожною новою сессією стає
-        точніше
-      </div>
+      <span className="font-semibold italic">{locale.titleInfo}</span>
       <div className="mt-6">
         <div className="flex items-center justify-between mt-3">
           <Title
             classes="text-[16px]"
             variant={TypeTittle.SMALL}
-            title="Прогнозований настрій"
+            title={locale.predictMood}
           />
           <div>{MoodDictionary[4]}</div>
         </div>
@@ -39,7 +36,7 @@ export const AIHelper = (): JSX.Element => {
           <Title
             classes="text-[16px]"
             variant={TypeTittle.SMALL}
-            title="Прогнозований час навчання"
+            title={locale.predictTimeLearning}
           />
           <span className="font-semibold text-secondary-light dark:text-purple-light">
             1 час 45хв
@@ -49,7 +46,7 @@ export const AIHelper = (): JSX.Element => {
           <Title
             classes="text-[16px]"
             variant={TypeTittle.SMALL}
-            title="Прогнозований кількість сессій"
+            title={locale.predictCountSession}
           />
           <span className="font-semibold text-secondary-light dark:text-purple-light">
             3
@@ -60,7 +57,7 @@ export const AIHelper = (): JSX.Element => {
         <Title
           classes="text-[14px]"
           variant={TypeTittle.SMALL}
-          title="Рекомендація від ШІ: Спробуй додати коротку перерву між сесіями (5–10 хв), щоб зберегти концентрацію. Якщо настрій стабільний, можеш трохи збільшити час навчання або змінити формат (тестування, обговорення)."
+          title={`${locale.recomendFromAI}: Спробуй додати коротку перерву між сесіями (5–10 хв), щоб зберегти концентрацію. Якщо настрій стабільний, можеш трохи збільшити час навчання або змінити формат (тестування, обговорення).`}
         />
       </div>
     </Container>
