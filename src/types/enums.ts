@@ -52,3 +52,11 @@ export enum ChromeKeys {
   CHROME_STATE_TIMER = 'timerState',
   CHROME_STATE_NOTIFICATION = 'notificationState',
 }
+
+export enum LocalStorageKeys {
+  MODEL_INFO = 'model-metadata',
+}
+
+export enum IndexDB {
+  MODEL = 'indexeddb://user-learning-model',
+}
