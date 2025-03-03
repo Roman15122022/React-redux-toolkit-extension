@@ -25,7 +25,7 @@ const AchievementsPage = (): JSX.Element => {
   }
 
   return (
-    <Container classes="mr-1 mt-4">
+    <Container classes="mr-0 mt-4">
       <div className="flex gap-3 justify-end items-center w-[95%]">
         <button onClick={iconSort.onClick}>
           {createElement(iconSort.icon, {
@@ -42,7 +42,7 @@ const AchievementsPage = (): JSX.Element => {
       </div>
       <div className="h-[300px] overflow-y-scroll scrollbar-thin scrollbar scrollbar-thumb-secondary-light dark:scrollbar-track-white dark:scrollbar-thumb-purple-dark dark:scrollbar-track-black">
         {achievements.map((subject, index) => (
-          <div key={subject.name} className="mt-4 w-[95%]">
+          <div key={subject.name} className="mt-4 w-[97%]">
             <span className="text-sm font-bold">
               {index + 1}. {subject.name}:{' '}
               <span className="text-secondary-light dark:text-purple-light">

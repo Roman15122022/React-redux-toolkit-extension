@@ -5,6 +5,6 @@ export type LineChartDayOfWeekProps = {
 }
 
 export type DataChartDayOfWeek = {
-  day: number
+  day: string
   time: number
 }

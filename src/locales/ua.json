@@ -74,7 +74,8 @@
         "graphsTitles": {
           "moodPie": "Кругова діаграма настроїв",
           "moodLine": "Лінійний графік час/настрій",
-          "dayWeekLine": "Лінійний графік час/день тижня"
+          "dayWeekLine": "Лінійний графік час/день тижня",
+          "moodOverDay": "Лінійний графік день/настрій"
         },
         "moodsLine": {
           "title": "Залежність часу від настрою",
@@ -83,8 +84,13 @@
         },
         "dayWeekLine": {
           "title": "Залежність часу від дня тижня",
-          "labelMood": "День тижня",
+          "labelDay": "День тижня",
           "labelTime": "Час навчання сек."
+        },
+        "moodOverDay": {
+          "title": "Залежність настрою від дня тижня/(1-Жахливий, 5-Відмінний)",
+          "labelDay": "День тижня",
+          "labelMood": "Настрій"
         }
       },
       "noStatistics": "Статистики ще немає",
@@ -110,9 +116,9 @@
       "theMostProductivePeriodOfDay": "Найпродуктивніший період дня:",
       "descriptionTheMostProductivePeriodOfDay": "Це період який вираховується на базі ваших сесій та показує найбільш активний відрізок часу",
       "moods": {
-        "veryDissatisfied": "Погане",
+        "veryDissatisfied": "Жахливе",
         "dissatisfied": "Не дуже",
-        "neutral": "Нейтральне",
+        "neutral": "Звичайне",
         "satisfied": "Хороше",
         "verySatisfied": "Відмінне"
       }
@@ -125,6 +131,16 @@
       "thursday": "Четвер",
       "friday": "П’ятниця",
       "saturday": "Субота"
+    },
+
+    "dayOfWeekShort": {
+      "sunday": "Нд",
+      "monday": "Пн",
+      "tuesday": "Вт",
+      "wednesday": "Ср",
+      "thursday": "Чт",
+      "friday": "Пт",
+      "saturday": "Сб"
     }
   }
 }

@@ -74,7 +74,8 @@
         "graphsTitles": {
           "moodPie": "Pie graph moods",
           "moodLine": "Line graph time/moods",
-          "dayWeekLine": "Line graph time/day week"
+          "dayWeekLine": "Line graph time/day week",
+          "moodOverDay": "Line graph day/mood"
         },
         "moodsLine": {
           "title": "Time learning over Mood",
@@ -83,8 +84,13 @@
         },
         "dayWeekLine": {
           "title": "Time learning over Day pf week",
-          "labelMood": "Day of week",
+          "labelDay": "Day of week",
           "labelTime": "Time learning (sec)"
+        },
+        "moodOverDay": {
+          "title": "Mood Over Day of week/ (1-Awful, 5-Great)",
+          "labelDay": "Day of week",
+          "labelMood": "Mood"
         }
       },
       "noStatistics": "No statistics available yet",
@@ -110,11 +116,11 @@
       "theMostProductivePeriodOfDay": "Most productive period:",
       "descriptionTheMostProductivePeriodOfDay": "This is a period calculated based on your sessions and shows the most active time segment",
       "moods": {
-        "veryDissatisfied": "Very dissatisfied",
-        "dissatisfied": "Dissatisfied",
+        "veryDissatisfied": "Awful",
+        "dissatisfied": "Bad",
         "neutral": "Neutral",
-        "satisfied": "Satisfied",
-        "verySatisfied": "Very satisfied"
+        "satisfied": "Good",
+        "verySatisfied": "Great"
       }
     },
 
@@ -126,6 +132,16 @@
       "thursday": "Thursday",
       "friday": "Friday",
       "saturday": "Saturday"
+    },
+
+    "dayOfWeekShort": {
+      "sunday": "Sun",
+      "monday": "Mon",
+      "tuesday": "Tue",
+      "wednesday": "Wed",
+      "thursday": "Thu",
+      "friday": "Fri",
+      "saturday": "Sat"
     }
   }
 }

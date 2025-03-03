@@ -12,7 +12,10 @@ export const useLineChartMood = (dates: TimePeriod[]) => {
 
   const isDark = theme === ThemeVariants.DARK
 
-  const chartData = useMemo(() => getChartData(dates), [dates])
+  const chartData = useMemo(
+    () => getChartData(dates, interfaceLang.popup),
+    [dates],
+  )
 
   return {
     colorAxis: isDark ? 'white' : 'black',

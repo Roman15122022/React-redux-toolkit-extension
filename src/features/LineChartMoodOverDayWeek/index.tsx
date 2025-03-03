@@ -1,20 +1,32 @@
 import React from 'react'
 import { LineChart } from '@mui/x-charts'
 
-import { useLineChartMood } from './useLineChartMood'
-import { LineChartMoodProps } from './types'
+import { useLineChartMoodOverDayWeek } from './useLineChartMoodOverDayWeek'
+import { LineChartMoodDayProps } from './types'
 
-export const LineChartMood = ({ dates }: LineChartMoodProps): JSX.Element => {
-  const { colorAxis, locale, chartData } = useLineChartMood(dates)
+export const LineChartMoodOverDayWeek = ({
+  dates,
+}: LineChartMoodDayProps): JSX.Element => {
+  const { colorAxis, locale, chartData } = useLineChartMoodOverDayWeek(dates)
 
   return (
     <LineChart
       dataset={chartData}
-      xAxis={[{ dataKey: 'mood', label: locale.labelMood, scaleType: 'band' }]}
+      xAxis={[
+        {
+          dataKey: 'day',
+          label: locale.labelDay,
+          scaleType: 'band',
+        },
+      ]}
       yAxis={[
         {
-          dataKey: 'time',
-          label: locale.labelTime,
+          dataKey: 'mood',
+          label: locale.labelMood,
+          scaleType: 'linear',
+          min: 1,
+          max: 5,
+          tickMinStep: 1,
           labelStyle: {
             transform: 'rotate(-90deg) translateX(-104px) translateY(-181px)',
             textAnchor: 'middle',
@@ -22,8 +34,8 @@ export const LineChartMood = ({ dates }: LineChartMoodProps): JSX.Element => {
           },
         },
       ]}
-      series={[{ dataKey: 'time', label: locale.title }]}
-      width={415}
+      series={[{ dataKey: 'mood', label: locale.title }]}
+      width={410}
       height={280}
       slotProps={{
         axisLabel: {

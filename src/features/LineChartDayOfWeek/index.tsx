@@ -10,10 +10,20 @@ export const LineChartDayOfWeek = ({ dates }: LineChartDayOfWeekProps) => {
   return (
     <LineChart
       dataset={chartData}
-      xAxis={[{ dataKey: 'day', label: locale.labelMood }]}
-      yAxis={[{ dataKey: 'time', label: locale.labelTime }]}
+      xAxis={[{ dataKey: 'day', label: locale.labelDay, scaleType: 'band' }]}
+      yAxis={[
+        {
+          dataKey: 'time',
+          label: locale.labelTime,
+          labelStyle: {
+            transform: 'rotate(-90deg) translateX(-104px) translateY(-181px)',
+            textAnchor: 'middle',
+            fontSize: 14,
+          },
+        },
+      ]}
       series={[{ dataKey: 'time', label: locale.title }]}
-      width={400}
+      width={410}
       height={280}
       slotProps={{
         axisLabel: {
@@ -34,11 +44,17 @@ export const LineChartDayOfWeek = ({ dates }: LineChartDayOfWeekProps) => {
         '& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel': {
           fill: colorAxis,
         },
+        '& .MuiChartsAxis-bottom .MuiChartsAxis-tick': {
+          stroke: colorAxis,
+        },
         '& .MuiChartsAxis-left .MuiChartsAxis-line': {
           stroke: colorAxis,
         },
         '& .MuiChartsAxis-left .MuiChartsAxis-tickLabel': {
           fill: colorAxis,
+        },
+        '& .MuiChartsAxis-left .MuiChartsAxis-tick': {
+          stroke: colorAxis,
         },
       }}
     />

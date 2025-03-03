@@ -1,14 +1,26 @@
-import { TimePeriod } from '../../types'
+import { Locale, TimePeriod } from '../../types'
+import { getMoodLabels } from '../../helpers'
 
 import { DataChart } from './types'
 
-export function getChartData(dates: TimePeriod[]): DataChart[] {
+export function getChartData(
+  dates: TimePeriod[],
+  locale: Locale['popup'],
+): DataChart[] {
   if (dates.length === 0) return []
 
-  const moodGroups: { [key: number]: { totalTime: number; count: number } } = {}
+  const moodLabels = getMoodLabels(locale)
+
+  const moodGroups: { [key: number]: { totalTime: number; count: number } } = {
+    1: { totalTime: 0, count: 0 },
+    2: { totalTime: 0, count: 0 },
+    3: { totalTime: 0, count: 0 },
+    4: { totalTime: 0, count: 0 },
+    5: { totalTime: 0, count: 0 },
+  }
 
   dates.forEach(item => {
-    const mood = Number(item.mood) || 3
+    const mood = Number(item.mood) ?? 3
     const time = item.totalTimeForSession
 
     if (!moodGroups[mood]) {
@@ -19,15 +31,14 @@ export function getChartData(dates: TimePeriod[]): DataChart[] {
     moodGroups[mood].count += 1
   })
 
-  const result: DataChart[] = Object.keys(moodGroups).map(mood => {
+  return Object.keys(moodGroups).map(mood => {
     const moodNumber = Number(mood)
-    const averageTime = moodGroups[mood].totalTime / moodGroups[mood].count
+    const averageTime =
+      moodGroups[mood].totalTime / (moodGroups[mood].count || 1)
 
     return {
-      mood: moodNumber,
+      mood: `${moodLabels[moodNumber]}`,
       time: averageTime,
     }
   })
-
-  return result
 }

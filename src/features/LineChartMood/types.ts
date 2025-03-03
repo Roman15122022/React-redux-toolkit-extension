@@ -5,6 +5,6 @@ export type LineChartMoodProps = {
 }
 
 export type DataChart = {
-  mood: number
+  mood: string
   time: number
 }
