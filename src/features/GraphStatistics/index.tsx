@@ -23,9 +23,9 @@ export const GraphStatistics = ({
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
-        {chartTypes.map(({ id, title, icon, onClick }) => (
+        {chartTypes.map(({ id, title, icon, isActive, onClick }) => (
           <ListItem key={id} disablePadding>
-            <ListItemButton onClick={onClick}>
+            <ListItemButton onClick={onClick} disabled={isActive}>
               <ListItemIcon>{icon}</ListItemIcon>
               <ListItemText primary={title} />
             </ListItemButton>
