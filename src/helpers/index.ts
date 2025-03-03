@@ -1,6 +1,6 @@
 import moment from 'moment/moment'
 
-import { TimePeriod } from '../types'
+import { Locale, TimePeriod } from '../types'
 
 export function getDataForDefiniteDay(
   timeStamp: number,
@@ -67,4 +67,32 @@ export function convertToAmericanFormat(time: string): string {
   const americanHours = hours % 12 === 0 ? 12 : hours % 12
 
   return `${String(americanHours).padStart(2, '0')}:${String(minutes).padStart(2, '0')} ${period}`
+}
+
+export function getDayLabels(locale: Locale['popup']): Record<number, string> {
+  const { sunday, monday, tuesday, wednesday, thursday, friday, saturday } =
+    locale.dayOfWeekShort
+
+  return {
+    1: sunday,
+    2: monday,
+    3: tuesday,
+    4: wednesday,
+    5: thursday,
+    6: friday,
+    7: saturday,
+  }
+}
+
+export function getMoodLabels(locale: Locale['popup']): Record<number, string> {
+  const { veryDissatisfied, dissatisfied, neutral, satisfied, verySatisfied } =
+    locale.statistics.moods
+
+  return {
+    1: veryDissatisfied,
+    2: dissatisfied,
+    3: neutral,
+    4: satisfied,
+    5: verySatisfied,
+  }
 }

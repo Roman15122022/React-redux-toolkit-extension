@@ -1,11 +1,15 @@
-import { TimePeriod } from '../../types'
+import { Locale, TimePeriod } from '../../types'
+import { getDayLabels } from '../../helpers'
 
 import { DataChartDayOfWeek } from './types'
 
 export function getChartDataDayOverTime(
   dates: TimePeriod[],
+  locale: Locale['popup'],
 ): DataChartDayOfWeek[] {
   if (dates.length === 0) return []
+
+  const dayLabels = getDayLabels(locale)
 
   const dayGroups: { [key: number]: { totalTime: number; count: number } } = {
     1: { totalTime: 0, count: 0 },
@@ -29,15 +33,13 @@ export function getChartDataDayOverTime(
     dayGroups[day].count += 1
   })
 
-  const result: DataChartDayOfWeek[] = Object.keys(dayGroups).map(day => {
+  return Object.keys(dayGroups).map(day => {
     const dayNumber = Number(day)
     const averageTime = dayGroups[day].totalTime / (dayGroups[day].count || 1)
 
     return {
-      day: dayNumber,
+      day: dayLabels[dayNumber],
       time: averageTime,
     }
   })
-
-  return result
 }

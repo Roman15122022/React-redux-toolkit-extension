@@ -10,7 +10,7 @@ export const LineChartDayOfWeek = ({ dates }: LineChartDayOfWeekProps) => {
   return (
     <LineChart
       dataset={chartData}
-      xAxis={[{ dataKey: 'day', label: locale.labelMood }]}
+      xAxis={[{ dataKey: 'day', label: locale.labelDay, scaleType: 'band' }]}
       yAxis={[
         {
           dataKey: 'time',
