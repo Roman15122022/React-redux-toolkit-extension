@@ -11,9 +11,19 @@ export const LineChartMood = ({ dates }: LineChartMoodProps): JSX.Element => {
     <LineChart
       dataset={chartData}
       xAxis={[{ dataKey: 'mood', label: locale.labelMood }]}
-      yAxis={[{ dataKey: 'time', label: locale.labelTime }]}
+      yAxis={[
+        {
+          dataKey: 'time',
+          label: locale.labelTime,
+          labelStyle: {
+            transform: 'rotate(-90deg) translateX(-104px) translateY(-181px)',
+            textAnchor: 'middle',
+            fontSize: 14,
+          },
+        },
+      ]}
       series={[{ dataKey: 'time', label: locale.title }]}
-      width={400}
+      width={410}
       height={280}
       slotProps={{
         axisLabel: {
@@ -34,11 +44,17 @@ export const LineChartMood = ({ dates }: LineChartMoodProps): JSX.Element => {
         '& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel': {
           fill: colorAxis,
         },
+        '& .MuiChartsAxis-bottom .MuiChartsAxis-tick': {
+          stroke: colorAxis,
+        },
         '& .MuiChartsAxis-left .MuiChartsAxis-line': {
           stroke: colorAxis,
         },
         '& .MuiChartsAxis-left .MuiChartsAxis-tickLabel': {
           fill: colorAxis,
+        },
+        '& .MuiChartsAxis-left .MuiChartsAxis-tick': {
+          stroke: colorAxis,
         },
       }}
     />
