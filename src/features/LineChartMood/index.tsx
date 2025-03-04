@@ -5,7 +5,7 @@ import { useLineChartMood } from './useLineChartMood'
 import { LineChartMoodProps } from './types'
 
 export const LineChartMood = ({ dates }: LineChartMoodProps): JSX.Element => {
-  const { colorAxis, locale, chartData } = useLineChartMood(dates)
+  const { colorAxis, locale, chartData, seconds } = useLineChartMood(dates)
 
   return (
     <LineChart
@@ -22,7 +22,13 @@ export const LineChartMood = ({ dates }: LineChartMoodProps): JSX.Element => {
           },
         },
       ]}
-      series={[{ dataKey: 'time', label: locale.title }]}
+      series={[
+        {
+          dataKey: 'time',
+          label: locale.title,
+          valueFormatter: value => `${value} ${seconds}`,
+        },
+      ]}
       width={415}
       height={280}
       slotProps={{

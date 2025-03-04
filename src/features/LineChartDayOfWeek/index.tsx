@@ -5,7 +5,7 @@ import { useLineChartDayOfWeek } from './useLineChartDayOfWeek'
 import { LineChartDayOfWeekProps } from './types'
 
 export const LineChartDayOfWeek = ({ dates }: LineChartDayOfWeekProps) => {
-  const { locale, chartData, colorAxis } = useLineChartDayOfWeek(dates)
+  const { locale, chartData, colorAxis, seconds } = useLineChartDayOfWeek(dates)
 
   return (
     <LineChart
@@ -22,7 +22,13 @@ export const LineChartDayOfWeek = ({ dates }: LineChartDayOfWeekProps) => {
           },
         },
       ]}
-      series={[{ dataKey: 'time', label: locale.title }]}
+      series={[
+        {
+          dataKey: 'time',
+          label: locale.title,
+          valueFormatter: value => `${value} ${seconds}`,
+        },
+      ]}
       width={410}
       height={280}
       slotProps={{
@@ -38,6 +44,11 @@ export const LineChartDayOfWeek = ({ dates }: LineChartDayOfWeekProps) => {
         },
       }}
       sx={{
+        '& .MuiChartsTooltip-tooltip': {
+          fontSize: '5px !important',
+          padding: '4px 6px',
+          borderRadius: 4,
+        },
         '& .MuiChartsAxis-bottom .MuiChartsAxis-line': {
           stroke: colorAxis,
         },

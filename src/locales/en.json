@@ -93,7 +93,8 @@
           "title": "Mood Over Day of week/ (1-Awful, 5-Great)",
           "labelDay": "Day of week",
           "labelMood": "Mood"
-        }
+        },
+        "sec": "sec."
       },
       "noStatistics": "No statistics available yet",
       "hint": "This button toggles the display of hints. On this page, you can see your progress statistics.",
