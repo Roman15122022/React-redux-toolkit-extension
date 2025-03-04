@@ -39,4 +39,3 @@ export const dayOfWeekMap: Record<DayOfWeek, number> = {
 }
 
 export const CHROME_ALARM = 'chromeAlarm'
-
