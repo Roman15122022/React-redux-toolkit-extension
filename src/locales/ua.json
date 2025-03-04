@@ -63,11 +63,13 @@
     },
     "statistics": {
       "choosePeriod": {
+        "chooseActivityName": "Активність",
         "period": "Період",
         "day": "День",
         "week": "Тиждень",
         "month": "Місяць",
-        "allTime": "Весь час"
+        "allTime": "Весь час",
+        "allActivities": "Усі"
       },
       "graphs": {
         "more": "Інші",

@@ -11,17 +11,21 @@ export const SelectStatPeriod = ({
   const { styles, locale } = useSelectStatPeriod()
 
   return (
-    <FormControl
-      sx={{ m: 1, minWidth: 120, margin: 0, ...styles }}
-      size="small"
-    >
+    <FormControl sx={{ margin: 0, ...styles }} size="small">
       <InputLabel id="demo-select-small-label">{locale.period}</InputLabel>
       <Select
         labelId="demo-select-small-label"
         id="demo-select-small"
+        autoWidth
         value={value || 0}
         label={locale.period}
         onChange={onChange}
+        IconComponent={() => null}
+        sx={{
+          '& .MuiSelect-select': {
+            paddingRight: '15px !important',
+          },
+        }}
       >
         <MenuItem value={1}>{locale.day}</MenuItem>
         <MenuItem value={7}>{locale.week}</MenuItem>

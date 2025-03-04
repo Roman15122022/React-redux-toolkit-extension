@@ -63,11 +63,13 @@
     },
     "statistics": {
       "choosePeriod": {
+        "chooseActivityName": "Activity",
         "period": "Period",
         "day": "Day",
         "week": "Week",
         "month": "Month",
-        "allTime": "All time"
+        "allTime": "All time",
+        "allActivities": "All"
       },
       "graphs": {
         "more": "More",
