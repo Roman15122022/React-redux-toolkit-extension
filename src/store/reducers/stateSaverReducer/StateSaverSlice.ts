@@ -15,6 +15,7 @@ const initialState: StateSaver = {
   sortAchievement: Sort.TIME,
   isHintActive: false,
   periodStat: '0',
+  activityNameFilter: '0',
 }
 
 export const stateSaverSlice = createSlice({
@@ -38,6 +39,9 @@ export const stateSaverSlice = createSlice({
     },
     savePeriod(state, action: PayloadAction<Period>) {
       state.periodStat = action.payload
+    },
+    saveActivityNameFilter(state, action: PayloadAction<string>) {
+      state.activityNameFilter = action.payload
     },
     resetState(state) {
       Object.assign(state, initialState)

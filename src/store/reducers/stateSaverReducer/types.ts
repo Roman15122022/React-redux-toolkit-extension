@@ -8,6 +8,7 @@ export interface StateSaver {
   activeRouteLink: RoutesPath
   isHintActive: boolean
   periodStat: Period
+  activityNameFilter: string
 }
 
 export type StateHistoryPage = {

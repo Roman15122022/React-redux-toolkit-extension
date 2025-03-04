@@ -17,12 +17,14 @@ import { StatisticState } from './enums'
 
 export const useStatisticsPage = () => {
   const { dates } = useAppSelector(state => state.TimerLogsReducer)
-  const { isHintActive: startValueHint, periodStat } = useAppSelector(
-    state => state.StateSaverReducer,
-  )
+  const {
+    isHintActive: startValueHint,
+    periodStat,
+    activityNameFilter,
+  } = useAppSelector(state => state.StateSaverReducer)
 
   const dispatch = useAppDispatch()
-  const { savePeriod } = stateSaverSlice.actions
+  const { savePeriod, saveActivityNameFilter } = stateSaverSlice.actions
 
   const { interfaceLang } = useTranslate()
   const { setIsActiveHint } = useStateSaver()
@@ -31,6 +33,9 @@ export const useStatisticsPage = () => {
     startValueHint ?? false,
   )
   const [period, setPeriod] = useState<Period>(periodStat || '0')
+  const [activityName, setActivityName] = useState<string>(
+    activityNameFilter || '0',
+  )
   const [statisticState, setStatisticState] = useState<StatisticState>(
     StatisticState.TEXT,
   )
@@ -43,27 +48,40 @@ export const useStatisticsPage = () => {
     })
   }
 
-  const handleChangePeriod = (event: SelectChangeEvent) => {
+  const handleChangePeriod = (event: SelectChangeEvent): void => {
     const period = event.target.value as Period
 
     setPeriod(period)
     dispatch(savePeriod(period))
   }
 
+  const handleChangeActivityName = (event: SelectChangeEvent): void => {
+    const activityName = event.target.value.toString()
+
+    setActivityName(activityName)
+    dispatch(saveActivityNameFilter(activityName))
+  }
+
   const dataByPeriod = useMemo(() => {
     return getDatesByPeriod(dates, period)
   }, [dates, period])
+
+  const filteredData = useMemo(() => {
+    if (activityNameFilter.toString() === '0') return dataByPeriod
+
+    return dataByPeriod.filter(item => item.activityName === activityNameFilter)
+  }, [dataByPeriod, activityName])
 
   const componentsByState = {
     [StatisticState.TEXT]: (
       <TextStatistics
         isHintActive={isHintActive}
-        dates={dataByPeriod}
+        dates={filteredData}
         period={period}
       />
     ),
     [StatisticState.GRAPH]: (
-      <GraphStatistics dates={dataByPeriod} period={period} />
+      <GraphStatistics dates={filteredData} period={period} />
     ),
   }
 
@@ -88,9 +106,11 @@ export const useStatisticsPage = () => {
     isHintActive,
     colorHint: isHintActive ? 'text-secondary-light dark:text-purple-dark' : '',
     handleToggleHint,
-    dates: dataByPeriod,
+    dates: filteredData,
     period,
+    activityName,
     handleChangePeriod,
+    handleChangeActivityName,
     statisticState,
     statComponentByState: componentsByState[statisticState] || null,
     selectStatStateVariants,

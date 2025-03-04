@@ -5,6 +5,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import { cn } from '../../utils'
 import { TypeTittle } from '../../types'
 import { SelectStatPeriod } from '../../features/SelectStatPeriod'
+import { SelectStatActivityName } from '../../features/SelectStatActivityName'
 import Title from '../../components/Title'
 import Container from '../../components/Container'
 
@@ -17,7 +18,9 @@ const StatisticsPage = (): JSX.Element => {
     colorHint,
     handleToggleHint,
     period,
+    activityName,
     handleChangePeriod,
+    handleChangeActivityName,
     statComponentByState,
     selectStatStateVariants,
   } = useStatisticsPage()
@@ -34,7 +37,13 @@ const StatisticsPage = (): JSX.Element => {
   return (
     <Container classes="mt-4">
       <div className="flex gap-3 justify-between items-center">
-        <SelectStatPeriod value={period} onChange={handleChangePeriod} />
+        <div className="flex gap-3">
+          <SelectStatPeriod value={period} onChange={handleChangePeriod} />
+          <SelectStatActivityName
+            value={activityName}
+            onChange={handleChangeActivityName}
+          />
+        </div>
         <div className="flex gap-4">
           <div className="flex">
             {selectStatStateVariants.map(({ icon, onClick, isActive, id }) => (
