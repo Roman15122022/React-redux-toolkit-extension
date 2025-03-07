@@ -54,6 +54,15 @@
       "totalForDay": "Total time study for day",
       "label": "Activity"
     },
+    "aiHelper": {
+      "titleInfo": "This model learns from your data and becomes more accurate with each new session",
+      "noData": "No data for analysis. Complete at least one training session",
+      "isTraining": "The model is learning, please wait...",
+      "predictMood": "Predicted mood",
+      "predictTimeLearning": "Predicted learning time",
+      "predictCountSession": "Predicted number of sessions",
+      "recomendFromAI": "Recommendation from AI"
+    },
     "history": {
       "noHistory": "History is empty!"
     },
