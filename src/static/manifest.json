@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "TrackerR",
   "description": "It is extension for tracking time",
-  "version": "1.2.1",
+  "version": "1.2.7",
   "action": {
     "default_popup": "popup.html",
     "default_title": "TrackerR",
