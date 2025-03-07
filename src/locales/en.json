@@ -75,6 +75,7 @@
         "more": "More",
         "graphsTitles": {
           "moodPie": "Pie graph moods",
+          "activityPie": "Pie graph activities",
           "moodLine": "Line graph time/moods",
           "dayWeekLine": "Line graph time/day week",
           "moodOverDay": "Line graph day/mood"
@@ -85,7 +86,7 @@
           "labelTime": "Time learning (sec)"
         },
         "dayWeekLine": {
-          "title": "Time learning over Day pf week",
+          "title": "Time learning over Day of week",
           "labelDay": "Day of week",
           "labelTime": "Time learning (sec)"
         },

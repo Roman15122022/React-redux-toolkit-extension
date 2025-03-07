@@ -23,6 +23,7 @@ const StatisticsPage = (): JSX.Element => {
     handleChangeActivityName,
     statComponentByState,
     selectStatStateVariants,
+    isActivityFilterVisible,
   } = useStatisticsPage()
 
   if (!isDataAvailable)
@@ -39,10 +40,12 @@ const StatisticsPage = (): JSX.Element => {
       <div className="flex gap-3 justify-between items-center">
         <div className="flex gap-3">
           <SelectStatPeriod value={period} onChange={handleChangePeriod} />
-          <SelectStatActivityName
-            value={activityName}
-            onChange={handleChangeActivityName}
-          />
+          {isActivityFilterVisible && (
+            <SelectStatActivityName
+              value={activityName}
+              onChange={handleChangeActivityName}
+            />
+          )}
         </div>
         <div className="flex gap-4">
           <div className="flex">
