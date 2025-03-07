@@ -1,9 +1,9 @@
 import { TimePeriod } from '../../types'
 
 export type DataActivity = {
-  id: string
+  id: number
   value: number
-  name: string
+  label: string
 }
 
 export type PieChartActivitiesProps = {

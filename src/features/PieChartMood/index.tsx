@@ -44,6 +44,7 @@ export const PieChartMood = ({ dates }: PieChartMoodProps): JSX.Element => {
               color: '#2e7d32',
             },
           ],
+          valueFormatter: value => `${(value as any).data} %`,
         },
       ]}
       width={400}
