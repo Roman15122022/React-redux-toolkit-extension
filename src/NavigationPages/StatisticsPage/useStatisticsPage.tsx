@@ -70,7 +70,7 @@ export const useStatisticsPage = () => {
   }, [dates, period])
 
   const filteredData = useMemo(() => {
-    if (activityNameFilter.toString() === '0') return dataByPeriod
+    if (activityName === '0') return dataByPeriod
 
     return dataByPeriod.filter(item => item.activityName === activityNameFilter)
   }, [dataByPeriod, activityName])
