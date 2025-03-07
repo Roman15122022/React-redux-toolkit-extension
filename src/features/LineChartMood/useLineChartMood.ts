@@ -21,5 +21,6 @@ export const useLineChartMood = (dates: TimePeriod[]) => {
     colorAxis: isDark ? 'white' : 'black',
     locale: interfaceLang.popup.statistics.graphs.moodsLine,
     chartData,
+    seconds: interfaceLang.popup.statistics.graphs.sec,
   }
 }

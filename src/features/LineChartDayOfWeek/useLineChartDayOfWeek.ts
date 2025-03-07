@@ -20,5 +20,6 @@ export const useLineChartDayOfWeek = (dates: TimePeriod[]) => {
     colorAxis: isDark ? 'white' : 'black',
     locale: interfaceLang.popup.statistics.graphs.dayWeekLine,
     chartData,
+    seconds: interfaceLang.popup.statistics.graphs.sec,
   }
 }

@@ -16,9 +16,15 @@ import { GraphStatisticsProps } from './types'
 
 export const GraphStatistics = ({
   dates,
+  dataFilteredOnlyByTimePeriod,
+  setIsActivityFilterVisible,
 }: GraphStatisticsProps): JSX.Element => {
   const { locale, open, toggleDrawer, chartTypes, currentGraph, currentTitle } =
-    useGraphStatistics(dates)
+    useGraphStatistics(
+      dates,
+      dataFilteredOnlyByTimePeriod,
+      setIsActivityFilterVisible,
+    )
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>

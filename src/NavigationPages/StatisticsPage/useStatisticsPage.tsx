@@ -36,6 +36,9 @@ export const useStatisticsPage = () => {
   const [activityName, setActivityName] = useState<string>(
     activityNameFilter || '0',
   )
+  const [isActivityFilterVisible, setIsActivityFilterVisible] =
+    useState<boolean>(true)
+
   const [statisticState, setStatisticState] = useState<StatisticState>(
     StatisticState.TEXT,
   )
@@ -81,7 +84,12 @@ export const useStatisticsPage = () => {
       />
     ),
     [StatisticState.GRAPH]: (
-      <GraphStatistics dates={filteredData} period={period} />
+      <GraphStatistics
+        dates={filteredData}
+        dataFilteredOnlyByTimePeriod={dataByPeriod}
+        setIsActivityFilterVisible={setIsActivityFilterVisible}
+        period={period}
+      />
     ),
   }
 
@@ -114,5 +122,6 @@ export const useStatisticsPage = () => {
     statisticState,
     statComponentByState: componentsByState[statisticState] || null,
     selectStatStateVariants,
+    isActivityFilterVisible,
   }
 }

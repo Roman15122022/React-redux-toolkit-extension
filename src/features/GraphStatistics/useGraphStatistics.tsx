@@ -3,6 +3,7 @@ import ShowChartIcon from '@mui/icons-material/ShowChart'
 import PieChartIcon from '@mui/icons-material/PieChart'
 
 import { PieChartMood } from '../PieChartMood'
+import { PieChartActivities } from '../PieChartActivities'
 import { LineChartMoodOverDayWeek } from '../LineChartMoodOverDayWeek'
 import { LineChartMood } from '../LineChartMood'
 import { LineChartDayOfWeek } from '../LineChartDayOfWeek'
@@ -11,7 +12,11 @@ import { useTranslate } from '../../hooks/useTranslate'
 
 import { ChartType } from './enums'
 
-export const useGraphStatistics = (dates: TimePeriod[]) => {
+export const useGraphStatistics = (
+  dates: TimePeriod[],
+  dataFilteredOnlyByTimePeriod: TimePeriod[],
+  setIsActivityFilterVisible: (visible: boolean) => void,
+) => {
   const { interfaceLang } = useTranslate()
 
   const locale = interfaceLang.popup.statistics.graphs
@@ -33,20 +38,27 @@ export const useGraphStatistics = (dates: TimePeriod[]) => {
     },
     {
       id: 2,
+      icon: <PieChartIcon />,
+      title: locale.graphsTitles.activityPie,
+      onClick: () => setChartType(ChartType.ACTIVITY_PIE),
+      isActive: chartType === ChartType.ACTIVITY_PIE,
+    },
+    {
+      id: 3,
       icon: <ShowChartIcon />,
       title: locale.graphsTitles.moodLine,
       onClick: () => setChartType(ChartType.MOOD_LINE),
       isActive: chartType === ChartType.MOOD_LINE,
     },
     {
-      id: 3,
+      id: 4,
       icon: <ShowChartIcon />,
       title: locale.graphsTitles.dayWeekLine,
       onClick: () => setChartType(ChartType.DAY_WEEK_LINE),
       isActive: chartType === ChartType.DAY_WEEK_LINE,
     },
     {
-      id: 4,
+      id: 5,
       icon: <ShowChartIcon />,
       title: locale.graphsTitles.moodOverDay,
       onClick: () => setChartType(ChartType.MOOD_OVER_DAY),
@@ -56,6 +68,12 @@ export const useGraphStatistics = (dates: TimePeriod[]) => {
 
   const graphsDictionary = {
     [ChartType.MOOD_PIE]: <PieChartMood dates={dates} />,
+    [ChartType.ACTIVITY_PIE]: (
+      <PieChartActivities
+        dates={dataFilteredOnlyByTimePeriod}
+        setIsActivityFilterVisible={setIsActivityFilterVisible}
+      />
+    ),
     [ChartType.MOOD_LINE]: <LineChartMood dates={dates} />,
     [ChartType.DAY_WEEK_LINE]: <LineChartDayOfWeek dates={dates} />,
     [ChartType.MOOD_OVER_DAY]: <LineChartMoodOverDayWeek dates={dates} />,
