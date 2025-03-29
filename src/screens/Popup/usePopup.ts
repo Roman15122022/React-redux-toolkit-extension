@@ -5,6 +5,7 @@ import { RoutesPath, TypeButton } from '../../types'
 import { stateSaverSlice } from '../../store/reducers/stateSaverReducer/StateSaverSlice'
 import { useTranslate } from '../../hooks/useTranslate'
 import useTheme from '../../hooks/useTheme'
+import { useTensorFlowInit } from '../../hooks/useTensorFlowModelInit'
 import { useStateSaver } from '../../hooks/useStateSaver'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
@@ -16,6 +17,7 @@ export const usePopup = () => {
   const dispatch = useAppDispatch()
 
   useTheme()
+  useTensorFlowInit()
 
   const { interfaceLang } = useTranslate()
   const location = useLocation()
