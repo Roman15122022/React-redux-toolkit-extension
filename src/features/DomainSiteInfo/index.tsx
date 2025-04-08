@@ -29,7 +29,8 @@ export const DomainSiteInfo = ({
             {
               data: actualDomenData,
               highlightScope: { fade: 'global', highlight: 'item' },
-              faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+              innerRadius: 60,
+              faded: { innerRadius: 60, additionalRadius: -20, color: 'gray' },
               valueFormatter,
             },
           ]}
