@@ -22,7 +22,7 @@ export const DomainSiteInfo = ({
       <div>
         <Title variant={TypeTittle.SMALL} title={locale.title} />
       </div>
-      <div>
+      <div className="mt-2">
         <PieChart
           className="pr-3"
           series={[
