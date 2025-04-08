@@ -6,6 +6,7 @@ import { stateSaverSlice } from '../../store/reducers/stateSaverReducer/StateSav
 import { useTranslate } from '../../hooks/useTranslate'
 import useTheme from '../../hooks/useTheme'
 import { useStateSaver } from '../../hooks/useStateSaver'
+import { useSetSessionData } from '../../hooks/useSetSessionData'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { Links } from '../../components/Button/types'
@@ -16,6 +17,7 @@ export const usePopup = () => {
   const dispatch = useAppDispatch()
 
   useTheme()
+  const { updateSessionData } = useSetSessionData()
 
   const { interfaceLang } = useTranslate()
   const location = useLocation()
@@ -60,6 +62,7 @@ export const usePopup = () => {
 
   useEffect(() => {
     navigate(activeRouteLink)
+    updateSessionData()
 
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'hidden' && !saveStateAfterClose) {

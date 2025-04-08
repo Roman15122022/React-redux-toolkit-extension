@@ -6,6 +6,7 @@ import { timerLogsSlice } from '../../store/reducers/timeLogsReducer/TimerLogsSl
 import { currentTimerSlice } from '../../store/reducers/currentTimerReducer/CurrentTimerSlice'
 import { useTranslate } from '../../hooks/useTranslate'
 import useTimer from '../../hooks/useTimer'
+import { useSetSessionData } from '../../hooks/useSetSessionData'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { TIME_IN_MS } from '../../constants'
@@ -14,6 +15,8 @@ import { customizedTime, formatTime } from './helpers'
 
 export const useTrackTime = () => {
   const { interfaceLang } = useTranslate()
+
+  const { updateSessionData } = useSetSessionData()
 
   const {
     stateTimer: storeStateTimer,
@@ -74,6 +77,8 @@ export const useTrackTime = () => {
   }
 
   function handleStopTimer(): void {
+    updateSessionData()
+
     dispatch(
       addTimeLogs({
         activityName: lastNameActivity.trim(),

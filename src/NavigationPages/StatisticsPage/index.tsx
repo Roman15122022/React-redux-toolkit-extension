@@ -51,7 +51,7 @@ const StatisticsPage = (): JSX.Element => {
           <div className="flex">
             {selectStatStateVariants.map(({ icon, onClick, isActive, id }) => (
               <div
-                className={`cursor-pointer ${isActive ? 'bg-secondary-light dark:bg-purple-dark' : ''} py-1 pb-1.5 px-3 border-[1px] border-secondary-light dark:border-purple-dark ${id === 1 && 'rounded-l-lg'} ${id === 2 && 'rounded-r-lg'}`}
+                className={`cursor-pointer ${isActive ? 'bg-secondary-light dark:bg-purple-dark' : ''} py-1 pb-1.5 px-3 border-[1px] border-secondary-light dark:border-purple-dark ${id === 1 && 'rounded-l-lg'} ${id === 2 && 'border-l-0 border-r-0'} ${id === 3 && 'rounded-r-lg'}`}
                 key={id}
                 onClick={onClick}
               >
