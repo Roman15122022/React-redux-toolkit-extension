@@ -125,6 +125,9 @@
         "neutral": "Звичайне",
         "satisfied": "Хороше",
         "verySatisfied": "Відмінне"
+      },
+      "siteDomainStat": {
+        "title": "Статистика браузера під час сеансів"
       }
     },
     "dayOfWeek": {

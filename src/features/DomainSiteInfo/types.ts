@@ -6,3 +6,8 @@ export type DomainSiteInfoProps = {
   setIsActivityFilterVisible: Dispatch<SetStateAction<boolean>>
   period: Period
 }
+
+export type ChartData = {
+  label: string
+  value: number
+}
