@@ -1,4 +1,8 @@
-import { DEFAULT_PERIOD_IN_MINUTES, MAX_SIZE_PERIODS, MIN_TIME_FOR_NOTE } from "./constants";
+import {
+  DEFAULT_PERIOD_IN_MINUTES,
+  MAX_SIZE_PERIODS,
+  MIN_TIME_FOR_NOTE,
+} from './constants'
 
 async function updateAlarmBasedOnTimer(
   isActive: boolean,
