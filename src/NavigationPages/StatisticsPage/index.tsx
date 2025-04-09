@@ -8,8 +8,10 @@ import { SelectStatPeriod } from '../../features/SelectStatPeriod'
 import { SelectStatActivityName } from '../../features/SelectStatActivityName'
 import Title from '../../components/Title'
 import Container from '../../components/Container'
+import Button from '../../components/Button'
 
 import { useStatisticsPage } from './useStatisticsPage'
+import { StatisticState } from './enums'
 
 const StatisticsPage = (): JSX.Element => {
   const {
@@ -24,6 +26,7 @@ const StatisticsPage = (): JSX.Element => {
     statComponentByState,
     selectStatStateVariants,
     isActivityFilterVisible,
+    statisticState,
   } = useStatisticsPage()
 
   if (!isDataAvailable)
@@ -46,6 +49,15 @@ const StatisticsPage = (): JSX.Element => {
               onChange={handleChangeActivityName}
             />
           )}
+          {!isActivityFilterVisible &&
+            statisticState === StatisticState.SITES && (
+              <Button
+                classes="bg-red-500 text-white hover:bg-red-600 dark:bg-red-700 dark:hover:bg-red-600"
+                onClick={() => {}}
+              >
+                {locale.siteDomainStat.blackList}
+              </Button>
+            )}
         </div>
         <div className="flex gap-4">
           <div className="flex">

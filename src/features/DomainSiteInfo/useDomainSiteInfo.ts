@@ -45,7 +45,39 @@ export const useDomainSiteInfo = ({
     })
   }, [period, sessions])
 
-  const actualDomenData: ChartData[] = useMemo(() => {
+  const allActualDomenDataText = useMemo(() => {
+    const dictionaryData = filteredByDataSessions.reduce(
+      (acc, { domain, duration }) => {
+        if (!acc[domain]) {
+          acc[domain] = 0
+        }
+
+        acc[domain] += duration
+
+        return acc
+      },
+      {} as Record<string, number>,
+    )
+
+    return Object.keys(dictionaryData)
+      .map(key => {
+        return {
+          label: key,
+          value: Math.round(dictionaryData[key] / TIME_IN_MS.SECOND),
+        }
+      })
+      .sort((a, b) => b.value - a.value)
+      .map(item => {
+        const formattedValue = fullFormatTime(
+          item.value,
+          interfaceLang,
+        ).replaceAll('0', '')
+
+        return { ...item, value: formattedValue }
+      })
+  }, [filteredByDataSessions])
+
+  const actualDomenData = useMemo(() => {
     const dictionaryData = filteredByDataSessions.reduce(
       (acc, { domain, duration }) => {
         const key = getReadableName(domain)
@@ -120,6 +152,7 @@ export const useDomainSiteInfo = ({
   return {
     locale: interfaceLang.popup.statistics.siteDomainStat,
     filterToOtherData,
+    allActualDomenDataText,
     colorText: isDarkTheme ? 'white' : 'black',
     valueFormatter,
     isGraph,

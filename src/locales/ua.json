@@ -127,9 +127,10 @@
         "verySatisfied": "Відмінне"
       },
       "siteDomainStat": {
-        "title": "Статистика браузера під час сеансів",
+        "title": "Сайти під час навчання",
         "others": "Інші",
-        "blackList": "Чорний список"
+        "blackList": "Чорний список",
+        "mode": "Режим"
       }
     },
     "dayOfWeek": {
