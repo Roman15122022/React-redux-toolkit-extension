@@ -32,6 +32,7 @@ export enum TypeTittle {
   LARGE = 'large',
   DEFAULT = 'default',
   SMALL = 'small',
+  TINY = 'tiny',
 }
 
 export enum RoutesPath {

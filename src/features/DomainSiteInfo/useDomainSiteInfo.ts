@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo } from 'react'
+import { useLayoutEffect, useMemo, useState } from 'react'
 
 import { ThemeVariants } from '../../types'
 import { fullFormatTime } from '../../NavigationPages/TrackTimePage/helpers'
@@ -9,21 +9,29 @@ import { TIME_IN_MS } from '../../constants'
 
 import { ChartData, DomainSiteInfoProps } from './types'
 import { getReadableName } from './helpers'
+import {
+  DOMAIN_COLORS,
+  DOMAIN_NAME_MAP,
+  MAX_SIZE_LIST_UNTIL_OTHERS,
+  OTHERS_COLORS,
+} from './constants'
 
 export const useDomainSiteInfo = ({
   setIsActivityFilterVisible,
   period,
 }: DomainSiteInfoProps) => {
   const { interfaceLang } = useTranslate()
+  const otherName = interfaceLang.popup.statistics.siteDomainStat.others
 
   const { theme } = useTheme()
-
   const isDarkTheme = theme === ThemeVariants.DARK
 
   const { sessions } = useAppSelector(state => state.SessionDataSlice)
 
+  const [isGraph, setGraph] = useState<boolean>(true)
+
   const filteredByDataSessions = useMemo(() => {
-    if (period === '0') return sessions
+    if (period == '0') return sessions
 
     const now = new Date()
     const periodInDays = parseInt(period)
@@ -54,12 +62,48 @@ export const useDomainSiteInfo = ({
     )
 
     return Object.keys(dictionaryData).map(key => {
-      return {
-        label: key,
+      const lowerKey = key.toLowerCase()
+      const color = DOMAIN_COLORS[lowerKey]
+
+      const base: ChartData = {
+        label: DOMAIN_NAME_MAP[lowerKey] || key,
         value: Math.round(dictionaryData[key] / TIME_IN_MS.SECOND),
       }
+
+      if (color) {
+        base.color = color
+      }
+
+      return base
     })
   }, [filteredByDataSessions])
+
+  const filterToOtherData: ChartData[] = useMemo(() => {
+    const sortedDataByTime = actualDomenData.sort((a, b) => b.value - a.value)
+
+    const filteredData = sortedDataByTime.slice(0, MAX_SIZE_LIST_UNTIL_OTHERS)
+
+    const othersArray = sortedDataByTime.slice(MAX_SIZE_LIST_UNTIL_OTHERS)
+
+    if (othersArray.length === 0) {
+      return filteredData
+    }
+
+    const othersData: ChartData = othersArray.reduce(
+      (acc: ChartData, { value }) => {
+        acc.value = acc.value + value
+
+        return acc
+      },
+      { value: 0, label: otherName, color: OTHERS_COLORS },
+    )
+
+    return [...filteredData, othersData]
+  }, [actualDomenData])
+
+  const handleToggleGraphText = (): void => {
+    setGraph(prevState => !prevState)
+  }
 
   useLayoutEffect(() => {
     setIsActivityFilterVisible(false)
@@ -69,13 +113,16 @@ export const useDomainSiteInfo = ({
     }
   }, [])
 
-  const valueFormatter = (item: { value: number }) =>
-    fullFormatTime(item.value, interfaceLang)
+  const valueFormatter = (item: { value: number }) => {
+    return fullFormatTime(item.value, interfaceLang).replaceAll('0', '')
+  }
 
   return {
     locale: interfaceLang.popup.statistics.siteDomainStat,
-    actualDomenData,
+    filterToOtherData,
     colorText: isDarkTheme ? 'white' : 'black',
     valueFormatter,
+    isGraph,
+    handleToggleGraphText,
   }
 }

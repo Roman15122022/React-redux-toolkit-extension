@@ -127,7 +127,9 @@
         "verySatisfied": "Great"
       },
       "siteDomainStat": {
-        "title": "Browser time during the sessions"
+        "title": "Browser time during the sessions",
+        "others": "Others",
+        "blackList": "Black List"
       }
     },
 

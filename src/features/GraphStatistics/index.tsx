@@ -43,7 +43,7 @@ export const GraphStatistics = ({
 
   return (
     <div>
-      <div className="flex items-center justify-between my-3">
+      <div className="flex items-center justify-between my-2">
         <Title variant={TypeTittle.SMALL} title={currentTitle} />
         <Button onClick={toggleDrawer(true)}>{locale.more}</Button>
       </div>
