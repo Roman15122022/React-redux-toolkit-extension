@@ -10,6 +10,7 @@ import Button from '../../components/Button'
 
 import { useDomainSiteInfo } from './useDomainSiteInfo'
 import { DomainSiteInfoProps } from './types'
+import { OTHERS_COLORS } from './constants'
 
 export const DomainSiteInfo = ({
   setIsActivityFilterVisible,
@@ -50,6 +51,17 @@ export const DomainSiteInfo = ({
         {isGraph ? (
           <PieChart
             className="pr-3"
+            onItemClick={e => {
+              const path = e.target as HTMLElement
+
+              if (path) {
+                const fill = path.getAttribute('fill')
+
+                if (fill === OTHERS_COLORS) {
+                  handleToggleGraphText()
+                }
+              }
+            }}
             series={[
               {
                 data: filterToOtherData,
