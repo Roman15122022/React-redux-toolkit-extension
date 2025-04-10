@@ -6,6 +6,7 @@ import { SessionData } from './types'
 
 const initialState: SessionData = {
   sessions: [],
+  blackList: [],
 }
 
 export const sessionDataSlice = createSlice({
@@ -14,6 +15,9 @@ export const sessionDataSlice = createSlice({
   reducers: {
     setSessionsData: (state, action: PayloadAction<SessionsDomainInfo[]>) => {
       state.sessions = action.payload
+    },
+    setBlackList: (state, action: PayloadAction<string[]>) => {
+      state.blackList = action.payload
     },
   },
 })

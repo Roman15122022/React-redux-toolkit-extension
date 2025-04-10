@@ -22,8 +22,8 @@ const Button = ({
         'disabled:opacity-70',
         'hover:text-black hover:dark:bg-white hover:bg-white',
         `${disabled ? 'pointer-events-none ' : ''}`,
-        variantButton[variant || TypeButton.PRIMARY],
         classes,
+        variantButton[variant || TypeButton.PRIMARY],
       )}
     >
       {children}

@@ -4,6 +4,7 @@ import { ThemeVariants } from '../../types'
 import { fullFormatTime } from '../../NavigationPages/TrackTimePage/helpers'
 import { useTranslate } from '../../hooks/useTranslate'
 import useTheme from '../../hooks/useTheme'
+import { useManageBlackListDomain } from '../../hooks/useManageBlackListDomain'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { TIME_IN_MS } from '../../constants'
 
@@ -26,9 +27,16 @@ export const useDomainSiteInfo = ({
   const { theme } = useTheme()
   const isDarkTheme = theme === ThemeVariants.DARK
 
-  const { sessions } = useAppSelector(state => state.SessionDataSlice)
+  const { sessions, blackList } = useAppSelector(
+    state => state.SessionDataSlice,
+  )
 
   const [isGraph, setGraph] = useState<boolean>(true)
+
+  const { handleAddItemToBlackList, handleRemoveItemFromBlackList } =
+    useManageBlackListDomain()
+
+  const quickSetBlackList = new Set(blackList)
 
   const filteredByDataSessions = useMemo(() => {
     if (period == '0') return sessions
@@ -149,6 +157,20 @@ export const useDomainSiteInfo = ({
     return fullFormatTime(item.value, interfaceLang).replaceAll('0', '')
   }
 
+  const isInBlackList = (domain: string): boolean => {
+    return quickSetBlackList.has(domain)
+  }
+
+  const handleToggleBlackList = (domain: string): void => {
+    if (isInBlackList(domain)) {
+      handleRemoveItemFromBlackList(domain)
+
+      return
+    }
+
+    handleAddItemToBlackList(domain)
+  }
+
   return {
     locale: interfaceLang.popup.statistics.siteDomainStat,
     filterToOtherData,
@@ -157,5 +179,7 @@ export const useDomainSiteInfo = ({
     valueFormatter,
     isGraph,
     handleToggleGraphText,
+    handleToggleBlackList,
+    isInBlackList,
   }
 }

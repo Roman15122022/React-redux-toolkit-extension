@@ -130,7 +130,11 @@
         "title": "Sites during the sessions",
         "others": "Others",
         "blackList": "Black List",
-        "mode": "Mode"
+        "mode": "Mode",
+        "addToBlack": "Quick Add To Black List",
+        "removeFromBlack": "Quick Remove From Black List",
+        "btnAddBl": "Add",
+        "btnRemove": "Remove"
       }
     },
 

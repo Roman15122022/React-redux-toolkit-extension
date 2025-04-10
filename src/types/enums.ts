@@ -22,6 +22,7 @@ export enum TypeButton {
   PRIMARY = 'primary',
   SECONDARY = 'secondary',
   ERROR = 'error',
+  ERROR_TWO = 'error_TWO',
   LINK = 'link',
   ACTIVE_LINK = 'activeLink',
   PAGE = 'page',

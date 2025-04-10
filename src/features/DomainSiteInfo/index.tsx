@@ -3,6 +3,7 @@ import { PieChart } from '@mui/x-charts'
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered'
 import DonutLargeIcon from '@mui/icons-material/DonutLarge'
 
+import { TextStatDomain } from '../TextStatDomain'
 import { TypeTittle } from '../../types'
 import Title from '../../components/Title'
 import Button from '../../components/Button'
@@ -22,6 +23,8 @@ export const DomainSiteInfo = ({
     valueFormatter,
     isGraph,
     handleToggleGraphText,
+    handleToggleBlackList,
+    isInBlackList,
   } = useDomainSiteInfo({
     period,
     setIsActivityFilterVisible,
@@ -72,21 +75,15 @@ export const DomainSiteInfo = ({
             }}
           />
         ) : (
-          <div className="-mr-4 h-[250px] overflow-y-scroll scrollbar-thin scrollbar scrollbar-thumb-secondary-light dark:scrollbar-track-white dark:scrollbar-thumb-purple-dark dark:scrollbar-track-black">
-            {allActualDomenDataText.map(({ label, value }, index) => {
-              return (
-                <div className="mt-1.5 flex justify-between items-center">
-                  <Title
-                    title={`${index + 1}. ${label}`}
-                    variant={TypeTittle.TINY}
-                  />
-                  <span className="mr-1 font-bold text-secondary-light dark:text-purple-light">
-                    {value}
-                  </span>
-                </div>
-              )
-            })}
-          </div>
+          <TextStatDomain
+            allActualDomenDataText={allActualDomenDataText}
+            handleToggleBlackList={handleToggleBlackList}
+            isInBlackList={isInBlackList}
+            btnAddBl={locale.btnAddBl}
+            btnRemove={locale.btnRemove}
+            removeFromBlack={locale.removeFromBlack}
+            addToBlack={locale.addToBlack}
+          />
         )}
       </div>
     </div>
