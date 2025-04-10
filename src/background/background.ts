@@ -147,3 +147,31 @@ chrome.windows.onFocusChanged.addListener(windowId => {
     })
   }
 })
+
+chrome.webNavigation.onBeforeNavigate.addListener(
+  async details => {
+    const url = new URL(details.url)
+    const domain = url.hostname
+
+    const result = (await new Promise(resolve =>
+      chrome.storage.local.get(['timerState', 'blackList'], resolve),
+    )) as {
+      timerState?: { isActive: boolean }
+      blackList?: string[]
+    }
+
+    const isActive = result.timerState?.isActive
+    const isBlocked = (result.blackList || []).some(blockedDomain =>
+      domain
+        .replace(/^www\./, '')
+        .includes(blockedDomain.replace(/^www\./, '')),
+    )
+
+    if (isActive && isBlocked) {
+      chrome.tabs.update(details.tabId, {
+        url: chrome.runtime.getURL('blocked.html'),
+      })
+    }
+  },
+  { url: [{ schemes: ['http', 'https'] }] },
+)

@@ -8,7 +8,7 @@
     "default_title": "TrackerR",
     "default_icon": "icon.png"
   },
-  "permissions": ["storage", "notifications", "alarms"],
+  "permissions": ["storage", "notifications", "alarms", "webNavigation", "tabs"],
   "host_permissions": ["<all_urls>"],
   "icons": {
     "16": "icon.png",
