@@ -54,7 +54,7 @@ const StatisticsPage = (): JSX.Element => {
               <Button
                 classes="bg-red-500 text-white hover:bg-red-600 dark:bg-red-700 dark:hover:bg-red-600"
                 onClick={() => {
-                  chrome.tabs.create({ url: 'options.html' })
+                  chrome.tabs.create({ url: 'options.html?blacklist=true' })
                 }}
               >
                 {locale.siteDomainStat.blackList}

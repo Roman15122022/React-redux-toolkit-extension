@@ -5,6 +5,7 @@
   },
   "settings": {
     "title": "Settings",
+    "titleTwo": "Black List",
     "darkTheme": "Theme",
     "language": "Language",
     "button": "Click",
@@ -23,6 +24,11 @@
       "labelInput": "Time(min)",
       "errorFirst": "The period is number cannot be more than 24 hours",
       "errorSecond": "Can't be 0"
+    },
+    "blackList": {
+      "title": "Black List",
+      "description": "This list contains the domains you have blocked. These websites will not be accessible while the timer is active.",
+      "button": "12"
     },
     "resetStatistics": {
       "title": "Reset all statistics",
