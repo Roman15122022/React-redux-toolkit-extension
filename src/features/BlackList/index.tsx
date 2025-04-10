@@ -14,6 +14,7 @@ export const BlackList = (): JSX.Element => {
     handleAddSite,
     newSite,
     setNewSite,
+    locale,
   } = useBlackList()
 
   return (
@@ -25,11 +26,11 @@ export const BlackList = (): JSX.Element => {
             value={newSite}
             onChange={e => setNewSite(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Add new site (e.g., example.com)"
+            placeholder={locale.placeholder}
             className="w-full px-3 py-2 bg-white dark:bg-black border dark:border-purple-light border-secondary-light rounded-lg theme-text focus:outline-none focus:ring-2 focus:ring-secondary-dark dark:focus:ring-purple-dark"
           />
         </div>
-        <Button onClick={handleAddSite}>Add</Button>
+        <Button onClick={handleAddSite}>{locale.btnAdd}</Button>
       </div>
 
       <div className="mt-4 space-y-2">

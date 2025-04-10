@@ -1,9 +1,11 @@
 import { useState } from 'react'
 
+import { useTranslate } from '../../hooks/useTranslate'
 import { useManageBlackListDomain } from '../../hooks/useManageBlackListDomain'
 import { useAppSelector } from '../../hooks/useAppSelector'
 
 export const useBlackList = () => {
+  const { interfaceLang } = useTranslate()
   const { blackList } = useAppSelector(state => state.SessionDataSlice)
   const { handleAddItemToBlackList, handleRemoveItemFromBlackList } =
     useManageBlackListDomain()
@@ -24,6 +26,7 @@ export const useBlackList = () => {
   }
 
   return {
+    locale: interfaceLang.settings.blackList,
     blackList,
     handleRemoveItemFromBlackList,
     handleAddSite,
