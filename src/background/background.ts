@@ -4,69 +4,6 @@ import {
   MIN_TIME_FOR_NOTE,
 } from './constants'
 
-async function updateAlarmBasedOnTimer(
-  isActive: boolean,
-  periodInMin: number,
-): Promise<void> {
-  if (isActive) {
-    chrome.alarms.create('chromeAlarm', {
-      periodInMinutes: periodInMin || DEFAULT_PERIOD_IN_MINUTES,
-    })
-    console.log('Created')
-
-    return
-  }
-
-  await chrome.alarms.clear('chromeAlarm')
-  console.log('Clear')
-}
-function createNotification(period: number): void {
-  chrome.notifications.create({
-    type: 'basic',
-    iconUrl: 'icon.png',
-    title: 'Knowledge is power',
-    message: `Another ${period || DEFAULT_PERIOD_IN_MINUTES} minute(s) of training has passed, don't forget to rest!`,
-    priority: 2,
-  })
-}
-
-async function checkTimerAndSendNotification(): Promise<void> {
-  chrome.storage.local.get('timerState', resultTimerState => {
-    chrome.storage.local.get('notificationState', async resultNot => {
-      if (!resultNot.notificationState.isNotificationActive) return
-
-      await updateAlarmBasedOnTimer(
-        resultTimerState.timerState.isActive,
-        resultNot.notificationState.periodInMinutes,
-      )
-
-      if (resultTimerState.timerState.isActive) {
-        createNotification(resultNot.notificationState.periodInMinutes)
-      }
-    })
-  })
-}
-
-chrome.storage.onChanged.addListener(async (changes, area) => {
-  if (area === 'local' && changes.timerState) {
-    const { isActive } = changes.timerState.newValue
-    chrome.storage.local.get('notificationState', async result => {
-      if (!result.notificationState.isNotificationActive) return
-
-      await updateAlarmBasedOnTimer(
-        isActive,
-        result.notificationState.periodInMinutes,
-      )
-    })
-  }
-})
-
-chrome.alarms.onAlarm.addListener(async alarm => {
-  if (alarm.name === 'chromeAlarm') {
-    await checkTimerAndSendNotification()
-  }
-})
-
 /*Domain names*/
 
 let currentSession: {
@@ -150,28 +87,135 @@ chrome.windows.onFocusChanged.addListener(windowId => {
 
 chrome.webNavigation.onBeforeNavigate.addListener(
   async details => {
-    const url = new URL(details.url)
-    const domain = url.hostname
+    if (details.frameId !== 0) return
 
-    const result = (await new Promise(resolve =>
-      chrome.storage.local.get(['timerState', 'blackList'], resolve),
-    )) as {
-      timerState?: { isActive: boolean }
-      blackList?: string[]
-    }
+    try {
+      const url = new URL(details.url)
+      const domain = url.hostname
+      const cleanDomain = domain.replace(/^www\./, '').toLowerCase()
+      const fullUrl = details.url.toLowerCase()
 
-    const isActive = result.timerState?.isActive
-    const isBlocked = (result.blackList || []).some(blockedDomain =>
-      domain
-        .replace(/^www\./, '')
-        .includes(blockedDomain.replace(/^www\./, '')),
-    )
+      // Get timer state and blacklist from storage
+      const { timerState, blackList = [] } = await chrome.storage.local.get([
+        'timerState',
+        'blackList',
+      ])
 
-    if (isActive && isBlocked) {
-      chrome.tabs.update(details.tabId, {
-        url: chrome.runtime.getURL('blocked.html'),
+      const isActive = timerState?.isActive
+
+      if (!isActive) return
+
+      // Check if the site is in the blacklist (including subdomains)
+      const isBlocked = blackList.some(blockedDomain => {
+        const cleanBlockedDomain = blockedDomain
+          .replace(/^www\./, '')
+          .toLowerCase()
+
+        // Check domain match
+        const domainMatch =
+          cleanDomain === cleanBlockedDomain ||
+          cleanDomain.endsWith('.' + cleanBlockedDomain)
+
+        // Check if URL contains the blocked domain (for search results)
+        const urlContainsBlockedDomain = fullUrl.includes(cleanBlockedDomain)
+
+        // For YouTube specific handling
+        const isYouTubeSearch =
+          cleanBlockedDomain === 'youtube.com' &&
+          fullUrl.includes('search') &&
+          fullUrl.includes('youtube')
+
+        return (
+          domainMatch ||
+          (cleanBlockedDomain === 'youtube.com' && urlContainsBlockedDomain) ||
+          isYouTubeSearch
+        )
       })
+
+      const isMainFrame = details.parentFrameId === -1
+
+      // Block the site if it's in the blacklist and timer is active and no temporary access
+      if (isBlocked && isMainFrame) {
+        chrome.tabs.update(details.tabId, {
+          url:
+            chrome.runtime.getURL('blocked.html') +
+            `?from=${encodeURIComponent(details.url)}`,
+        })
+      }
+    } catch (error) {
+      console.error('Error in blocking logic:', error)
     }
   },
   { url: [{ schemes: ['http', 'https'] }] },
 )
+
+/*END DOMAIN*/
+
+async function updateAlarmBasedOnTimer(
+  isActive: boolean,
+  periodInMin: number,
+): Promise<void> {
+  if (isActive) {
+    chrome.alarms.create('chromeAlarm', {
+      periodInMinutes: periodInMin || DEFAULT_PERIOD_IN_MINUTES,
+    })
+    console.log('Created')
+
+    return
+  }
+
+  await chrome.alarms.clear('chromeAlarm')
+  console.log('Clear')
+}
+function createNotification(period: number): void {
+  chrome.notifications.create({
+    type: 'basic',
+    iconUrl: 'icon.png',
+    title: 'Knowledge is power',
+    message: `Another ${period || DEFAULT_PERIOD_IN_MINUTES} minute(s) of training has passed, don't forget to rest!`,
+    priority: 2,
+  })
+}
+
+async function checkTimerAndSendNotification(): Promise<void> {
+  chrome.storage.local.get('timerState', resultTimerState => {
+    chrome.storage.local.get('notificationState', async resultNot => {
+      if (!resultNot.notificationState.isNotificationActive) return
+
+      await updateAlarmBasedOnTimer(
+        resultTimerState.timerState.isActive,
+        resultNot.notificationState.periodInMinutes,
+      )
+
+      if (resultTimerState.timerState.isActive) {
+        createNotification(resultNot.notificationState.periodInMinutes)
+      }
+    })
+  })
+}
+
+chrome.storage.onChanged.addListener(async (changes, area) => {
+  if (area === 'local' && changes.timerState) {
+    const { isActive } = changes.timerState.newValue
+    const previousState = changes.timerState.oldValue?.isActive
+
+    if (previousState && !isActive) {
+      saveCurrentSession()
+    }
+
+    chrome.storage.local.get('notificationState', async result => {
+      if (!result.notificationState.isNotificationActive) return
+
+      await updateAlarmBasedOnTimer(
+        isActive,
+        result.notificationState.periodInMinutes,
+      )
+    })
+  }
+})
+
+chrome.alarms.onAlarm.addListener(async alarm => {
+  if (alarm.name === 'chromeAlarm') {
+    await checkTimerAndSendNotification()
+  }
+})
