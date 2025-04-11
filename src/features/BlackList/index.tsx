@@ -35,7 +35,7 @@ export const BlackList = (): JSX.Element => {
 
       <div className="mt-4 space-y-2">
         {blackList.length === 0 && (
-          <Title classes="text-center" title="List is Empty" />
+          <Title classes="text-center" title={locale.listEmpty} />
         )}
 
         {blackList.map(site => (

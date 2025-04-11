@@ -3,17 +3,16 @@ import { Tooltip } from '@mui/material'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import EastIcon from '@mui/icons-material/East'
 
-import { TypeTittle } from '../../types'
-import { useTranslate } from '../../hooks/useTranslate'
+import { Locale, TypeTittle } from '../../types'
 import Title from '../../components/Title'
 
 export const BlackListSwitcher = ({
   toggleBlackList,
+  interfaceLang,
 }: {
   toggleBlackList: () => void
+  interfaceLang: Locale
 }): JSX.Element => {
-  const { interfaceLang } = useTranslate()
-
   return (
     <div className="flex items-center justify-between my-4">
       <div className="flex items-center gap-5">

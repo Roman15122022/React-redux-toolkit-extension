@@ -30,7 +30,8 @@
       "description": "This list contains the domains you have blocked. These websites will not be accessible while the timer is active.",
       "button": "12",
       "placeholder": "Add new site (e.g., example.com)",
-      "btnAdd": "Add"
+      "btnAdd": "Add",
+      "listEmpty": "List is Empty"
     },
     "resetStatistics": {
       "title": "Reset all statistics",

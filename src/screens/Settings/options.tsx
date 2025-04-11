@@ -58,7 +58,10 @@ const Options = (): JSX.Element => {
               interfaceLang={interfaceLang}
             />
             <div className="border-t-2 mt-4 dark:border-white" />
-            <BlackListSwitcher toggleBlackList={toggleBlackList} />
+            <BlackListSwitcher
+              interfaceLang={interfaceLang}
+              toggleBlackList={toggleBlackList}
+            />
             <ResetStatistics interfaceLang={interfaceLang} />
 
             <p className="theme-text text-center mt-8 opacity-60">
