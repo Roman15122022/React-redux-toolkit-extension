@@ -6,8 +6,26 @@ import {
 
 /*Domain names*/
 
+function extractMainDomain(url: string): string {
+  try {
+    const { hostname } = new URL(url)
+    const parts = hostname.split('.')
+
+    if (parts.length > 2) {
+      return parts.slice(-2).join('.')
+    }
+
+    return hostname
+  } catch (e) {
+    console.error('Error extracting domain:', e)
+
+    return ''
+  }
+}
+
 let currentSession: {
   domain: string
+  fullDomain: string
   startTime: string
 } | null = null
 
@@ -26,6 +44,7 @@ function saveCurrentSession(): void {
 
   const sessionData = {
     domain: currentSession.domain,
+    fullDomain: currentSession.fullDomain,
     startTime: currentSession.startTime,
     endTime,
     duration,
@@ -46,32 +65,60 @@ function saveCurrentSession(): void {
   currentSession = null
 }
 
+function isDomainChanged(newUrl: string): boolean {
+  if (!currentSession) return true
+
+  try {
+    const newDomain = extractMainDomain(newUrl)
+
+    return newDomain !== currentSession.domain
+  } catch (e) {
+    console.error('Error checking domain change:', e)
+
+    return true
+  }
+}
+
 function tryStartSession(tab: chrome.tabs.Tab): void {
   if (!tab.url || !tab.active || !tab.url.startsWith('http')) return
 
   chrome.storage.local.get('timerState', result => {
     if (!result.timerState?.isActive) return
 
-    const domain = new URL(tab.url!).hostname
+    const fullDomain = new URL(tab.url).hostname
+    const domain = extractMainDomain(tab.url)
     const startTime = new Date().toISOString()
 
-    currentSession = { domain, startTime }
+    if (currentSession && currentSession.domain === domain) {
+      console.log('Same domain, keeping current session:', domain)
+
+      return
+    }
+
+    if (currentSession) {
+      saveCurrentSession()
+    }
+
+    currentSession = { domain, fullDomain, startTime }
     console.log('Started session:', currentSession)
   })
 }
 
-chrome.tabs.onUpdated.addListener((_, changeInfo, tab) => {
-  if (changeInfo.status === 'complete') {
-    saveCurrentSession()
-    tryStartSession(tab)
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.status === 'complete' && tab.active) {
+    if (tab.url && isDomainChanged(tab.url)) {
+      saveCurrentSession()
+      tryStartSession(tab)
+    }
   }
 })
 
 chrome.tabs.onActivated.addListener(activeInfo => {
-  saveCurrentSession()
-
   chrome.tabs.get(activeInfo.tabId, tab => {
-    tryStartSession(tab)
+    if (tab.url && isDomainChanged(tab.url)) {
+      saveCurrentSession()
+      tryStartSession(tab)
+    }
   })
 })
 
@@ -80,9 +127,16 @@ chrome.windows.onFocusChanged.addListener(windowId => {
     saveCurrentSession()
   } else {
     chrome.tabs.query({ active: true, windowId }, tabs => {
-      if (tabs[0]) tryStartSession(tabs[0])
+      if (tabs[0] && tabs[0].url && isDomainChanged(tabs[0].url)) {
+        saveCurrentSession()
+        tryStartSession(tabs[0])
+      }
     })
   }
+})
+
+chrome.runtime.onSuspend.addListener(() => {
+  saveCurrentSession()
 })
 
 chrome.webNavigation.onBeforeNavigate.addListener(
