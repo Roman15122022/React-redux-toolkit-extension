@@ -33,7 +33,7 @@ function getTotalDays(data: TimePeriod[]): number {
 function getFinalCustomizedTime(totalTime: number, locale: Locale): string {
   const formattedTime = formatTime(totalTime, false)
 
-  return customizedTime(formattedTime, locale)
+  return customizedTime(formattedTime, locale, false)
 }
 
 export function getCustomizeAllTime(
