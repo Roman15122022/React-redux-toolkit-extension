@@ -138,7 +138,7 @@
       "siteDomainStat": {
         "title": "Сайти під час навчання",
         "others": "Інші",
-        "blackList": "Чорний список",
+        "blackList": "ЧС",
         "mode": "Режим",
         "addToBlack": "Додати до чорного списку",
         "removeFromBlack": "Прибрати з чорного списку",

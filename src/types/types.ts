@@ -29,6 +29,7 @@ export type NotificationSettingState = {
 
 export type SessionsDomainInfo = {
   domain: string
+  fullDomain: string
   duration: number
   endTime: string
   startTime: string

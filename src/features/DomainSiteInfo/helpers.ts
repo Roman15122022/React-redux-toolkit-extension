@@ -15,7 +15,7 @@ function formatDomainName(name: string): string {
 
 /* eslint-disable */
 export const getReadableName = (url: string): string => {
-  let domain = url.replace(/^(https?:\/\/)/, '')
+  let domain = url?.replace(/^(https?:\/\/)/, '') || ''
 
   domain = domain.split('/')[0]
   const parts = domain.split('.')

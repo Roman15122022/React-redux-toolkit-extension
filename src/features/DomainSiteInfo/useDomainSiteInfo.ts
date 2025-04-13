@@ -55,12 +55,12 @@ export const useDomainSiteInfo = ({
 
   const allActualDomenDataText = useMemo(() => {
     const dictionaryData = filteredByDataSessions.reduce(
-      (acc, { domain, duration }) => {
-        if (!acc[domain]) {
-          acc[domain] = 0
+      (acc, { fullDomain, duration }) => {
+        if (!acc[fullDomain]) {
+          acc[fullDomain] = 0
         }
 
-        acc[domain] += duration
+        acc[fullDomain] += duration
 
         return acc
       },
@@ -87,8 +87,8 @@ export const useDomainSiteInfo = ({
 
   const actualDomenData = useMemo(() => {
     const dictionaryData = filteredByDataSessions.reduce(
-      (acc, { domain, duration }) => {
-        const key = getReadableName(domain)
+      (acc, { fullDomain, duration }) => {
+        const key = getReadableName(fullDomain)
 
         if (!acc[key]) {
           acc[key] = 0
