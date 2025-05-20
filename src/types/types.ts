@@ -26,3 +26,11 @@ export type NotificationSettingState = {
   isNotificationActive: boolean
   periodInMinutes: number
 }
+
+export type SessionsDomainInfo = {
+  domain: string
+  fullDomain: string
+  duration: number
+  endTime: string
+  startTime: string
+}

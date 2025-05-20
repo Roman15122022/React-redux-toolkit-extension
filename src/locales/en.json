@@ -5,6 +5,7 @@
   },
   "settings": {
     "title": "Settings",
+    "titleTwo": "Black List",
     "darkTheme": "Theme",
     "language": "Language",
     "button": "Click",
@@ -23,6 +24,14 @@
       "labelInput": "Time(min)",
       "errorFirst": "The period is number cannot be more than 24 hours",
       "errorSecond": "Can't be 0"
+    },
+    "blackList": {
+      "title": "Black List",
+      "description": "This list contains the domains you have blocked. These websites will not be accessible while the timer is active.",
+      "button": "12",
+      "placeholder": "Add new site (e.g., example.com)",
+      "btnAdd": "Add",
+      "listEmpty": "List is Empty"
     },
     "resetStatistics": {
       "title": "Reset all statistics",
@@ -125,6 +134,16 @@
         "neutral": "Neutral",
         "satisfied": "Good",
         "verySatisfied": "Great"
+      },
+      "siteDomainStat": {
+        "title": "Sites during the sessions",
+        "others": "Others",
+        "blackList": "Black List",
+        "mode": "Mode",
+        "addToBlack": "Quick Add To Black List",
+        "removeFromBlack": "Quick Remove From Black List",
+        "btnAddBl": "Add",
+        "btnRemove": "Remove"
       }
     },
 

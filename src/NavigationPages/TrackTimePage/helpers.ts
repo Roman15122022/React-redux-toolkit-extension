@@ -31,9 +31,33 @@ export function formatTime(
   return { formattedHours, formattedMinutes, formattedSeconds }
 }
 
-export function customizedTime(time: FormattedTime, locale: Locale): string {
+export function customizedTime(
+  time: FormattedTime,
+  locale: Locale,
+  includingZero = true,
+): string {
   const { formattedHours, formattedSeconds, formattedMinutes } = time
   const { hours, seconds, minutes } = locale.popup.track
 
-  return `${formattedHours}${hours} ${formattedMinutes}${minutes} ${formattedSeconds}${seconds}`
+  if (includingZero) {
+    return `${formattedHours}${hours} ${formattedMinutes}${minutes} ${formattedSeconds}${seconds}`
+  }
+
+  return [
+    Number(formattedHours) > 0 ? `${formattedHours}${hours}` : '',
+    Number(formattedMinutes) > 0 ? `${formattedMinutes}${minutes}` : '',
+    Number(formattedSeconds) > 0 ? `${formattedSeconds}${seconds}` : '',
+  ]
+    .filter(Boolean)
+    .join(' ')
+}
+
+export const fullFormatTime = (
+  seconds: number,
+  locale: Locale,
+  includeLeadingZeros = true,
+): string => {
+  const formatted = formatTime(seconds, includeLeadingZeros)
+
+  return customizedTime(formatted, locale, false)
 }

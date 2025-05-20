@@ -5,6 +5,7 @@
   },
   "settings": {
     "title": "Налаштування",
+    "titleTwo": "Чорний список",
     "darkTheme": "Тема",
     "language": "Мова",
     "button": "Натисни",
@@ -23,6 +24,14 @@
       "labelInput": "Час(хв)",
       "errorFirst": "Період(число) і не може бути більше 24-х години",
       "errorSecond": "Не може бути 0"
+    },
+    "blackList": {
+      "title": "Чорний список",
+      "description": "Цей список містить заблоковані вами домени. Ці веб-сайти будуть недоступні, поки активний таймер.",
+      "button": "12",
+      "placeholder": "Додати новий сайт (напр., example.com)",
+      "btnAdd": "Додати",
+      "listEmpty": "Cписок порожній"
     },
     "resetStatistics": {
       "title": "Обнулити статистику",
@@ -125,6 +134,16 @@
         "neutral": "Звичайне",
         "satisfied": "Хороше",
         "verySatisfied": "Відмінне"
+      },
+      "siteDomainStat": {
+        "title": "Сайти під час навчання",
+        "others": "Інші",
+        "blackList": "ЧС",
+        "mode": "Режим",
+        "addToBlack": "Додати до чорного списку",
+        "removeFromBlack": "Прибрати з чорного списку",
+        "btnAddBl": "Додати",
+        "btnRemove": "Прибрати"
       }
     },
     "dayOfWeek": {

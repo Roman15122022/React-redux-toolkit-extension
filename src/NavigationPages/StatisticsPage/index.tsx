@@ -8,8 +8,10 @@ import { SelectStatPeriod } from '../../features/SelectStatPeriod'
 import { SelectStatActivityName } from '../../features/SelectStatActivityName'
 import Title from '../../components/Title'
 import Container from '../../components/Container'
+import Button from '../../components/Button'
 
 import { useStatisticsPage } from './useStatisticsPage'
+import { StatisticState } from './enums'
 
 const StatisticsPage = (): JSX.Element => {
   const {
@@ -24,6 +26,7 @@ const StatisticsPage = (): JSX.Element => {
     statComponentByState,
     selectStatStateVariants,
     isActivityFilterVisible,
+    statisticState,
   } = useStatisticsPage()
 
   if (!isDataAvailable)
@@ -46,12 +49,23 @@ const StatisticsPage = (): JSX.Element => {
               onChange={handleChangeActivityName}
             />
           )}
+          {!isActivityFilterVisible &&
+            statisticState === StatisticState.SITES && (
+              <Button
+                classes="bg-red-500 text-white hover:bg-red-600 dark:bg-red-700 dark:hover:bg-red-600"
+                onClick={() => {
+                  chrome.tabs.create({ url: 'options.html?blacklist=true' })
+                }}
+              >
+                {locale.siteDomainStat.blackList}
+              </Button>
+            )}
         </div>
         <div className="flex gap-4">
           <div className="flex">
             {selectStatStateVariants.map(({ icon, onClick, isActive, id }) => (
               <div
-                className={`cursor-pointer ${isActive ? 'bg-secondary-light dark:bg-purple-dark' : ''} py-1 pb-1.5 px-3 border-[1px] border-secondary-light dark:border-purple-dark ${id === 1 && 'rounded-l-lg'} ${id === 2 && 'rounded-r-lg'}`}
+                className={`cursor-pointer ${isActive ? 'bg-secondary-light dark:bg-purple-dark' : ''} py-1 pb-1.5 px-3 border-[1px] border-secondary-light dark:border-purple-dark ${id === 1 && 'rounded-l-lg'} ${id === 2 && 'border-l-0 border-r-0'} ${id === 3 && 'rounded-r-lg'}`}
                 key={id}
                 onClick={onClick}
               >

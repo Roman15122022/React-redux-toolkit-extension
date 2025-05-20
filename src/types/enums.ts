@@ -22,6 +22,7 @@ export enum TypeButton {
   PRIMARY = 'primary',
   SECONDARY = 'secondary',
   ERROR = 'error',
+  ERROR_TWO = 'error_TWO',
   LINK = 'link',
   ACTIVE_LINK = 'activeLink',
   PAGE = 'page',
@@ -32,6 +33,7 @@ export enum TypeTittle {
   LARGE = 'large',
   DEFAULT = 'default',
   SMALL = 'small',
+  TINY = 'tiny',
 }
 
 export enum RoutesPath {

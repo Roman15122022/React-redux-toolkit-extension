@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { SelectChangeEvent } from '@mui/material'
+import LanguageIcon from '@mui/icons-material/Language'
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
 import DonutLargeIcon from '@mui/icons-material/DonutLarge'
 
@@ -10,6 +11,7 @@ import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import TextStatistics from '../../features/TextStatistics'
 import { GraphStatistics } from '../../features/GraphStatistics'
+import { DomainSiteInfo } from '../../features/DomainSiteInfo'
 
 import { Period } from './types'
 import { getDatesByPeriod } from './helpers'
@@ -91,6 +93,12 @@ export const useStatisticsPage = () => {
         period={period}
       />
     ),
+    [StatisticState.SITES]: (
+      <DomainSiteInfo
+        period={period}
+        setIsActivityFilterVisible={setIsActivityFilterVisible}
+      />
+    ),
   }
 
   const selectStatStateVariants = [
@@ -102,6 +110,12 @@ export const useStatisticsPage = () => {
     },
     {
       id: 2,
+      icon: <LanguageIcon sx={{ fontSize: 14 }} />,
+      onClick: () => setStatisticState(StatisticState.SITES),
+      isActive: statisticState === StatisticState.SITES,
+    },
+    {
+      id: 3,
       icon: <DonutLargeIcon sx={{ fontSize: 14 }} />,
       onClick: () => setStatisticState(StatisticState.GRAPH),
       isActive: statisticState === StatisticState.GRAPH,
