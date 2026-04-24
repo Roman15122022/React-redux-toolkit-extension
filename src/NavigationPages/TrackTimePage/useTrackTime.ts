@@ -1,6 +1,7 @@
 import { SyntheticEvent, useEffect, useLayoutEffect, useState } from 'react'
 import { SelectChangeEvent } from '@mui/material'
 
+import { trainAIModelAfterSession } from '../AIHelper/aiModel'
 import { getDayOfWeekNumber, getTimeDifferenceByNow } from '../../utils'
 import { timerLogsSlice } from '../../store/reducers/timeLogsReducer/TimerLogsSlice'
 import { currentTimerSlice } from '../../store/reducers/currentTimerReducer/CurrentTimerSlice'
@@ -23,7 +24,7 @@ export const useTrackTime = () => {
     startDate,
     elapsedTime,
   } = useAppSelector(state => state.CurrentTimerReducer)
-  const { lastStartDate, lastNameActivity, lastMood } = useAppSelector(
+  const { dates, lastStartDate, lastNameActivity, lastMood } = useAppSelector(
     state => state.TimerLogsReducer,
   )
 
@@ -88,16 +89,17 @@ export const useTrackTime = () => {
   function handleStopTimer(): void {
     updateSessionData()
 
-    dispatch(
-      addTimeLogs({
-        activityName: lastNameActivity.trim(),
-        startDate: lastStartDate,
-        endDate: Date.now(),
-        dayOfWeek: getDayOfWeekNumber(),
-        totalTimeForSession: elapsedTime,
-        mood: lastMood,
-      }),
-    )
+    const timeLog = {
+      activityName: lastNameActivity.trim(),
+      startDate: lastStartDate,
+      endDate: Date.now(),
+      dayOfWeek: getDayOfWeekNumber(),
+      totalTimeForSession: elapsedTime,
+      mood: lastMood,
+    }
+
+    dispatch(addTimeLogs(timeLog))
+    void trainAIModelAfterSession([...dates, timeLog]).catch(() => undefined)
 
     resetCurrentTimer()
     setLastTime(customizedTime(formatTime(seconds), interfaceLang))

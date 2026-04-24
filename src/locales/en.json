@@ -76,6 +76,48 @@
     "history": {
       "noHistory": "History is empty!"
     },
+    "aiHelper": {
+      "noDates": "No sessions yet",
+      "description": "This model trains only on your local data and becomes more accurate after every training block.",
+      "status": "Model status",
+      "statuses": {
+        "notEnoughData": "Need more sessions",
+        "training": "Training",
+        "trained": "Trained",
+        "ready": "Prediction ready",
+        "fallback": "Heuristic forecast",
+        "error": "Model error"
+      },
+      "notEnoughData": "Add {count} more session(s) to train the local AI model.",
+      "predictedMood": "Predicted mood",
+      "predictedStudyTime": "Predicted study time",
+      "predictedSessionCount": "Predicted sessions",
+      "badMoodRisk": "Bad mood risk",
+      "fatigueScore": "Fatigue score",
+      "consistencyScore": "Consistency score",
+      "recommendation": "AI recommendation",
+      "metricLevels": {
+        "low": "low",
+        "medium": "medium",
+        "high": "high"
+      },
+      "metricDescriptions": {
+        "badMoodRisk": "Chance that the next session may have a low mood.",
+        "fatigueScore": "Shows possible overload from recent duration, mood trend, and short breaks.",
+        "consistencyScore": "Shows how stable your study rhythm is by day, start time, and duration."
+      },
+      "metricSummary": "Current outlook: bad mood risk is {riskLevel}, fatigue is {fatigueLevel}, and learning rhythm is {consistencyLevel}.",
+      "recommendations": {
+        "rest": "Plan a lighter session and add a short break before studying.",
+        "shortSession": "Keep the next session focused and short, then review your progress.",
+        "increase": "Your pattern looks stable. You can slightly increase the study time or task difficulty.",
+        "steady": "Keep the current rhythm and track one more session for a sharper forecast."
+      },
+      "trainedOn": "Trained on",
+      "sessions": "sessions",
+      "loss": "loss",
+      "error": "Details"
+    },
     "achievements": {
       "noAchievements": "No achievements yet",
       "info": "In his book ‘Geniuses and Underdogs’, Malcolm Gladwell formulates the ‘10,000 Hour Rule’: to achieve world-class performance in any field, you need about 10,000 hours of practice - about 3 hours a day for 10 years. Gladwell argues that success depends more on purposeful practice and environment than on innate talent.\n\nThe examples of Mozart, The Beatles, Bill Gates, and Bobby Fischer confirm this rule. Mozart wrote his first major concerto at the age of 21, after ten years of composing practice. Bobby Fischer became a grandmaster in nine years, and Bill Gates spent about 10,000 hours on programming. So, 10,000 is the number that defines the highest skill. Believe it or not, check it out on your own experience."
