@@ -9,7 +9,7 @@ import useTimer from '../../hooks/useTimer'
 import { useSetSessionData } from '../../hooks/useSetSessionData'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
-import { TIME_IN_MS } from '../../constants'
+import { CANCEL_TIMER_SESSION_MESSAGE, TIME_IN_MS } from '../../constants'
 
 import { customizedTime, formatTime } from './helpers'
 
@@ -76,6 +76,15 @@ export const useTrackTime = () => {
     setIsError(false)
   }
 
+  function resetCurrentTimer(): void {
+    dispatch(setStartDate(0))
+    dispatch(setElapsedTime(0))
+    dispatch(setStateTimer(null))
+
+    stopAndResetTimer()
+    setInputText('')
+  }
+
   function handleStopTimer(): void {
     updateSessionData()
 
@@ -90,14 +99,15 @@ export const useTrackTime = () => {
       }),
     )
 
-    dispatch(setStartDate(0))
-    dispatch(setElapsedTime(0))
-    dispatch(setStateTimer(null))
-
-    stopAndResetTimer()
-
+    resetCurrentTimer()
     setLastTime(customizedTime(formatTime(seconds), interfaceLang))
-    setInputText('')
+  }
+
+  function handleCancelTimer(): void {
+    chrome.runtime.sendMessage({ type: CANCEL_TIMER_SESSION_MESSAGE }, () => {
+      resetCurrentTimer()
+      setLastTime('')
+    })
   }
 
   function handleStartTimer(): void {
@@ -163,6 +173,7 @@ export const useTrackTime = () => {
     time: formatTime(seconds),
     handleStartSession,
     handleStopTimer,
+    handleCancelTimer,
     handlePauseTimer,
     startTimer,
     isPaused: stateTimer.isPause,

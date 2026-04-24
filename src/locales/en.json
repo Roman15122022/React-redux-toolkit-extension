@@ -54,6 +54,7 @@
       "title": "Track your study time",
       "start": "Start session",
       "stop": "Finish session",
+      "cancel": "Cancel",
       "pause": "Pause",
       "hours": "h",
       "minutes": "m",

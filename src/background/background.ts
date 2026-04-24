@@ -1,3 +1,5 @@
+import { CANCEL_TIMER_SESSION_MESSAGE } from '../constants'
+
 import {
   DEFAULT_PERIOD_IN_MINUTES,
   MAX_SIZE_PERIODS,
@@ -28,6 +30,17 @@ let currentSession: {
   fullDomain: string
   startTime: string
 } | null = null
+
+chrome.runtime.onMessage.addListener(
+  (message: { type?: string }, _sender, sendResponse) => {
+    if (message?.type !== CANCEL_TIMER_SESSION_MESSAGE) return false
+
+    currentSession = null
+    sendResponse({ success: true })
+
+    return false
+  },
+)
 
 function saveCurrentSession(): void {
   if (!currentSession) return

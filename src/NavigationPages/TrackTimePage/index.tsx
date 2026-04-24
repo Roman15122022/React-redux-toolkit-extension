@@ -18,6 +18,7 @@ const TrackTimePage = (): JSX.Element => {
     lastNameActivity,
     date,
     handleStopTimer,
+    handleCancelTimer,
     handleStartFromButton,
     handlePauseTimer,
     handleStartSession,
@@ -52,6 +53,13 @@ const TrackTimePage = (): JSX.Element => {
               onClick={handleStopTimer}
             >
               {locale.stop}: {lastNameActivity}
+            </Button>
+            <Button
+              classes="mt-1"
+              variant={TypeButton.ERROR}
+              onClick={handleCancelTimer}
+            >
+              {locale.cancel}
             </Button>
           </div>
         ) : (
