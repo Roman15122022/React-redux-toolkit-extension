@@ -43,6 +43,9 @@ export const stateSaverSlice = createSlice({
     saveActivityNameFilter(state, action: PayloadAction<string>) {
       state.activityNameFilter = action.payload
     },
+    setStateSaverState(state, action: PayloadAction<StateSaver>) {
+      Object.assign(state, action.payload)
+    },
     resetState(state) {
       Object.assign(state, initialState)
     },

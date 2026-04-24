@@ -32,6 +32,9 @@ export const timerLogsSlice = createSlice({
     setLastMood(state, action: PayloadAction<string>) {
       state.lastMood = action.payload
     },
+    setTimerLogsState(state, action: PayloadAction<TimerLogs>) {
+      Object.assign(state, action.payload)
+    },
     resetData(state) {
       state.dates = []
       state.lastStartDate = 0

@@ -8,6 +8,7 @@ import SaveStateToggler from '../../features/SaveStateToggler'
 import ResetStatistics from '../../features/ResetStatistics'
 import NotificationSetting from '../../features/NotificationSetting'
 import LocaleSwitcher from '../../features/LocaleSwitcher'
+import DataTransfer from '../../features/DataTransfer'
 import { BlackListSwitcher } from '../../features/BlackListSwitcher'
 import { BlackList } from '../../features/BlackList'
 import Title from '../../components/Title'
@@ -62,6 +63,7 @@ const Options = (): JSX.Element => {
               interfaceLang={interfaceLang}
               toggleBlackList={toggleBlackList}
             />
+            <DataTransfer interfaceLang={interfaceLang} />
             <ResetStatistics interfaceLang={interfaceLang} />
 
             <p className="theme-text text-center mt-8 opacity-60">

@@ -33,6 +33,15 @@
       "btnAdd": "Add",
       "listEmpty": "List is Empty"
     },
+    "dataTransfer": {
+      "title": "Data",
+      "description": "Export or import extension data in JSON format, including settings, timer history, tracked sites, and the blacklist.",
+      "export": "Export",
+      "import": "Import",
+      "exportSuccess": "Data exported",
+      "importSuccess": "Data imported",
+      "importError": "Invalid JSON data"
+    },
     "resetStatistics": {
       "title": "Reset all statistics",
       "askTitle": "Are you sure?",

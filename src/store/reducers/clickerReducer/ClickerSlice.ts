@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { UserClicker } from './types'
 
@@ -12,6 +12,9 @@ export const clickerSlice = createSlice({
   reducers: {
     increment(state) {
       state.count += 1
+    },
+    setClickerState(state, action: PayloadAction<UserClicker>) {
+      state.count = action.payload.count
     },
   },
 })

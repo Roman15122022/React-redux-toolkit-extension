@@ -32,6 +32,9 @@ export const settingSlice = createSlice({
     toggleSaveState(state, action: PayloadAction<boolean>) {
       state.saveStateAfterClose = action.payload
     },
+    setSettingsState(state, action: PayloadAction<Setting>) {
+      Object.assign(state, action.payload)
+    },
     setNotification(state, action: PayloadAction<NotificationSettingState>) {
       state.notification = action.payload
 
