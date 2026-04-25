@@ -10,8 +10,21 @@ import { clickerSlice } from '../../store/reducers/clickerReducer/ClickerSlice'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 
-import { ChromeStorageData, ExportedAppData, StatusMessage } from './types'
-import { isExportedAppData } from './helpers'
+import {
+  ChromeStorageData,
+  DateRange,
+  ExportMode,
+  ExportedAppData,
+  ImportMode,
+  ImportPreview,
+  StatusMessage,
+} from './types'
+import {
+  createExportedAppData,
+  createMergedAppData,
+  getDataTransferSummary,
+  isExportedAppData,
+} from './helpers'
 
 const STORAGE_KEYS = [
   ChromeKeys.CHROME_STATE_TIMER,
@@ -25,6 +38,11 @@ export const useDataTransfer = () => {
   const dispatch = useAppDispatch()
   const inputRef = useRef<HTMLInputElement>(null)
   const [statusMessage, setStatusMessage] = useState<StatusMessage>(null)
+  const [dateRange, setDateRange] = useState<DateRange>({ from: '', to: '' })
+  const [exportMode, setExportMode] = useState<ExportMode>('all')
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false)
+  const [importMode, setImportMode] = useState<ImportMode>('merge')
+  const [importPreview, setImportPreview] = useState<ImportPreview | null>(null)
 
   function getChromeStorageData(): Promise<ChromeStorageData> {
     return new Promise(resolve => {
@@ -52,16 +70,26 @@ export const useDataTransfer = () => {
     URL.revokeObjectURL(url)
   }
 
-  async function handleExportData(successText: string): Promise<void> {
+  async function handleExportData(
+    successText: string,
+    dateRangeErrorText: string,
+  ): Promise<void> {
     const chromeStorage = await getChromeStorageData()
-
-    downloadJson({
-      version: 1,
-      exportedAt: new Date().toISOString(),
-      redux: state,
+    const exportData = createExportedAppData({
+      state,
       chromeStorage,
+      dateRange: exportMode === 'range' ? dateRange : { from: '', to: '' },
     })
 
+    if (!exportData) {
+      setStatusMessage({ type: 'error', text: dateRangeErrorText })
+
+      return
+    }
+
+    downloadJson(exportData)
+
+    setIsExportModalOpen(false)
     setStatusMessage({ type: 'success', text: successText })
   }
 
@@ -120,13 +148,43 @@ export const useDataTransfer = () => {
     await syncChromeStorage(data)
   }
 
+  function handleDateRangeChange(field: keyof DateRange, value: string): void {
+    setDateRange(prevState => ({ ...prevState, [field]: value }))
+  }
+
+  function clearDateRange(): void {
+    setDateRange({ from: '', to: '' })
+  }
+
+  function handleExportModeChange(mode: ExportMode): void {
+    setExportMode(mode)
+    setStatusMessage(null)
+
+    if (mode === 'all') {
+      clearDateRange()
+    }
+  }
+
+  function openExportModal(): void {
+    setImportPreview(null)
+    setStatusMessage(null)
+    setExportMode('all')
+    clearDateRange()
+    setIsExportModalOpen(true)
+  }
+
+  function closeExportModal(): void {
+    setIsExportModalOpen(false)
+    setStatusMessage(null)
+  }
+
   function handleImportClick(): void {
+    setIsExportModalOpen(false)
     inputRef.current?.click()
   }
 
   function handleImportData(
     event: ChangeEvent<HTMLInputElement>,
-    successText: string,
     errorText: string,
   ): void {
     const file = event.target.files?.[0]
@@ -141,14 +199,19 @@ export const useDataTransfer = () => {
         const parsedData = JSON.parse(String(reader.result))
 
         if (!isExportedAppData(parsedData)) {
+          setImportPreview(null)
           setStatusMessage({ type: 'error', text: errorText })
 
           return
         }
 
-        await importData(parsedData)
-        setStatusMessage({ type: 'success', text: successText })
+        setImportPreview({
+          data: parsedData,
+          summary: getDataTransferSummary(parsedData),
+        })
+        setStatusMessage(null)
       } catch {
+        setImportPreview(null)
         setStatusMessage({ type: 'error', text: errorText })
       }
     }
@@ -156,11 +219,46 @@ export const useDataTransfer = () => {
     reader.readAsText(file)
   }
 
+  async function handleConfirmImport(successText: string): Promise<void> {
+    if (!importPreview) return
+
+    const dataToImport =
+      importMode === 'replace'
+        ? importPreview.data
+        : createMergedAppData({
+            currentState: state,
+            currentChromeStorage: await getChromeStorageData(),
+            importedData: importPreview.data,
+          })
+
+    await importData(dataToImport)
+    setImportPreview(null)
+    setStatusMessage({ type: 'success', text: successText })
+  }
+
+  function handleCancelImport(): void {
+    setImportPreview(null)
+    setStatusMessage(null)
+  }
+
   return {
+    clearDateRange,
+    closeExportModal,
+    dateRange,
+    exportMode,
     handleExportData,
+    handleCancelImport,
+    handleConfirmImport,
+    handleDateRangeChange,
+    handleExportModeChange,
     handleImportClick,
     handleImportData,
+    importMode,
+    importPreview,
     inputRef,
+    isExportModalOpen,
+    openExportModal,
+    setImportMode,
     statusMessage,
   }
 }
