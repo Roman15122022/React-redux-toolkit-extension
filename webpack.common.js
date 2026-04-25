@@ -64,6 +64,7 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
+    chunkFilename: 'chunk-[id].js',
     path: path.join(__dirname, 'dist'),
   },
   optimization: {

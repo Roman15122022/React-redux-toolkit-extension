@@ -4,6 +4,8 @@ export type HistoryDate = {
   isSelected: boolean
 }
 
+export type HistoryView = 'list' | 'calendar'
+
 export type DateInfo = {
   localizeName: string
   date: number

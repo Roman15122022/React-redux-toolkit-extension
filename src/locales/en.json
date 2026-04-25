@@ -99,7 +99,9 @@
       "label": "Activity"
     },
     "history": {
-      "noHistory": "History is empty!"
+      "noHistory": "History is empty!",
+      "listView": "List view",
+      "calendarView": "Calendar view"
     },
     "aiHelper": {
       "noDates": "No sessions yet",
@@ -185,6 +187,20 @@
       },
       "noStatistics": "No statistics available yet",
       "hint": "This button toggles the display of hints. On this page, you can see your progress statistics.",
+      "heatmap": {
+        "title": "Study activity",
+        "description": "Heatmap of tracked study time per day.",
+        "lastYear": "Last 12 months",
+        "lastMonths": "Last {count} months",
+        "moreDetails": "More",
+        "today": "Today",
+        "less": "Less",
+        "more": "More",
+        "intensity": "Intensity",
+        "noStudyTime": "No study time",
+        "session": "session",
+        "sessions": "sessions"
+      },
       "allTime": "Total time spent:",
       "descriptionAllTime": "How much total time has been logged by this tracker",
       "totalSessions": "Total sessions:",

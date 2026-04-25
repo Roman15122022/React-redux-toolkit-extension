@@ -11,6 +11,7 @@ const initialState: StateSaver = {
   historyPage: {
     selectedPage: 1,
     selectedDate: 0,
+    historyView: 'list',
   },
   sortAchievement: Sort.TIME,
   isHintActive: false,

@@ -15,6 +15,7 @@ import Title from '../../components/Title'
 import StyledLink from '../../components/StyledLink'
 
 import { useOptions } from './useOptions'
+import HistoryHeatmapOptions from './HistoryHeatmapOptions'
 
 const Options = (): JSX.Element => {
   const {
@@ -24,15 +25,21 @@ const Options = (): JSX.Element => {
     switchTheme,
     interfaceLang,
     isBlackList,
+    isHistory,
     toggleBlackList,
+    toggleHistory,
     title,
   } = useOptions()
 
   return (
-    <div className="w-[500px] m-auto mt-4">
-      {isBlackList && (
+    <div
+      className={`${
+        isHistory ? 'w-[1220px] max-w-[calc(100vw-48px)]' : 'w-[500px]'
+      } m-auto mt-4`}
+    >
+      {(isBlackList || isHistory) && (
         <WestIcon
-          onClick={toggleBlackList}
+          onClick={isHistory ? toggleHistory : toggleBlackList}
           className="theme-text hover:text-secondary-light dark:hover:text-purple-dark cursor-pointer"
           sx={{ fontSize: 24 }}
         />
@@ -41,6 +48,8 @@ const Options = (): JSX.Element => {
       <div className="mt-6">
         {isBlackList ? (
           <BlackList />
+        ) : isHistory ? (
+          <HistoryHeatmapOptions />
         ) : (
           <>
             <ThemeSwitcher

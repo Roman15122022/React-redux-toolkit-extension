@@ -15,7 +15,12 @@ const StudyTimeInfoForDay = ({
   const { locale, periods, totalForDay } = useStudyTimeInfoForDay(date)
 
   return (
-    <div className={cn('mt-5 font-semibold text-sm', classes)}>
+    <div
+      className={cn(
+        'theme-text mt-5 select-none font-semibold text-sm',
+        classes,
+      )}
+    >
       {isLastTimeNeeded &&
         (lastTime ? (
           <div className="flex items-center">
@@ -38,7 +43,7 @@ const StudyTimeInfoForDay = ({
             .map(({ period, activityName }, index) => (
               <div
                 key={period + index}
-                className="flex items-center mt-1 last:mb-1.5"
+                className="flex items-center text-xs mt-1 last:mb-1.5"
               >
                 <span>
                   {index + 1}. {activityName}:
