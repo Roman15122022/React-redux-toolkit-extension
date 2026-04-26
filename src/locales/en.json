@@ -96,7 +96,8 @@
       "lastTime": "The last session lasted",
       "period": "Period",
       "totalForDay": "Total time study for day",
-      "label": "Activity"
+      "label": "Activity",
+      "currentMood": "Current mood"
     },
     "history": {
       "noHistory": "History is empty!",

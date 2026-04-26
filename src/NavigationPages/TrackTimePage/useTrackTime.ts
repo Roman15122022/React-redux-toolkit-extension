@@ -1,5 +1,4 @@
 import { SyntheticEvent, useEffect, useLayoutEffect, useState } from 'react'
-import { SelectChangeEvent } from '@mui/material'
 
 import { trainAIModelAfterSession } from '../AIHelper/aiModel'
 import { getDayOfWeekNumber, getTimeDifferenceByNow } from '../../utils'
@@ -148,9 +147,7 @@ export const useTrackTime = () => {
     pauseTimer()
   }
 
-  function handleChangeMood(event: SelectChangeEvent) {
-    const newMood = event.target.value
-
+  function handleChangeMood(newMood: string): void {
     setMood(newMood)
   }
 

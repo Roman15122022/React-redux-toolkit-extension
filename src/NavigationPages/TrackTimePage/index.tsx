@@ -63,15 +63,20 @@ const TrackTimePage = (): JSX.Element => {
             </Button>
           </div>
         ) : (
-          <div className="flex gap-3 justify-center items-center">
-            <InputNameActivity
-              nameLabel={locale.label}
-              currentLength={currentLength}
-              onChanges={handleOnChanges}
-              isError={isError}
-            />
-            <MoodSelect key={mood} value={mood} onChange={handleChangeMood} />
-            <Button classes="mt-2" onClick={handleStartSession}>
+          <div className="flex w-full flex-col items-center justify-center gap-3">
+            <div className="mx-auto flex w-fit items-start justify-center gap-3">
+              <InputNameActivity
+                nameLabel={locale.label}
+                currentLength={currentLength}
+                onChanges={handleOnChanges}
+                isError={isError}
+              />
+              <MoodSelect value={mood} onChange={handleChangeMood} />
+            </div>
+            <Button
+              classes="whitespace-nowrap mt-2"
+              onClick={handleStartSession}
+            >
               {locale.start}
             </Button>
           </div>

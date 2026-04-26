@@ -1,57 +1,88 @@
 import React from 'react'
-import { FormControl, MenuItem, Select } from '@mui/material'
-import SentimentVerySatisfiedRoundedIcon from '@mui/icons-material/SentimentVerySatisfiedRounded'
-import SentimentVeryDissatisfiedRoundedIcon from '@mui/icons-material/SentimentVeryDissatisfiedRounded'
-import SentimentSatisfiedRoundedIcon from '@mui/icons-material/SentimentSatisfiedRounded'
-import SentimentNeutralRoundedIcon from '@mui/icons-material/SentimentNeutralRounded'
-import SentimentDissatisfiedRoundedIcon from '@mui/icons-material/SentimentDissatisfiedRounded'
 
+import { cn } from '../../utils'
+import { useTranslate } from '../../hooks/useTranslate'
 import useTheme from '../../hooks/useTheme'
 
 import { MoodSelectOptions } from './types'
-import { MoodColorDictionary } from './constants'
+import {
+  MOOD_DARK_BG,
+  MOOD_MAIN_PURPLE,
+  MOOD_SELECTED_BG_ALPHA,
+  MOOD_SELECTED_SHADOW_ALPHA,
+  MOOD_SELECT_ICON_SIZE,
+  MoodIcons,
+  MoodLabelKeys,
+  MoodSelectClasses,
+  MoodColorDictionary,
+} from './constants'
 
 export const MoodSelect = ({
   value,
   onChange,
 }: MoodSelectOptions): JSX.Element => {
+  const { interfaceLang } = useTranslate()
   const { theme } = useTheme()
+  const moodLabels = interfaceLang.popup.statistics.moods
+  const selectedMoodLabel =
+    moodLabels[MoodLabelKeys[Number(value) as keyof typeof MoodIcons]]
 
   return (
-    <FormControl>
-      <Select
-        value={value}
-        autoWidth
-        onChange={onChange}
-        className="mt-2 w-[54px] h-[40px] light:text-white dark:text-white"
-        IconComponent={null}
-        sx={{
-          '& .MuiSelect-select': {
-            paddingRight: '0px !important',
-          },
-          '& .MuiOutlinedInput-input': {
-            paddingRight: '0px !important',
-          },
-          border: `2px solid ${MoodColorDictionary[value][theme]}`,
-          borderRadius: '4px',
-        }}
+    <div className={MoodSelectClasses.root}>
+      <div
+        className={cn(...MoodSelectClasses.pill)}
+        role="radiogroup"
+        aria-label="Mood"
       >
-        <MenuItem value={1}>
-          <SentimentVeryDissatisfiedRoundedIcon color="error" />
-        </MenuItem>
-        <MenuItem value={2}>
-          <SentimentDissatisfiedRoundedIcon color="warning" />
-        </MenuItem>
-        <MenuItem value={3}>
-          <SentimentNeutralRoundedIcon color="inherit" />
-        </MenuItem>
-        <MenuItem value={4}>
-          <SentimentSatisfiedRoundedIcon color="info" />
-        </MenuItem>
-        <MenuItem value={5}>
-          <SentimentVerySatisfiedRoundedIcon color="success" />
-        </MenuItem>
-      </Select>
-    </FormControl>
+        {Object.entries(MoodIcons).map(([moodValue, Icon]) => {
+          const isSelected = moodValue === value
+          const moodNumber = Number(moodValue) as keyof typeof MoodIcons
+          const label = moodLabels[MoodLabelKeys[moodNumber]]
+          const selectedColor = MoodColorDictionary[moodNumber][theme]
+
+          return (
+            <button
+              key={moodValue}
+              type="button"
+              title={label}
+              aria-label={label}
+              aria-checked={isSelected}
+              role="radio"
+              onClick={() => onChange(moodValue)}
+              className={cn(
+                ...MoodSelectClasses.buttonBase,
+                isSelected
+                  ? MoodSelectClasses.selectedButton
+                  : MoodSelectClasses.button,
+              )}
+              style={{
+                borderColor: isSelected ? MOOD_MAIN_PURPLE : 'transparent',
+                backgroundColor: isSelected
+                  ? `${selectedColor}${MOOD_SELECTED_BG_ALPHA}`
+                  : 'transparent',
+                boxShadow: isSelected
+                  ? `inset 0 0 0 1px ${MOOD_DARK_BG}, 0 0 8px ${selectedColor}${MOOD_SELECTED_SHADOW_ALPHA}`
+                  : undefined,
+              }}
+            >
+              <Icon
+                htmlColor={selectedColor}
+                sx={{
+                  fontSize: isSelected
+                    ? MOOD_SELECT_ICON_SIZE.selected
+                    : MOOD_SELECT_ICON_SIZE.default,
+                }}
+              />
+            </button>
+          )
+        })}
+      </div>
+      <div className={MoodSelectClasses.label}>
+        {interfaceLang.popup.track.currentMood}:{' '}
+        <span className={MoodSelectClasses.labelValue}>
+          {selectedMoodLabel}
+        </span>
+      </div>
+    </div>
   )
 }
