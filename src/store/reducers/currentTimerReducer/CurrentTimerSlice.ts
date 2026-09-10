@@ -20,6 +20,9 @@ export const currentTimerSlice = createSlice({
     setElapsedTime(state, action: PayloadAction<number>) {
       state.elapsedTime = action.payload
     },
+    setCurrentTimerState(state, action: PayloadAction<CurrentTimer>) {
+      Object.assign(state, action.payload)
+    },
     setStateTimer(state, action: PayloadAction<StateTimer>) {
       state.stateTimer = action.payload
 

@@ -8,12 +8,14 @@ import SaveStateToggler from '../../features/SaveStateToggler'
 import ResetStatistics from '../../features/ResetStatistics'
 import NotificationSetting from '../../features/NotificationSetting'
 import LocaleSwitcher from '../../features/LocaleSwitcher'
+import DataTransfer from '../../features/DataTransfer'
 import { BlackListSwitcher } from '../../features/BlackListSwitcher'
 import { BlackList } from '../../features/BlackList'
 import Title from '../../components/Title'
 import StyledLink from '../../components/StyledLink'
 
 import { useOptions } from './useOptions'
+import HistoryHeatmapOptions from './HistoryHeatmapOptions'
 
 const Options = (): JSX.Element => {
   const {
@@ -23,15 +25,21 @@ const Options = (): JSX.Element => {
     switchTheme,
     interfaceLang,
     isBlackList,
+    isHistory,
     toggleBlackList,
+    toggleHistory,
     title,
   } = useOptions()
 
   return (
-    <div className="w-[500px] m-auto mt-4">
-      {isBlackList && (
+    <div
+      className={`${
+        isHistory ? 'w-[1220px] max-w-[calc(100vw-48px)]' : 'w-[500px]'
+      } m-auto mt-4`}
+    >
+      {(isBlackList || isHistory) && (
         <WestIcon
-          onClick={toggleBlackList}
+          onClick={isHistory ? toggleHistory : toggleBlackList}
           className="theme-text hover:text-secondary-light dark:hover:text-purple-dark cursor-pointer"
           sx={{ fontSize: 24 }}
         />
@@ -40,6 +48,8 @@ const Options = (): JSX.Element => {
       <div className="mt-6">
         {isBlackList ? (
           <BlackList />
+        ) : isHistory ? (
+          <HistoryHeatmapOptions />
         ) : (
           <>
             <ThemeSwitcher
@@ -62,6 +72,7 @@ const Options = (): JSX.Element => {
               interfaceLang={interfaceLang}
               toggleBlackList={toggleBlackList}
             />
+            <DataTransfer interfaceLang={interfaceLang} />
             <ResetStatistics interfaceLang={interfaceLang} />
 
             <p className="theme-text text-center mt-8 opacity-60">

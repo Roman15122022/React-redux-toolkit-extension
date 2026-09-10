@@ -33,6 +33,40 @@
       "btnAdd": "Add",
       "listEmpty": "List is Empty"
     },
+    "dataTransfer": {
+      "title": "Data",
+      "description": "Export or import extension data in JSON format, including settings, timer history, tracked sites, and the blacklist.",
+      "export": "Export",
+      "import": "Import",
+      "exportModalTitle": "Export data",
+      "exportModalDescription": "Download all TrackerR data or choose a date range for timer history and tracked site sessions.",
+      "exportAllTime": "All time",
+      "exportDateRange": "Date range",
+      "exportAllHint": "All available TrackerR data will be included.",
+      "exportRangeHint": "Choose a start date, end date, or both. Empty fields are allowed.",
+      "downloadJson": "Download JSON",
+      "dateFrom": "From",
+      "dateTo": "To",
+      "selectDate": "Select date",
+      "clearRange": "Clear",
+      "dateRangeError": "Choose a valid date range",
+      "exportSuccess": "Data exported successfully. JSON file was downloaded.",
+      "importSuccess": "Data imported successfully.",
+      "importError": "Invalid JSON data. Nothing was imported.",
+      "previewTitle": "Import preview",
+      "previewDescription": "Review this file before changing your local data.",
+      "previewTimerSessions": "Timer sessions",
+      "previewDomainSessions": "Site sessions",
+      "previewBlackList": "Blocked sites",
+      "previewPeriod": "Session period",
+      "mergeMode": "Merge",
+      "replaceMode": "Replace",
+      "mergeDescription": "Merge keeps your current settings and combines history, tracked sites, and blacklist items without duplicates.",
+      "replaceDescription": "Replace overwrites local extension data with this JSON file.",
+      "cancelImport": "Cancel",
+      "confirmMergeImport": "Merge import",
+      "confirmReplaceImport": "Replace import"
+    },
     "resetStatistics": {
       "title": "Reset all statistics",
       "askTitle": "Are you sure?",
@@ -54,6 +88,7 @@
       "title": "Track your study time",
       "start": "Start session",
       "stop": "Finish session",
+      "cancel": "Cancel",
       "pause": "Pause",
       "hours": "h",
       "minutes": "m",
@@ -61,10 +96,55 @@
       "lastTime": "The last session lasted",
       "period": "Period",
       "totalForDay": "Total time study for day",
-      "label": "Activity"
+      "label": "Activity",
+      "currentMood": "Current mood"
     },
     "history": {
-      "noHistory": "History is empty!"
+      "noHistory": "History is empty!",
+      "listView": "List view",
+      "calendarView": "Calendar view"
+    },
+    "aiHelper": {
+      "noDates": "No sessions yet",
+      "description": "This model trains only on your local data and becomes more accurate after every training block.",
+      "status": "Model status",
+      "statuses": {
+        "notEnoughData": "Need more sessions",
+        "training": "Training",
+        "trained": "Trained",
+        "ready": "Prediction ready",
+        "fallback": "Heuristic forecast",
+        "error": "Model error"
+      },
+      "notEnoughData": "Add {count} more session(s) to train the local AI model.",
+      "predictedMood": "Predicted mood",
+      "predictedStudyTime": "Predicted study time",
+      "predictedSessionCount": "Predicted sessions",
+      "badMoodRisk": "Bad mood risk",
+      "fatigueScore": "Fatigue score",
+      "consistencyScore": "Consistency score",
+      "recommendation": "AI recommendation",
+      "metricLevels": {
+        "low": "low",
+        "medium": "medium",
+        "high": "high"
+      },
+      "metricDescriptions": {
+        "badMoodRisk": "Chance that the next session may have a low mood.",
+        "fatigueScore": "Shows possible overload from recent duration, mood trend, and short breaks.",
+        "consistencyScore": "Shows how stable your study rhythm is by day, start time, and duration."
+      },
+      "metricSummary": "Current outlook: bad mood risk is {riskLevel}, fatigue is {fatigueLevel}, and learning rhythm is {consistencyLevel}.",
+      "recommendations": {
+        "rest": "Plan a lighter session and add a short break before studying.",
+        "shortSession": "Keep the next session focused and short, then review your progress.",
+        "increase": "Your pattern looks stable. You can slightly increase the study time or task difficulty.",
+        "steady": "Keep the current rhythm and track one more session for a sharper forecast."
+      },
+      "trainedOn": "Trained on",
+      "sessions": "sessions",
+      "loss": "loss",
+      "error": "Details"
     },
     "achievements": {
       "noAchievements": "No achievements yet",
@@ -108,6 +188,20 @@
       },
       "noStatistics": "No statistics available yet",
       "hint": "This button toggles the display of hints. On this page, you can see your progress statistics.",
+      "heatmap": {
+        "title": "Study activity",
+        "description": "Heatmap of tracked study time per day.",
+        "lastYear": "Last 12 months",
+        "lastMonths": "Last {count} months",
+        "moreDetails": "More",
+        "today": "Today",
+        "less": "Less",
+        "more": "More",
+        "intensity": "Intensity",
+        "noStudyTime": "No study time",
+        "session": "session",
+        "sessions": "sessions"
+      },
       "allTime": "Total time spent:",
       "descriptionAllTime": "How much total time has been logged by this tracker",
       "totalSessions": "Total sessions:",

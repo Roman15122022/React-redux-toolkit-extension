@@ -7,9 +7,13 @@ import { useAppSelector } from '../../hooks/useAppSelector'
 import { formatLanguageDate, getSegment } from '../../helpers'
 import { DATE_FULL_MONTH } from '../../constants'
 
-import { HistoryDate } from './types'
+import { HistoryDate, HistoryView } from './types'
 import { getNormalizeName, getUniqStudyDays } from './helpers'
 import { LIMIT_BUTTON_PAGE } from './constants'
+
+function getStartOfDayTimestamp(date: number): number {
+  return new Date(date).setHours(0, 0, 0, 0)
+}
 
 export const useHistoryPage = () => {
   const { dates } = useAppSelector(state => state.TimerLogsReducer)
@@ -23,28 +27,50 @@ export const useHistoryPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(
     historyPage.selectedPage,
   )
+  const [historyView, setHistoryView] = useState<HistoryView>(
+    historyPage.historyView || 'list',
+  )
 
   function handleSetCurrentPage(selectedPage: number): void {
     setCurrentPage(selectedPage)
-    setHistoryState({ ...historyPage, selectedPage })
+    setHistoryState({ ...historyPage, historyView, selectedPage })
+  }
+
+  function handleChangeHistoryView(view: HistoryView): void {
+    const nextSelectedDate =
+      view === 'calendar' && !selectedDate
+        ? getStartOfDayTimestamp(Date.now())
+        : selectedDate
+
+    setHistoryView(view)
+    setSelectedDate(nextSelectedDate)
+    setHistoryState({
+      ...historyPage,
+      selectedDate: nextSelectedDate,
+      selectedPage: currentPage,
+      historyView: view,
+    })
   }
 
   function isSelectedDate(date: number): boolean {
-    return selectedDate === new Date(date).getTime()
+    return (
+      Boolean(selectedDate) &&
+      getStartOfDayTimestamp(selectedDate) === getStartOfDayTimestamp(date)
+    )
   }
 
   function handleSelectDate(date: number): void {
-    const fullDate = new Date(date).getTime()
+    const fullDate = getStartOfDayTimestamp(date)
 
-    if (fullDate === selectedDate) {
+    if (isSelectedDate(fullDate)) {
       setSelectedDate(0)
-      setHistoryState({ ...historyPage, selectedDate: 0 })
+      setHistoryState({ ...historyPage, historyView, selectedDate: 0 })
 
       return
     }
 
     setSelectedDate(fullDate)
-    setHistoryState({ ...historyPage, selectedDate: fullDate })
+    setHistoryState({ ...historyPage, historyView, selectedDate: fullDate })
   }
 
   const historyDates: HistoryDate[] = getUniqStudyDays(dates, language)
@@ -70,12 +96,16 @@ export const useHistoryPage = () => {
   }
 
   return {
+    dates,
     interfaceLang,
+    historyView,
     historyDates: getSegment(historyDates, LIMIT_BUTTON_PAGE, currentPage),
     selectedDate,
     pages: handleGetPages(),
     currentPage,
     handleSetCurrentPage,
+    handleChangeHistoryView,
+    handleSelectDate,
     fullMonthName: getFullMonthSelectedDate(),
   }
 }

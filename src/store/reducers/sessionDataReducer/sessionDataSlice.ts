@@ -19,6 +19,9 @@ export const sessionDataSlice = createSlice({
     setBlackList: (state, action: PayloadAction<string[]>) => {
       state.blackList = action.payload
     },
+    setSessionState: (state, action: PayloadAction<SessionData>) => {
+      Object.assign(state, action.payload)
+    },
   },
 })
 

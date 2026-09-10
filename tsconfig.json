@@ -3,7 +3,7 @@
     "lib": ["DOM", "ES2021"],
     "baseUrl": "",
     "jsx": "react",
-    "module": "commonjs",
+    "module": "esnext",
     "target": "es6",
     "moduleResolution": "node",
     "skipLibCheck": true,

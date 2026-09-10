@@ -14,4 +14,5 @@ export interface StateSaver {
 export type StateHistoryPage = {
   selectedPage: number
   selectedDate: number
+  historyView: 'list' | 'calendar'
 }

@@ -1,6 +1,6 @@
 import { SyntheticEvent, useEffect, useLayoutEffect, useState } from 'react'
-import { SelectChangeEvent } from '@mui/material'
 
+import { trainAIModelAfterSession } from '../AIHelper/aiModel'
 import { getDayOfWeekNumber, getTimeDifferenceByNow } from '../../utils'
 import { timerLogsSlice } from '../../store/reducers/timeLogsReducer/TimerLogsSlice'
 import { currentTimerSlice } from '../../store/reducers/currentTimerReducer/CurrentTimerSlice'
@@ -9,7 +9,7 @@ import useTimer from '../../hooks/useTimer'
 import { useSetSessionData } from '../../hooks/useSetSessionData'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
-import { TIME_IN_MS } from '../../constants'
+import { CANCEL_TIMER_SESSION_MESSAGE, TIME_IN_MS } from '../../constants'
 
 import { customizedTime, formatTime } from './helpers'
 
@@ -23,7 +23,7 @@ export const useTrackTime = () => {
     startDate,
     elapsedTime,
   } = useAppSelector(state => state.CurrentTimerReducer)
-  const { lastStartDate, lastNameActivity, lastMood } = useAppSelector(
+  const { dates, lastStartDate, lastNameActivity, lastMood } = useAppSelector(
     state => state.TimerLogsReducer,
   )
 
@@ -76,28 +76,39 @@ export const useTrackTime = () => {
     setIsError(false)
   }
 
-  function handleStopTimer(): void {
-    updateSessionData()
-
-    dispatch(
-      addTimeLogs({
-        activityName: lastNameActivity.trim(),
-        startDate: lastStartDate,
-        endDate: Date.now(),
-        dayOfWeek: getDayOfWeekNumber(),
-        totalTimeForSession: elapsedTime,
-        mood: lastMood,
-      }),
-    )
-
+  function resetCurrentTimer(): void {
     dispatch(setStartDate(0))
     dispatch(setElapsedTime(0))
     dispatch(setStateTimer(null))
 
     stopAndResetTimer()
-
-    setLastTime(customizedTime(formatTime(seconds), interfaceLang))
     setInputText('')
+  }
+
+  function handleStopTimer(): void {
+    updateSessionData()
+
+    const timeLog = {
+      activityName: lastNameActivity.trim(),
+      startDate: lastStartDate,
+      endDate: Date.now(),
+      dayOfWeek: getDayOfWeekNumber(),
+      totalTimeForSession: elapsedTime,
+      mood: lastMood,
+    }
+
+    dispatch(addTimeLogs(timeLog))
+    void trainAIModelAfterSession([...dates, timeLog]).catch(() => undefined)
+
+    resetCurrentTimer()
+    setLastTime(customizedTime(formatTime(seconds), interfaceLang))
+  }
+
+  function handleCancelTimer(): void {
+    chrome.runtime.sendMessage({ type: CANCEL_TIMER_SESSION_MESSAGE }, () => {
+      resetCurrentTimer()
+      setLastTime('')
+    })
   }
 
   function handleStartTimer(): void {
@@ -136,9 +147,7 @@ export const useTrackTime = () => {
     pauseTimer()
   }
 
-  function handleChangeMood(event: SelectChangeEvent) {
-    const newMood = event.target.value
-
+  function handleChangeMood(newMood: string): void {
     setMood(newMood)
   }
 
@@ -163,6 +172,7 @@ export const useTrackTime = () => {
     time: formatTime(seconds),
     handleStartSession,
     handleStopTimer,
+    handleCancelTimer,
     handlePauseTimer,
     startTimer,
     isPaused: stateTimer.isPause,
