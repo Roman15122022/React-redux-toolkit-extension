@@ -11,23 +11,40 @@ import {
 } from 'redux-persist'
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 
+import { migrateSettingState } from './settingPersistence'
 import TimerLogsReducer from './reducers/timeLogsReducer/TimerLogsSlice'
 import StateSaverReducer from './reducers/stateSaverReducer/StateSaverSlice'
 import SettingReducer from './reducers/settingReducer/SettingSlice'
 import SessionDataSlice from './reducers/sessionDataReducer/sessionDataSlice'
 import CurrentTimerReducer from './reducers/currentTimerReducer/CurrentTimerSlice'
 import ClickerReducer from './reducers/clickerReducer/ClickerSlice'
+import { migrateCurrentTimerState } from './currentTimerPersistence'
 
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['SessionDataSlice'],
+  blacklist: ['CurrentTimerReducer', 'SessionDataSlice', 'SettingReducer'],
+}
+
+const currentTimerPersistConfig = {
+  key: 'currentTimer',
+  storage,
+  migrate: migrateCurrentTimerState,
+}
+
+const settingPersistConfig = {
+  key: 'setting',
+  storage,
+  migrate: migrateSettingState,
 }
 
 const rootReducer = combineReducers({
   ClickerReducer,
-  SettingReducer,
-  CurrentTimerReducer,
+  SettingReducer: persistReducer(settingPersistConfig, SettingReducer),
+  CurrentTimerReducer: persistReducer(
+    currentTimerPersistConfig,
+    CurrentTimerReducer,
+  ),
   TimerLogsReducer,
   StateSaverReducer,
   SessionDataSlice,
