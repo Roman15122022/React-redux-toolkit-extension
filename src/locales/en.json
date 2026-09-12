@@ -239,6 +239,15 @@
         "sec": "sec."
       },
       "noStatistics": "No statistics available yet",
+      "streak": {
+        "title": "Study streak",
+        "current": "Current streak",
+        "best": "Best streak",
+        "day": "day",
+        "days": "days",
+        "recoveryAvailable": "1 missed day is forgiven",
+        "recoveryUsed": "Next missed day resets the streak"
+      },
       "hint": "This button toggles the display of hints. On this page, you can see your progress statistics.",
       "heatmap": {
         "title": "Study activity",

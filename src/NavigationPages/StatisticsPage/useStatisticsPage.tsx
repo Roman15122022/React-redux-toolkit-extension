@@ -14,7 +14,7 @@ import { GraphStatistics } from '../../features/GraphStatistics'
 import { DomainSiteInfo } from '../../features/DomainSiteInfo'
 
 import { Period } from './types'
-import { getDatesByPeriod } from './helpers'
+import { getDatesByPeriod, getStudyStreak } from './helpers'
 import { StatisticState } from './enums'
 
 export const useStatisticsPage = () => {
@@ -77,6 +77,8 @@ export const useStatisticsPage = () => {
     return dataByPeriod.filter(item => item.activityName === activityNameFilter)
   }, [dataByPeriod, activityName])
 
+  const studyStreak = getStudyStreak(dates, Date.now())
+
   const componentsByState = {
     [StatisticState.TEXT]: (
       <TextStatistics
@@ -137,5 +139,6 @@ export const useStatisticsPage = () => {
     statComponentByState: componentsByState[statisticState] || null,
     selectStatStateVariants,
     isActivityFilterVisible,
+    studyStreak,
   }
 }

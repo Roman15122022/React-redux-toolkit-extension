@@ -12,6 +12,7 @@
     "test:domain-tracking": "node --test scripts/domain-time-tracker.test.js",
     "test:charts": "node --test scripts/chart-layout.test.js",
     "test:session-summary": "node --test scripts/session-summary.test.js",
+    "test:study-streak": "node --test scripts/study-streak.test.js",
     "test:store": "node --test scripts/store-persistence.test.js",
     "lint": "eslint --cache ./src",
     "lint:fix": "eslint --cache --fix ./src",

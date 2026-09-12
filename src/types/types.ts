@@ -22,6 +22,12 @@ export type TimePeriod = {
   pauseCount?: number
 }
 
+export type StudyStreak = {
+  currentStreak: number
+  bestStreak: number
+  isRecoveryDayUsed: boolean
+}
+
 export interface ChromeStorageProps {
   [ChromeKeys.CHROME_STATE_TIMER]: { isActive: boolean; isPause: boolean }
 }
