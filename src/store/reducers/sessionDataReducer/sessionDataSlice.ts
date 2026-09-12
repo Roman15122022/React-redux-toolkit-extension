@@ -7,6 +7,7 @@ import { SessionData } from './types'
 const initialState: SessionData = {
   sessions: [],
   blackList: [],
+  distractingDomains: [],
 }
 
 export const sessionDataSlice = createSlice({
@@ -18,6 +19,24 @@ export const sessionDataSlice = createSlice({
     },
     setBlackList: (state, action: PayloadAction<string[]>) => {
       state.blackList = action.payload
+    },
+    setDistractingDomains: (state, action: PayloadAction<string[]>) => {
+      state.distractingDomains = action.payload
+    },
+    toggleDistractingDomain: (state, action: PayloadAction<string>) => {
+      const normalizedDomain = action.payload
+        .replace(/^www\./, '')
+        .toLowerCase()
+
+      if (state.distractingDomains.includes(normalizedDomain)) {
+        state.distractingDomains = state.distractingDomains.filter(
+          domain => domain !== normalizedDomain,
+        )
+
+        return
+      }
+
+      state.distractingDomains.push(normalizedDomain)
     },
     setSessionState: (state, action: PayloadAction<SessionData>) => {
       Object.assign(state, action.payload)

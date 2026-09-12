@@ -1,5 +1,12 @@
 body {
-  height: 400px;
+  min-height: 400px;
   width: 400px;
+  margin: 0;
+  overflow-x: hidden;
   @apply bg-white dark:bg-black;
+}
+
+#root {
+  min-height: 400px;
+  overflow: hidden;
 }

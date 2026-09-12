@@ -3,3 +3,4 @@ dist
 .eslintcache
 .idea
 .vscode
+.superpowers/

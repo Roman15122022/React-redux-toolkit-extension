@@ -1,6 +1,6 @@
 import { Language, TimePeriod } from '../../types'
 import { formatLanguageDate } from '../../helpers'
-import { DATE_SHORT_DAY_FORMAT } from '../../constants'
+import { DATE_FULL_MONTH, DATE_SHORT_DAY_FORMAT } from '../../constants'
 
 import { DateInfo } from './types'
 
@@ -32,4 +32,17 @@ export function getNormalizeName(name: string): string {
   const result = arr.slice(0, 2).join(' ')
 
   return result.replace(/,/g, '')
+}
+
+export function getFullMonthSelectedDate(
+  selectedDate: number,
+  language: Language,
+): string | undefined {
+  if (!selectedDate) {
+    return undefined
+  }
+
+  return formatLanguageDate(selectedDate, DATE_FULL_MONTH, language)
+    .split(',')
+    .at(0)
 }

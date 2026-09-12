@@ -23,6 +23,21 @@ export const timerLogsSlice = createSlice({
 
       state.dates.push(action.payload)
     },
+    updateTimeLog(
+      state,
+      action: PayloadAction<{
+        startDate: number
+        changes: Partial<TimePeriod>
+      }>,
+    ) {
+      const timeLog = state.dates.find(
+        date => date.startDate === action.payload.startDate,
+      )
+
+      if (!timeLog) return
+
+      Object.assign(timeLog, action.payload.changes)
+    },
     setLastStartDate(state, action: PayloadAction<number>) {
       state.lastStartDate = action.payload
     },

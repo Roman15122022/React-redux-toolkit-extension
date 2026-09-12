@@ -56,19 +56,6 @@ function isNotificationState(data: unknown): data is NotificationSettingState {
   )
 }
 
-function isTimePeriod(data: unknown): data is TimePeriod {
-  if (!isRecord(data)) return false
-
-  return (
-    isString(data.activityName) &&
-    isFiniteNumber(data.startDate) &&
-    isFiniteNumber(data.endDate) &&
-    isFiniteNumber(data.dayOfWeek) &&
-    isFiniteNumber(data.totalTimeForSession) &&
-    isString(data.mood)
-  )
-}
-
 function isSessionDomainInfo(data: unknown): data is SessionsDomainInfo {
   if (!isRecord(data)) return false
 
@@ -78,6 +65,28 @@ function isSessionDomainInfo(data: unknown): data is SessionsDomainInfo {
     isFiniteNumber(data.duration) &&
     isString(data.endTime) &&
     isString(data.startTime)
+  )
+}
+
+function isTimePeriod(data: unknown): data is TimePeriod {
+  if (!isRecord(data)) return false
+
+  const optionalFieldsAreValid =
+    (data.pauseCount === undefined || isFiniteNumber(data.pauseCount)) &&
+    (data.focusScore === undefined || isFiniteNumber(data.focusScore)) &&
+    (data.note === undefined || isString(data.note)) &&
+    (data.domainSessions === undefined ||
+      (Array.isArray(data.domainSessions) &&
+        data.domainSessions.every(isSessionDomainInfo)))
+
+  return (
+    isString(data.activityName) &&
+    isFiniteNumber(data.startDate) &&
+    isFiniteNumber(data.endDate) &&
+    isFiniteNumber(data.dayOfWeek) &&
+    isFiniteNumber(data.totalTimeForSession) &&
+    isString(data.mood) &&
+    optionalFieldsAreValid
   )
 }
 
@@ -119,13 +128,17 @@ export function isExportedAppData(data: unknown): data is ExportedAppData {
       Array.isArray(redux.SessionDataSlice.sessions) &&
       redux.SessionDataSlice.sessions.every(isSessionDomainInfo) &&
       isStringArray(redux.SessionDataSlice.blackList) &&
+      (redux.SessionDataSlice.distractingDomains === undefined ||
+        isStringArray(redux.SessionDataSlice.distractingDomains)) &&
       (chromeStorage.timerState === undefined ||
         isTimerState(chromeStorage.timerState)) &&
       (chromeStorage.notificationState === undefined ||
         isNotificationState(chromeStorage.notificationState)) &&
       Array.isArray(chromeStorage.sessionData) &&
       chromeStorage.sessionData.every(isSessionDomainInfo) &&
-      isStringArray(chromeStorage.blackList),
+      isStringArray(chromeStorage.blackList) &&
+      (chromeStorage.distractingDomains === undefined ||
+        isStringArray(chromeStorage.distractingDomains)),
   )
 }
 
@@ -267,6 +280,15 @@ function getChromeBlackList(
   return chromeStorage.blackList?.length ? chromeStorage.blackList : fallback
 }
 
+function getChromeDistractingDomains(
+  chromeStorage: ChromeStorageData,
+  fallback: string[],
+): string[] {
+  return chromeStorage.distractingDomains?.length
+    ? chromeStorage.distractingDomains
+    : fallback
+}
+
 export function createExportedAppData({
   state,
   chromeStorage,
@@ -334,6 +356,14 @@ export function createMergedAppData({
     currentChromeStorage,
     currentState.SessionDataSlice.blackList,
   )
+  const importedDistractingDomains = getChromeDistractingDomains(
+    importedData.chromeStorage,
+    importedData.redux.SessionDataSlice.distractingDomains || [],
+  )
+  const currentDistractingDomains = getChromeDistractingDomains(
+    currentChromeStorage,
+    currentState.SessionDataSlice.distractingDomains || [],
+  )
   const mergedTimerDates = mergeUniqueByKey(
     currentState.TimerLogsReducer.dates,
     importedData.redux.TimerLogsReducer.dates,
@@ -348,6 +378,10 @@ export function createMergedAppData({
       getSessionTimestamp(a.startTime) - getSessionTimestamp(b.startTime),
   )
   const mergedBlackList = mergeStringValues(currentBlackList, importedBlackList)
+  const mergedDistractingDomains = mergeStringValues(
+    currentDistractingDomains,
+    importedDistractingDomains,
+  )
   const latestTimerLog = mergedTimerDates[mergedTimerDates.length - 1]
 
   return {
@@ -371,6 +405,7 @@ export function createMergedAppData({
         ...currentState.SessionDataSlice,
         sessions: mergedSessionData,
         blackList: mergedBlackList,
+        distractingDomains: mergedDistractingDomains,
       },
     },
     chromeStorage: {
@@ -384,6 +419,7 @@ export function createMergedAppData({
         DEFAULT_NOTIFICATION_STATE,
       sessionData: mergedSessionData,
       blackList: mergedBlackList,
+      distractingDomains: mergedDistractingDomains,
     },
   }
 }

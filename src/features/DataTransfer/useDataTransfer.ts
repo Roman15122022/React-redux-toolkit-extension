@@ -31,6 +31,7 @@ const STORAGE_KEYS = [
   ChromeKeys.CHROME_STATE_NOTIFICATION,
   'sessionData',
   'blackList',
+  'distractingDomains',
 ]
 
 export const useDataTransfer = () => {
@@ -52,6 +53,7 @@ export const useDataTransfer = () => {
           notificationState: result[ChromeKeys.CHROME_STATE_NOTIFICATION],
           sessionData: result.sessionData || [],
           blackList: result.blackList || [],
+          distractingDomains: result.distractingDomains || [],
         })
       })
     })
@@ -103,6 +105,10 @@ export const useDataTransfer = () => {
       data.chromeStorage.sessionData || data.redux.SessionDataSlice.sessions
     const blackList =
       data.chromeStorage.blackList || data.redux.SessionDataSlice.blackList
+    const distractingDomains =
+      data.chromeStorage.distractingDomains ||
+      data.redux.SessionDataSlice.distractingDomains ||
+      []
 
     return new Promise(resolve => {
       chrome.storage.local.set(
@@ -114,6 +120,7 @@ export const useDataTransfer = () => {
           [ChromeKeys.CHROME_STATE_NOTIFICATION]: notificationState,
           sessionData,
           blackList,
+          distractingDomains,
         },
         () => resolve(),
       )
@@ -135,6 +142,10 @@ export const useDataTransfer = () => {
           data.redux.SessionDataSlice.sessions,
         blackList:
           data.chromeStorage.blackList || data.redux.SessionDataSlice.blackList,
+        distractingDomains:
+          data.chromeStorage.distractingDomains ||
+          data.redux.SessionDataSlice.distractingDomains ||
+          [],
       }),
     )
     dispatch(settingSlice.actions.setSettingsState(data.redux.SettingReducer))

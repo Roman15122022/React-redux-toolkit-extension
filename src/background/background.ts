@@ -1,155 +1,121 @@
-import { CANCEL_TIMER_SESSION_MESSAGE } from '../constants'
+import {
+  CANCEL_TIMER_SESSION_MESSAGE,
+  FINISH_TIMER_SESSION_MESSAGE,
+} from '../constants'
 
 import {
-  DEFAULT_PERIOD_IN_MINUTES,
-  MAX_SIZE_PERIODS,
-  MIN_TIME_FOR_NOTE,
-} from './constants'
+  createDomainTimeTracker,
+  DomainTrackingStorageArea,
+  DomainTrackingTab,
+  DomainTrackingTimerState,
+} from './domainTimeTracker'
+import { DEFAULT_PERIOD_IN_MINUTES } from './constants'
 
 /*Domain names*/
 
-function extractMainDomain(url: string): string {
-  try {
-    const { hostname } = new URL(url)
-    const parts = hostname.split('.')
-
-    if (parts.length > 2) {
-      return parts.slice(-2).join('.')
-    }
-
-    return hostname
-  } catch (e) {
-    console.error('Error extracting domain:', e)
-
-    return ''
+const sessionStorageArea = (
+  chrome.storage as unknown as {
+    session: DomainTrackingStorageArea
   }
+).session
+
+function getTimerState(): Promise<DomainTrackingTimerState | null> {
+  return chrome.storage.local.get('timerState').then(result => {
+    const timerState = result.timerState as
+      | Partial<DomainTrackingTimerState>
+      | undefined
+
+    if (typeof timerState?.isActive !== 'boolean') return null
+
+    return {
+      isActive: timerState.isActive,
+      isPause: timerState.isPause ?? false,
+    }
+  })
 }
 
-let currentSession: {
-  domain: string
-  fullDomain: string
-  startTime: string
-} | null = null
+function getActiveTab(): Promise<DomainTrackingTab | null> {
+  return new Promise(resolve => {
+    chrome.windows.getLastFocused({ populate: true }, currentWindow => {
+      if (!currentWindow.focused) {
+        resolve(null)
+
+        return
+      }
+
+      const activeTab = currentWindow.tabs?.find(tab => tab.active)
+
+      resolve(
+        activeTab ? { active: activeTab.active, url: activeTab.url } : null,
+      )
+    })
+  })
+}
+
+const domainTimeTracker = createDomainTimeTracker({
+  getActiveTab,
+  getTimerState,
+  localStorageArea: chrome.storage.local,
+  sessionStorageArea,
+})
+const domainTimeTrackerReady = domainTimeTracker
+  .restore()
+  .then(() => domainTimeTracker.reconcile())
 
 chrome.runtime.onMessage.addListener(
   (message: { type?: string }, _sender, sendResponse) => {
-    if (message?.type !== CANCEL_TIMER_SESSION_MESSAGE) return false
+    if (message?.type === CANCEL_TIMER_SESSION_MESSAGE) {
+      domainTimeTrackerReady
+        .then(() => domainTimeTracker.cancel())
+        .then(() => sendResponse({ success: true }))
 
-    currentSession = null
-    sendResponse({ success: true })
+      return true
+    }
+
+    if (message?.type === FINISH_TIMER_SESSION_MESSAGE) {
+      domainTimeTrackerReady
+        .then(() => domainTimeTracker.flush())
+        .then(() => chrome.storage.local.get('sessionData'))
+        .then(result => {
+          sendResponse({ sessions: result.sessionData || [], success: true })
+        })
+
+      return true
+    }
 
     return false
   },
 )
 
-function saveCurrentSession(): void {
-  if (!currentSession) return
-
-  const endTime = new Date().toISOString()
-  const duration =
-    new Date(endTime).getTime() - new Date(currentSession.startTime).getTime()
-
-  if (duration < MIN_TIME_FOR_NOTE) {
-    currentSession = null
-
+chrome.tabs.onUpdated.addListener((_tabId, changeInfo, tab) => {
+  if (!tab.active || (!changeInfo.url && changeInfo.status !== 'complete')) {
     return
   }
 
-  const sessionData = {
-    domain: currentSession.domain,
-    fullDomain: currentSession.fullDomain,
-    startTime: currentSession.startTime,
-    endTime,
-    duration,
-  }
-
-  chrome.storage.local.get('sessionData', data => {
-    const sessions = data.sessionData || []
-    sessions.push(sessionData)
-
-    if (sessions.length > MAX_SIZE_PERIODS) {
-      sessions.splice(0, sessions.length - MAX_SIZE_PERIODS)
-    }
-
-    chrome.storage.local.set({ sessionData: sessions })
-    console.log('Saved session:', sessionData)
-  })
-
-  currentSession = null
-}
-
-function isDomainChanged(newUrl: string): boolean {
-  if (!currentSession) return true
-
-  try {
-    const newDomain = extractMainDomain(newUrl)
-
-    return newDomain !== currentSession.domain
-  } catch (e) {
-    console.error('Error checking domain change:', e)
-
-    return true
-  }
-}
-
-function tryStartSession(tab: chrome.tabs.Tab): void {
-  if (!tab.url || !tab.active || !tab.url.startsWith('http')) return
-
-  chrome.storage.local.get('timerState', result => {
-    if (!result.timerState?.isActive) return
-
-    const fullDomain = new URL(tab.url).hostname
-    const domain = extractMainDomain(tab.url)
-    const startTime = new Date().toISOString()
-
-    if (currentSession && currentSession.domain === domain) {
-      console.log('Same domain, keeping current session:', domain)
-
-      return
-    }
-
-    if (currentSession) {
-      saveCurrentSession()
-    }
-
-    currentSession = { domain, fullDomain, startTime }
-    console.log('Started session:', currentSession)
-  })
-}
-
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  if (changeInfo.status === 'complete' && tab.active) {
-    if (tab.url && isDomainChanged(tab.url)) {
-      saveCurrentSession()
-      tryStartSession(tab)
-    }
-  }
+  void domainTimeTrackerReady.then(() =>
+    domainTimeTracker.reconcileTab({
+      active: tab.active,
+      url: changeInfo.url ?? tab.url,
+    }),
+  )
 })
 
 chrome.tabs.onActivated.addListener(activeInfo => {
   chrome.tabs.get(activeInfo.tabId, tab => {
-    if (tab.url && isDomainChanged(tab.url)) {
-      saveCurrentSession()
-      tryStartSession(tab)
-    }
+    void domainTimeTrackerReady.then(() =>
+      domainTimeTracker.reconcileTab({ active: tab.active, url: tab.url }),
+    )
   })
 })
 
 chrome.windows.onFocusChanged.addListener(windowId => {
   if (windowId === chrome.windows.WINDOW_ID_NONE) {
-    saveCurrentSession()
-  } else {
-    chrome.tabs.query({ active: true, windowId }, tabs => {
-      if (tabs[0] && tabs[0].url && isDomainChanged(tabs[0].url)) {
-        saveCurrentSession()
-        tryStartSession(tabs[0])
-      }
-    })
-  }
-})
+    void domainTimeTrackerReady.then(() => domainTimeTracker.reconcileTab(null))
 
-chrome.runtime.onSuspend.addListener(() => {
-  saveCurrentSession()
+    return
+  }
+
+  void domainTimeTrackerReady.then(() => domainTimeTracker.reconcile())
 })
 
 chrome.webNavigation.onBeforeNavigate.addListener(
@@ -263,15 +229,16 @@ async function checkTimerAndSendNotification(): Promise<void> {
 
 chrome.storage.onChanged.addListener(async (changes, area) => {
   if (area === 'local' && changes.timerState) {
-    const { isActive } = changes.timerState.newValue
-    const previousState = changes.timerState.oldValue?.isActive
+    const timerState = changes.timerState.newValue as
+      | DomainTrackingTimerState
+      | undefined
+    const isActive = timerState?.isActive ?? false
 
-    if (previousState && !isActive) {
-      saveCurrentSession()
-    }
+    await domainTimeTrackerReady
+    await domainTimeTracker.reconcileTimerState(timerState ?? null)
 
     chrome.storage.local.get('notificationState', async result => {
-      if (!result.notificationState.isNotificationActive) return
+      if (!result.notificationState?.isNotificationActive) return
 
       await updateAlarmBasedOnTimer(
         isActive,

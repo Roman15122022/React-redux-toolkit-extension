@@ -15,7 +15,7 @@ const InputNameActivity = ({
   const { styles, options } = useInputNameActivity(isError)
 
   return (
-    <div className="relative">
+    <div className="relative min-w-0">
       <Autocomplete
         freeSolo
         options={options}

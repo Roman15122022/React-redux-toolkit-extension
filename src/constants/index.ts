@@ -41,3 +41,5 @@ export const dayOfWeekMap: Record<DayOfWeek, number> = {
 export const CHROME_ALARM = 'chromeAlarm'
 
 export const CANCEL_TIMER_SESSION_MESSAGE = 'cancelTimerSession'
+
+export const FINISH_TIMER_SESSION_MESSAGE = 'finishTimerSession'

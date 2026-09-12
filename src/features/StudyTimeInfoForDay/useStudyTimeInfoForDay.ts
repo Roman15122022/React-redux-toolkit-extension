@@ -17,12 +17,14 @@ export const useStudyTimeInfoForDay = (currentDate: number) => {
       return {
         period: customizedPeriod(item, language),
         activityName: item.activityName,
+        source: item,
       }
     })
   }
 
   return {
     locale: interfaceLang.popup.track,
+    summaryLocale: interfaceLang.popup.sessionSummary,
     periods: getPeriods(),
     totalForDay: totalElapsedTime(dates, interfaceLang, currentDate),
   }

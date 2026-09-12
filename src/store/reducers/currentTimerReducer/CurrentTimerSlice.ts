@@ -7,6 +7,7 @@ import { CurrentTimer } from './types'
 const initialState: CurrentTimer = {
   startDate: 0,
   elapsedTime: 0,
+  pauseCount: 0,
   stateTimer: null,
 }
 
@@ -19,6 +20,12 @@ export const currentTimerSlice = createSlice({
     },
     setElapsedTime(state, action: PayloadAction<number>) {
       state.elapsedTime = action.payload
+    },
+    incrementPauseCount(state) {
+      state.pauseCount = (state.pauseCount || 0) + 1
+    },
+    resetCurrentTimer(state) {
+      Object.assign(state, initialState)
     },
     setCurrentTimerState(state, action: PayloadAction<CurrentTimer>) {
       Object.assign(state, action.payload)

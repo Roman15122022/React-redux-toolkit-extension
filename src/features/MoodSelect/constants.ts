@@ -24,9 +24,9 @@ export const MOOD_SELECT_ICON_SIZE = {
 } as const
 
 export const MoodSelectClasses = {
-  root: 'flex w-[190px] flex-col items-center',
+  root: 'flex w-[180px] flex-col items-center',
   pill: [
-    'flex h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 px-2',
+    'flex h-10 w-full items-center justify-center gap-1 rounded-full border-2 px-2',
     'transition-colors duration-200',
   ],
   buttonBase: [

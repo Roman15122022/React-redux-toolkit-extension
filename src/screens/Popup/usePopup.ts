@@ -7,6 +7,7 @@ import { useTranslate } from '../../hooks/useTranslate'
 import useTheme from '../../hooks/useTheme'
 import { useStateSaver } from '../../hooks/useStateSaver'
 import { useSetSessionData } from '../../hooks/useSetSessionData'
+import { useManageDistractingDomains } from '../../hooks/useManageDistractingDomains'
 import { useManageBlackListDomain } from '../../hooks/useManageBlackListDomain'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
@@ -20,6 +21,7 @@ export const usePopup = () => {
   useTheme()
   const { updateSessionData } = useSetSessionData()
   const { handleSetBlackList } = useManageBlackListDomain()
+  const { handleSetDistractingDomains } = useManageDistractingDomains()
 
   const { interfaceLang } = useTranslate()
   const location = useLocation()
@@ -65,6 +67,7 @@ export const usePopup = () => {
   useEffect(() => {
     updateSessionData()
     handleSetBlackList()
+    handleSetDistractingDomains()
     navigate(activeRouteLink)
 
     const handleVisibilityChange = () => {

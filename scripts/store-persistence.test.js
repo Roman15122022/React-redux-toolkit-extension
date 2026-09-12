@@ -249,3 +249,77 @@ test('migrates settings from the legacy root persistence key', async () => {
     legacySettingsState,
   )
 })
+
+test('tracks pause count for the active timer and resets it with timer data', async () => {
+  localStorage.clear()
+  const popupPage = loadStoreInstance()
+  await waitForRehydration(popupPage.persistor)
+
+  popupPage.store.dispatch({ type: 'currentTimer/incrementPauseCount' })
+  popupPage.store.dispatch({ type: 'currentTimer/incrementPauseCount' })
+
+  assert.equal(popupPage.store.getState().CurrentTimerReducer.pauseCount, 2)
+
+  popupPage.store.dispatch({ type: 'currentTimer/resetCurrentTimer' })
+
+  assert.equal(popupPage.store.getState().CurrentTimerReducer.pauseCount, 0)
+})
+
+test('updates optional summary details on one completed timer log', async () => {
+  localStorage.clear()
+  const popupPage = loadStoreInstance()
+  await waitForRehydration(popupPage.persistor)
+  const completedPeriod = {
+    activityName: 'Programming',
+    startDate: 1_725_897_600_000,
+    endDate: 1_725_897_630_000,
+    dayOfWeek: 2,
+    totalTimeForSession: 30,
+    mood: '4',
+  }
+
+  popupPage.store.dispatch({
+    type: 'timerLogs/addTimeLogs',
+    payload: completedPeriod,
+  })
+  popupPage.store.dispatch({
+    type: 'timerLogs/updateTimeLog',
+    payload: {
+      startDate: completedPeriod.startDate,
+      changes: { note: 'Add tests next', focusScore: 86 },
+    },
+  })
+
+  assert.deepEqual(popupPage.store.getState().TimerLogsReducer.dates[0], {
+    ...completedPeriod,
+    note: 'Add tests next',
+    focusScore: 86,
+  })
+})
+
+test('toggles a distracting domain without adding it to the blacklist', async () => {
+  localStorage.clear()
+  const popupPage = loadStoreInstance()
+  await waitForRehydration(popupPage.persistor)
+
+  popupPage.store.dispatch({
+    type: 'sessionSlice/toggleDistractingDomain',
+    payload: 'youtube.com',
+  })
+
+  assert.deepEqual(
+    popupPage.store.getState().SessionDataSlice.distractingDomains,
+    ['youtube.com'],
+  )
+  assert.deepEqual(popupPage.store.getState().SessionDataSlice.blackList, [])
+
+  popupPage.store.dispatch({
+    type: 'sessionSlice/toggleDistractingDomain',
+    payload: 'youtube.com',
+  })
+
+  assert.deepEqual(
+    popupPage.store.getState().SessionDataSlice.distractingDomains,
+    [],
+  )
+})

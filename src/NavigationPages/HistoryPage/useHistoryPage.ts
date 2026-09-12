@@ -4,11 +4,14 @@ import { fillArr } from '../../utils'
 import { useTranslate } from '../../hooks/useTranslate'
 import { useStateSaver } from '../../hooks/useStateSaver'
 import { useAppSelector } from '../../hooks/useAppSelector'
-import { formatLanguageDate, getSegment } from '../../helpers'
-import { DATE_FULL_MONTH } from '../../constants'
+import { getSegment } from '../../helpers'
 
 import { HistoryDate, HistoryView } from './types'
-import { getNormalizeName, getUniqStudyDays } from './helpers'
+import {
+  getFullMonthSelectedDate,
+  getNormalizeName,
+  getUniqStudyDays,
+} from './helpers'
 import { LIMIT_BUTTON_PAGE } from './constants'
 
 function getStartOfDayTimestamp(date: number): number {
@@ -89,12 +92,6 @@ export const useHistoryPage = () => {
     return fillArr(pages)
   }
 
-  function getFullMonthSelectedDate() {
-    return formatLanguageDate(selectedDate, DATE_FULL_MONTH, language)
-      .split(',')
-      .at(0)
-  }
-
   return {
     dates,
     interfaceLang,
@@ -106,6 +103,6 @@ export const useHistoryPage = () => {
     handleSetCurrentPage,
     handleChangeHistoryView,
     handleSelectDate,
-    fullMonthName: getFullMonthSelectedDate(),
+    fullMonthName: getFullMonthSelectedDate(selectedDate, language),
   }
 }
