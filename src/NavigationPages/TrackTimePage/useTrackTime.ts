@@ -2,38 +2,56 @@ import { SyntheticEvent, useEffect, useLayoutEffect, useState } from 'react'
 
 import { trainAIModelAfterSession } from '../AIHelper/aiModel'
 import { getDayOfWeekNumber, getTimeDifferenceByNow } from '../../utils'
+import { SessionsDomainInfo, TimePeriod } from '../../types'
 import { timerLogsSlice } from '../../store/reducers/timeLogsReducer/TimerLogsSlice'
 import { currentTimerSlice } from '../../store/reducers/currentTimerReducer/CurrentTimerSlice'
 import { useTranslate } from '../../hooks/useTranslate'
 import useTimer from '../../hooks/useTimer'
-import { useSetSessionData } from '../../hooks/useSetSessionData'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
-import { CANCEL_TIMER_SESSION_MESSAGE, TIME_IN_MS } from '../../constants'
+import {
+  createSessionSummary,
+  getSessionDomainData,
+} from '../../features/SessionSummary/helpers'
+import {
+  CANCEL_TIMER_SESSION_MESSAGE,
+  FINISH_TIMER_SESSION_MESSAGE,
+  TIME_IN_MS,
+} from '../../constants'
 
 import { customizedTime, formatTime } from './helpers'
 
 export const useTrackTime = () => {
   const { interfaceLang } = useTranslate()
 
-  const { updateSessionData } = useSetSessionData()
-
   const {
     stateTimer: storeStateTimer,
     startDate,
     elapsedTime,
+    pauseCount = 0,
   } = useAppSelector(state => state.CurrentTimerReducer)
   const { dates, lastStartDate, lastNameActivity, lastMood } = useAppSelector(
     state => state.TimerLogsReducer,
+  )
+  const distractingDomains = useAppSelector(
+    state => state.SessionDataSlice.distractingDomains || [],
   )
 
   const [lastTime, setLastTime] = useState<string>('')
   const [mood, setMood] = useState<string>(lastMood || '3')
   const [inputText, setInputText] = useState<string>('')
   const [isError, setIsError] = useState<boolean>(false)
+  const [completedSession, setCompletedSession] = useState<TimePeriod | null>(
+    null,
+  )
 
-  const { setStateTimer, setStartDate, setElapsedTime } =
-    currentTimerSlice.actions
+  const {
+    incrementPauseCount,
+    resetCurrentTimer: resetCurrentTimerState,
+    setStateTimer,
+    setStartDate,
+    setElapsedTime,
+  } = currentTimerSlice.actions
   const { setLastNameActivity, setLastStartDate, addTimeLogs, setLastMood } =
     timerLogsSlice.actions
 
@@ -77,31 +95,56 @@ export const useTrackTime = () => {
   }
 
   function resetCurrentTimer(): void {
-    dispatch(setStartDate(0))
-    dispatch(setElapsedTime(0))
-    dispatch(setStateTimer(null))
+    dispatch(setStateTimer({ isActive: false, isPause: false }))
+    dispatch(resetCurrentTimerState())
 
     stopAndResetTimer()
     setInputText('')
   }
 
-  function handleStopTimer(): void {
-    updateSessionData()
+  function finishDomainSession(): Promise<SessionsDomainInfo[]> {
+    return new Promise(resolve => {
+      chrome.runtime.sendMessage(
+        { type: FINISH_TIMER_SESSION_MESSAGE },
+        (response?: { sessions?: SessionsDomainInfo[] }) => {
+          resolve(response?.sessions || [])
+        },
+      )
+    })
+  }
 
-    const timeLog = {
+  async function handleStopTimer(): Promise<void> {
+    const domainSessions = await finishDomainSession()
+    const timeLog: TimePeriod = {
       activityName: lastNameActivity.trim(),
       startDate: lastStartDate,
       endDate: Date.now(),
       dayOfWeek: getDayOfWeekNumber(),
-      totalTimeForSession: elapsedTime,
+      totalTimeForSession: seconds,
       mood: lastMood,
+      pauseCount,
+    }
+    const sessionDomainData = getSessionDomainData(timeLog, domainSessions)
+    const summary = createSessionSummary({
+      session: timeLog,
+      history: dates,
+      domainSessions: sessionDomainData,
+      distractingDomains,
+    })
+    const completedTimeLog: TimePeriod = {
+      ...timeLog,
+      domainSessions: sessionDomainData,
+      focusScore: summary.focusScore,
     }
 
-    dispatch(addTimeLogs(timeLog))
-    void trainAIModelAfterSession([...dates, timeLog]).catch(() => undefined)
+    dispatch(addTimeLogs(completedTimeLog))
+    void trainAIModelAfterSession([...dates, completedTimeLog]).catch(
+      () => undefined,
+    )
 
     resetCurrentTimer()
     setLastTime(customizedTime(formatTime(seconds), interfaceLang))
+    setCompletedSession(completedTimeLog)
   }
 
   function handleCancelTimer(): void {
@@ -137,12 +180,14 @@ export const useTrackTime = () => {
     dispatch(setLastMood(mood))
 
     setLastTime('')
+    setCompletedSession(null)
     handleStartTimer()
   }
 
   function handlePauseTimer(): void {
     dispatch(setStateTimer({ isActive: true, isPause: true }))
     dispatch(setElapsedTime(seconds))
+    dispatch(incrementPauseCount())
 
     pauseTimer()
   }
@@ -186,5 +231,7 @@ export const useTrackTime = () => {
     currentLength: inputText.length,
     mood,
     handleChangeMood,
+    completedSession,
+    handleCloseSessionSummary: () => setCompletedSession(null),
   }
 }

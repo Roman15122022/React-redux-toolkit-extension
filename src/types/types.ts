@@ -16,6 +16,10 @@ export type TimePeriod = {
   dayOfWeek: number
   totalTimeForSession: number
   mood: string
+  domainSessions?: SessionsDomainInfo[]
+  focusScore?: number
+  note?: string
+  pauseCount?: number
 }
 
 export interface ChromeStorageProps {

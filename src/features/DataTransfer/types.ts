@@ -14,6 +14,7 @@ export type ChromeStorageData = {
   notificationState?: NotificationSettingState
   sessionData: SessionsDomainInfo[]
   blackList: string[]
+  distractingDomains?: string[]
 }
 
 export type ExportedAppData = {

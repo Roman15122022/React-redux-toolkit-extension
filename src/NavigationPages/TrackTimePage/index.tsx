@@ -3,6 +3,7 @@ import React from 'react'
 import { TypeButton } from '../../types'
 import StudyTimeInfoForDay from '../../features/StudyTimeInfoForDay'
 import StopStartButton from '../../features/StopStartButton'
+import SessionSummary from '../../features/SessionSummary'
 import { MoodSelect } from '../../features/MoodSelect'
 import InputNameActivity from '../../features/InputNameActivity'
 import Container from '../../components/Container'
@@ -29,12 +30,23 @@ const TrackTimePage = (): JSX.Element => {
     handleOnChanges,
     mood,
     handleChangeMood,
+    completedSession,
+    handleCloseSessionSummary,
   } = useTrackTime()
 
+  if (completedSession) {
+    return (
+      <SessionSummary
+        session={completedSession}
+        onClose={handleCloseSessionSummary}
+      />
+    )
+  }
+
   return (
-    <Container>
-      <div className="relative">
-        <div className="text-5xl theme-text text-center">
+    <Container classes="mx-0 mt-0 p-4">
+      <div className="flex items-center justify-center gap-3">
+        <div className="theme-text text-center text-5xl tabular-nums">
           {formattedHours}:{formattedMinutes}:{formattedSeconds}
         </div>
         <StopStartButton
@@ -64,7 +76,7 @@ const TrackTimePage = (): JSX.Element => {
           </div>
         ) : (
           <div className="flex w-full flex-col items-center justify-center gap-3">
-            <div className="mx-auto flex w-fit items-start justify-center gap-3">
+            <div className="grid w-full grid-cols-[minmax(0,1fr)_180px] items-start gap-2">
               <InputNameActivity
                 nameLabel={locale.label}
                 currentLength={currentLength}
@@ -82,7 +94,12 @@ const TrackTimePage = (): JSX.Element => {
           </div>
         )}
       </div>
-      <StudyTimeInfoForDay lastTime={lastTime} date={date} isLastTimeNeeded />
+      <StudyTimeInfoForDay
+        lastTime={lastTime}
+        date={date}
+        isLastTimeNeeded
+        compactTotal
+      />
     </Container>
   )
 }

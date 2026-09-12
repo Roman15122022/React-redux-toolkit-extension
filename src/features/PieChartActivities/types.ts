@@ -1,6 +1,7 @@
 import { TimePeriod } from '../../types'
 
 export type DataActivity = {
+  color: string
   id: number
   value: number
   label: string

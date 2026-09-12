@@ -13,7 +13,7 @@ export const useInputNameActivity = (isError: boolean) => {
   const textColor = isDark ? 'white' : 'black'
 
   const styles = {
-    width: 160,
+    width: '100%',
     height: 39,
     padding: 0,
     '& .MuiOutlinedInput-notchedOutline': {

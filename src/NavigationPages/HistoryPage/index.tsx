@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Tooltip } from '@mui/material'
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 
 import { cn } from '../../utils'
 import { TypeButton, TypeTittle } from '../../types'
+import { TimePeriod } from '../../types'
 import StudyTimeInfoForDay from '../../features/StudyTimeInfoForDay'
+import SessionSummary from '../../features/SessionSummary'
 import PaginationHistoryPages from '../../features/PaginationHistoryPages'
 import CalendarHeatmap from '../../features/CalendarHeatmap'
 import Title from '../../components/Title'
@@ -15,6 +17,7 @@ import Button from '../../components/Button'
 import { useHistoryPage } from './useHistoryPage'
 
 const HistoryPage = (): JSX.Element => {
+  const [summarySession, setSummarySession] = useState<TimePeriod | null>(null)
   const {
     dates,
     interfaceLang,
@@ -29,6 +32,15 @@ const HistoryPage = (): JSX.Element => {
     handleChangeHistoryView,
   } = useHistoryPage()
   const heatmapLocale = interfaceLang.popup.statistics.heatmap
+
+  if (summarySession) {
+    return (
+      <SessionSummary
+        session={summarySession}
+        onClose={() => setSummarySession(null)}
+      />
+    )
+  }
 
   function openOptionsHeatmap(): void {
     chrome.tabs.create({
@@ -139,19 +151,14 @@ const HistoryPage = (): JSX.Element => {
         />
       )}
 
-      {historyView === 'list' &&
-        (!!selectedDate ? (
-          <span className="text-[14px] font-[700]">{fullMonthName}</span>
-        ) : (
-          <span className="text-white text-[14px] font-[700] font-bold dark:text-black select-none">
-            1
-          </span>
-        ))}
       <StudyTimeInfoForDay
         date={selectedDate}
         isLastTimeNeeded={false}
+        onSelectPeriod={setSummarySession}
         classes="mt-0"
         sxList="mt-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        compactTotal
+        heading={historyView === 'list' ? fullMonthName : undefined}
       />
     </Container>
   )
