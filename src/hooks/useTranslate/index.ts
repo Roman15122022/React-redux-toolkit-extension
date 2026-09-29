@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useAppSelector } from '../useAppSelector'
 import { useAppDispatch } from '../useAppDispatch'
 import { settingSlice } from '../../store/reducers/settingReducer/SettingSlice'
@@ -14,14 +13,11 @@ export const useTranslate = () => {
   const dispatch = useAppDispatch()
   const { setLocale } = settingSlice.actions
 
-  const [interfaceLang, setInterfaceLang] = useState<Locale>(
-    TRANSLATIONS[language],
-  )
+  const interfaceLang: Locale = TRANSLATIONS[language]
 
   function handleChangeLocale(locale: Language) {
     dispatch(setLocale(locale))
-    setInterfaceLang(TRANSLATIONS[locale])
-    moment.locale(language)
+    moment.locale(locale)
   }
 
   return { interfaceLang, handleChangeLocale, language }

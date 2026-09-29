@@ -8,6 +8,7 @@ const initialState: CurrentTimer = {
   startDate: 0,
   elapsedTime: 0,
   pauseCount: 0,
+  note: '',
   stateTimer: null,
 }
 
@@ -24,11 +25,14 @@ export const currentTimerSlice = createSlice({
     incrementPauseCount(state) {
       state.pauseCount = (state.pauseCount || 0) + 1
     },
+    setSessionNote(state, action: PayloadAction<string>) {
+      state.note = action.payload
+    },
     resetCurrentTimer(state) {
       Object.assign(state, initialState)
     },
     setCurrentTimerState(state, action: PayloadAction<CurrentTimer>) {
-      Object.assign(state, action.payload)
+      Object.assign(state, initialState, action.payload)
     },
     setStateTimer(state, action: PayloadAction<StateTimer>) {
       state.stateTimer = action.payload

@@ -59,8 +59,8 @@ const HistoryPage = (): JSX.Element => {
   }
 
   return (
-    <Container classes="mr-0 mt-4">
-      <div className="mb-3 flex w-[95%] items-start justify-between gap-3">
+    <Container classes="mt-4">
+      <div className="mb-3 flex w-full items-start justify-between gap-3">
         {historyView === 'calendar' ? (
           <div className="min-w-0">
             <p className="theme-text text-lg font-bold leading-tight">
@@ -86,7 +86,7 @@ const HistoryPage = (): JSX.Element => {
           <span />
         )}
 
-        <div className="flex">
+        <div className="flex shrink-0">
           <Tooltip title={interfaceLang.popup.history.listView}>
             <button
               type="button"

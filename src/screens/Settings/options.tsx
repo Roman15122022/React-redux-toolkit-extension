@@ -9,6 +9,7 @@ import ResetStatistics from '../../features/ResetStatistics'
 import NotificationSetting from '../../features/NotificationSetting'
 import LocaleSwitcher from '../../features/LocaleSwitcher'
 import DataTransfer from '../../features/DataTransfer'
+import DailyGoalSetting from '../../features/DailyGoalSetting'
 import { BlackListSwitcher } from '../../features/BlackListSwitcher'
 import { BlackList } from '../../features/BlackList'
 import Title from '../../components/Title'
@@ -67,6 +68,7 @@ const Options = (): JSX.Element => {
               isDark={isDark}
               interfaceLang={interfaceLang}
             />
+            <DailyGoalSetting />
             <div className="border-t-2 mt-4 dark:border-white" />
             <BlackListSwitcher
               interfaceLang={interfaceLang}
