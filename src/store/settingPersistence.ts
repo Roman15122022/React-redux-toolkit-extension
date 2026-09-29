@@ -2,6 +2,7 @@ import storage from 'redux-persist/lib/storage'
 import { PersistedState } from 'redux-persist'
 
 import { Language, ThemeVariants } from '../types'
+import { normalizeStudyGoalsConfiguration } from '../features/StudyGoals/configuration'
 
 import { Setting } from './reducers/settingReducer/types'
 
@@ -28,7 +29,19 @@ function isSetting(value: unknown): value is Setting {
 export async function migrateSettingState(
   persistedState: PersistedState,
 ): Promise<PersistedState> {
-  if (persistedState) return persistedState
+  if (persistedState) {
+    const setting = persistedState as PersistedState & Partial<Setting>
+
+    const migratedSetting = {
+      ...setting,
+      studyGoals: normalizeStudyGoalsConfiguration(
+        setting.studyGoals,
+        setting.dailyGoalMinutes,
+      ),
+    }
+
+    return migratedSetting
+  }
 
   const serializedRootState = await storage.getItem(LEGACY_ROOT_STORAGE_KEY)
 
@@ -47,10 +60,16 @@ export async function migrateSettingState(
 
     if (!isSetting(setting)) return undefined
 
-    return {
+    const migratedSetting = {
       ...setting,
+      studyGoals: normalizeStudyGoalsConfiguration(
+        setting.studyGoals,
+        setting.dailyGoalMinutes,
+      ),
       _persist: { version: -1, rehydrated: true },
     }
+
+    return migratedSetting
   } catch {
     return undefined
   }

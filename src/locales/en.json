@@ -326,7 +326,6 @@
         "btnRemove": "Remove"
       }
     },
-
     "dayOfWeek": {
       "sunday": "Sunday",
       "monday": "Monday",
@@ -336,7 +335,6 @@
       "friday": "Friday",
       "saturday": "Saturday"
     },
-
     "dayOfWeekShort": {
       "sunday": "Sun",
       "monday": "Mon",
@@ -346,5 +344,51 @@
       "friday": "Fri",
       "saturday": "Sat"
     }
+  },
+  "studyGoals": {
+    "title": "Study goals",
+    "today": "Today",
+    "thisWeek": "This week · Mon–Sun",
+    "dailyTotal": "Daily total",
+    "weeklyTotal": "Weekly total",
+    "weeklyActivity": "Weekly activity",
+    "minutes": "min",
+    "complete": "Complete",
+    "manage": "Manage goals",
+    "empty": "Set a study goal",
+    "emptyDescription": "Choose a target in Settings. Only completed sessions count.",
+    "completedOnly": "Completed sessions only",
+    "addGoal": "Add goal",
+    "goalType": "Goal type",
+    "activity": "Activity name",
+    "targetMinutes": "Target (minutes)",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "enable": "Enable",
+    "disable": "Disable",
+    "disabled": "Disabled",
+    "invalidGoal": "Use a whole number from 1 to {maximum}. Choose a unique activity name.",
+    "aliases": "Also counts: {names}",
+    "renameHelp": "Renaming keeps sessions recorded under the old name. Names are case-sensitive.",
+    "planningTitle": "Weekly plan",
+    "planningLimits": "Planning limits",
+    "maxDailyMinutes": "Maximum minutes per day",
+    "studyDays": "Study days",
+    "weekdays": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "invalidLimit": "Enter a whole number from 1 to 1440.",
+    "limitsSaved": "Planning limits saved.",
+    "noPlan": "Your weekly goals are complete, or no weekly goals are enabled.",
+    "generalStudy": "Any activity",
+    "unscheduled": "{duration} will not fit within your available days and limits.",
+    "adjustLimits": "Adjust goals or planning limits in Settings.",
+    "nextMilestone": "Next streak milestone: {days} days",
+    "goalReached": "Target reached: {name}",
+    "restoreGoal": "Create a new target to track progress.",
+    "historyNote": "Goal progress is for today and the current week.",
+    "noHistory": "Progress uses the locally saved session history.",
+    "saved": "Goal saved.",
+    "seconds": "sec"
   }
 }

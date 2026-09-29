@@ -5,9 +5,14 @@ import { getDayOfWeekNumber } from '../../utils'
 import { SessionsDomainInfo, TimePeriod } from '../../types'
 import { timerLogsSlice } from '../../store/reducers/timeLogsReducer/TimerLogsSlice'
 import { currentTimerSlice } from '../../store/reducers/currentTimerReducer/CurrentTimerSlice'
+import { store } from '../../store'
 import { useTranslate } from '../../hooks/useTranslate'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
+import { getCompletedGoalIds } from '../../features/StudyGoals/milestones'
+import { getStudyGoalProgress } from '../../features/StudyGoals/helpers'
+import { getGoalLabel } from '../../features/StudyGoals/GoalProgress'
+import { normalizeStudyGoalsConfiguration } from '../../features/StudyGoals/configuration'
 import {
   createSessionSummary,
   getSessionDomainData,
@@ -35,6 +40,7 @@ export const useTrackTime = () => {
   const [inputText, setInputText] = useState('')
   const [isError, setIsError] = useState(false)
   const [isFinishing, setIsFinishing] = useState(false)
+  const [completedGoalNames, setCompletedGoalNames] = useState<string[]>([])
   const [completedSession, setCompletedSession] = useState<TimePeriod | null>(
     null,
   )
@@ -112,6 +118,32 @@ export const useTrackTime = () => {
         focusScore: summary.focusScore,
       }
 
+      const currentState = store.getState()
+      const currentSessions = currentState.TimerLogsReducer.dates
+      const goalConfiguration = normalizeStudyGoalsConfiguration(
+        currentState.SettingReducer.studyGoals,
+        currentState.SettingReducer.dailyGoalMinutes,
+      )
+      const beforeProgress = getStudyGoalProgress(
+        currentSessions,
+        goalConfiguration,
+        endDate,
+      )
+      const afterProgress = getStudyGoalProgress(
+        [...currentSessions, completedTimeLog],
+        goalConfiguration,
+        endDate,
+      )
+      const completedGoalIds = getCompletedGoalIds(
+        beforeProgress,
+        afterProgress,
+      )
+      setCompletedGoalNames(
+        goalConfiguration.goals
+          .filter(goal => completedGoalIds.includes(goal.id))
+          .map(goal => getGoalLabel(goal, interfaceLang.studyGoals)),
+      )
+
       dispatch(timerLogsSlice.actions.addTimeLogs(completedTimeLog))
       void trainAIModelAfterSession([...dates, completedTimeLog]).catch(
         () => undefined,
@@ -173,6 +205,7 @@ export const useTrackTime = () => {
     setNow(startedAt)
     setLastTime('')
     setCompletedSession(null)
+    setCompletedGoalNames([])
   }
 
   function handlePauseTimer(): void {
@@ -213,6 +246,7 @@ export const useTrackTime = () => {
     handleChangeNote: (note: string) =>
       dispatch(currentTimerSlice.actions.setSessionNote(note)),
     completedSession,
+    completedGoalNames,
     handleCloseSessionSummary: () => setCompletedSession(null),
   }
 }

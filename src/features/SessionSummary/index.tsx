@@ -17,12 +17,14 @@ type SessionSummaryProps = {
   session: TimePeriod
   onClose: () => void
   layout?: 'popup' | 'page'
+  completedGoalNames?: string[]
 }
 
 const SessionSummary = ({
   session,
   onClose,
   layout = 'popup',
+  completedGoalNames = [],
 }: SessionSummaryProps): JSX.Element => {
   const { interfaceLang } = useTranslate()
   const {
@@ -75,6 +77,16 @@ const SessionSummary = ({
             </p>
           </div>
         </div>
+
+        {completedGoalNames.length > 0 && (
+          <div role="status" className="theme-text mt-3 text-sm font-semibold">
+            {completedGoalNames.map(name => (
+              <p key={name} className="break-words">
+                {interfaceLang.studyGoals.goalReached.replace('{name}', name)}
+              </p>
+            ))}
+          </div>
+        )}
 
         <section className="mt-4 rounded-2xl bg-white p-4 shadow-sm dark:bg-[#211721]">
           <div className="flex items-center justify-between gap-4">

@@ -7,6 +7,7 @@ import { cn } from '../../utils'
 import { TypeButton, TypeTittle } from '../../types'
 import { TimePeriod } from '../../types'
 import StudyTimeInfoForDay from '../../features/StudyTimeInfoForDay'
+import StudyGoals from '../../features/StudyGoals'
 import SessionSummary from '../../features/SessionSummary'
 import PaginationHistoryPages from '../../features/PaginationHistoryPages'
 import CalendarHeatmap from '../../features/CalendarHeatmap'
@@ -50,16 +51,20 @@ const HistoryPage = (): JSX.Element => {
 
   if (!dates.length) {
     return (
-      <Title
-        variant={TypeTittle.SMALL}
-        classes="mt-5 text-center"
-        title={interfaceLang.popup.history.noHistory}
-      />
+      <Container classes="mt-4">
+        <StudyGoals compact={false} />
+        <Title
+          variant={TypeTittle.SMALL}
+          classes="mt-5 text-center"
+          title={interfaceLang.popup.history.noHistory}
+        />
+      </Container>
     )
   }
 
   return (
     <Container classes="mt-4">
+      <StudyGoals compact={false} />
       <div className="mb-3 flex w-full items-start justify-between gap-3">
         {historyView === 'calendar' ? (
           <div className="min-w-0">

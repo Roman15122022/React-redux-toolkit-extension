@@ -16,10 +16,9 @@ require.extensions['.ts'] = (module, filename) => {
   module._compile(output, filename)
 }
 
-const helpers = require(path.resolve(
-  __dirname,
-  '../src/NavigationPages/TrackTimePage/timerState.ts',
-))
+const helpers = require(
+  path.resolve(__dirname, '../src/NavigationPages/TrackTimePage/timerState.ts'),
+)
 
 test('active time derives from the shared start timestamp', () => {
   assert.equal(
@@ -46,22 +45,26 @@ test('paused time stays fixed and resume keeps elapsed time', () => {
   assert.equal(helpers.getResumeStartDate(50_000, 32), 18_000)
 })
 
-test('daily goal counts completed and current session time without exceeding 100%', () => {
+test('daily goal uses completed history without the active timer', () => {
+  const {
+    getStudyGoalProgress,
+  } = require('../src/features/StudyGoals/helpers.ts')
+  const {
+    normalizeStudyGoalsConfiguration,
+  } = require('../src/features/StudyGoals/configuration.ts')
   const day = new Date(2026, 8, 29, 12).getTime()
   const yesterday = new Date(2026, 8, 28, 12).getTime()
   const sessions = [
-    { endDate: day, totalTimeForSession: 1200 },
-    { endDate: yesterday, totalTimeForSession: 2000 },
+    { activityName: 'English', endDate: day, totalTimeForSession: 1200 },
+    { activityName: 'English', endDate: yesterday, totalTimeForSession: 2000 },
   ]
-
-  assert.deepEqual(
-    helpers.getDailyGoalProgress(sessions, 1800, 60, day),
-    { seconds: 3000, goalSeconds: 3600, percent: 83 },
-  )
-  assert.equal(
-    helpers.getDailyGoalProgress(sessions, 3600, 60, day).percent,
-    100,
-  )
+  const progress = getStudyGoalProgress(
+    sessions,
+    normalizeStudyGoalsConfiguration(undefined, 60),
+    day,
+  )[0]
+  assert.equal(progress.completedSeconds, 1200)
+  assert.equal(progress.percent, 33)
 })
 
 const sidePanel = require('../src/utils/sidePanel.ts')

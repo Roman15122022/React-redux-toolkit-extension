@@ -38,7 +38,7 @@ function createCompletedSession(year, month, day, hour = 12) {
 test('returns a friendly zero streak when history is empty', () => {
   const streak = statisticsHelpers.getStudyStreak?.(
     [],
-    new Date(2026, 8, 12).getTime(),
+    new Date(2026, 8, 12, 23).getTime(),
   )
 
   assert.deepEqual(streak, {
@@ -56,7 +56,7 @@ test('counts unique consecutive study days from unsorted history', () => {
       createCompletedSession(2026, 8, 11),
       createCompletedSession(2026, 8, 11, 18),
     ],
-    new Date(2026, 8, 12).getTime(),
+    new Date(2026, 8, 12, 23).getTime(),
   )
 
   assert.deepEqual(streak, {
@@ -73,7 +73,7 @@ test('keeps the streak after one missed study day', () => {
       createCompletedSession(2026, 8, 10),
       createCompletedSession(2026, 8, 11),
     ],
-    new Date(2026, 8, 12).getTime(),
+    new Date(2026, 8, 12, 23).getTime(),
   )
 
   assert.deepEqual(streak, {
@@ -86,7 +86,7 @@ test('keeps the streak after one missed study day', () => {
 test('uses recovery when yesterday was the first missed day', () => {
   const streak = statisticsHelpers.getStudyStreak(
     [createCompletedSession(2026, 8, 8), createCompletedSession(2026, 8, 9)],
-    new Date(2026, 8, 11).getTime(),
+    new Date(2026, 8, 11, 23).getTime(),
   )
 
   assert.deepEqual(streak, {
@@ -104,7 +104,7 @@ test('starts a new streak after a second missed day', () => {
       createCompletedSession(2026, 8, 10),
       createCompletedSession(2026, 8, 12),
     ],
-    new Date(2026, 8, 12).getTime(),
+    new Date(2026, 8, 12, 23).getTime(),
   )
 
   assert.deepEqual(streak, {
@@ -117,7 +117,7 @@ test('starts a new streak after a second missed day', () => {
 test('ends the current streak when recovery was used before yesterday', () => {
   const streak = statisticsHelpers.getStudyStreak(
     [createCompletedSession(2026, 8, 8), createCompletedSession(2026, 8, 10)],
-    new Date(2026, 8, 12).getTime(),
+    new Date(2026, 8, 12, 23).getTime(),
   )
 
   assert.deepEqual(streak, {
@@ -167,7 +167,18 @@ test('renders streak progress alongside the empty statistics state', () => {
   try {
     const StatisticsPage = require(componentModulePath).default
     const markup = ReactDOMServer.renderToStaticMarkup(
-      React.createElement(StatisticsPage),
+      React.createElement(
+        require('react-redux').Provider,
+        {
+          store: require('@reduxjs/toolkit').configureStore({
+            reducer: () => ({
+              SettingReducer: { language: 'en', dailyGoalMinutes: 60 },
+              TimerLogsReducer: { dates: [] },
+            }),
+          }),
+        },
+        React.createElement(StatisticsPage),
+      ),
     )
 
     assert.match(markup, /Study streak/)

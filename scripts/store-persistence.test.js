@@ -212,8 +212,7 @@ test('timer history has its own persistence key and survives a stale page write'
     payload: completedPeriod,
   })
   await popupPage.persistor.flush()
-  const { synchronizePersistedState } =
-    require('../src/store/syncAcrossPages')
+  const { synchronizePersistedState } = require('../src/store/syncAcrossPages')
   synchronizePersistedState(
     settingsPage.store,
     'persist:timerLogs',
@@ -250,15 +249,17 @@ test('a second page receives timer pause and note changes from persisted state',
   })
   await popupPage.persistor.flush()
 
-  const { synchronizePersistedState } =
-    require('../src/store/syncAcrossPages')
+  const { synchronizePersistedState } = require('../src/store/syncAcrossPages')
   synchronizePersistedState(
     sidePanelPage.store,
     'persist:currentTimer',
     localStorage.getItem('persist:currentTimer'),
   )
 
-  assert.equal(sidePanelPage.store.getState().CurrentTimerReducer.elapsedTime, 32)
+  assert.equal(
+    sidePanelPage.store.getState().CurrentTimerReducer.elapsedTime,
+    32,
+  )
   assert.equal(
     sidePanelPage.store.getState().CurrentTimerReducer.note,
     'Read chapter two',
@@ -297,7 +298,10 @@ test('migrates timer history from the legacy root persistence key', async () => 
   const page = loadStoreInstance()
   await waitForRehydration(page.persistor)
 
-  assert.deepEqual(page.store.getState().TimerLogsReducer.dates, legacyLogs.dates)
+  assert.deepEqual(
+    page.store.getState().TimerLogsReducer.dates,
+    legacyLogs.dates,
+  )
 })
 
 test('migrates the timer from the legacy root persistence key', async () => {
@@ -431,4 +435,125 @@ test('toggles a distracting domain without adding it to the blacklist', async ()
     popupPage.store.getState().SessionDataSlice.distractingDomains,
     [],
   )
+})
+
+test('study goals persist deletion and synchronize across extension pages', async () => {
+  localStorage.clear()
+  const popupPage = loadStoreInstance()
+  await waitForRehydration(popupPage.persistor)
+  await popupPage.persistor.flush()
+  const settingsPage = loadStoreInstance()
+  await waitForRehydration(settingsPage.persistor)
+  const { synchronizePersistedState } = require('../src/store/syncAcrossPages')
+  settingsPage.store.dispatch({
+    type: 'locale/saveStudyGoal',
+    payload: {
+      id: 'week',
+      kind: 'weekly-total',
+      targetMinutes: 600,
+      enabled: true,
+      activityNames: [],
+    },
+  })
+  settingsPage.store.dispatch({
+    type: 'locale/deleteStudyGoal',
+    payload: 'daily-total',
+  })
+  await settingsPage.persistor.flush()
+  synchronizePersistedState(
+    popupPage.store,
+    'persist:setting',
+    localStorage.getItem('persist:setting'),
+  )
+  assert.deepEqual(
+    popupPage.store.getState().SettingReducer.studyGoals,
+    settingsPage.store.getState().SettingReducer.studyGoals,
+  )
+  popupPage.store.dispatch({ type: 'currentTimer/setElapsedTime', payload: 50 })
+  popupPage.store.dispatch({
+    type: 'timerLogs/addTimeLogs',
+    payload: {
+      activityName: 'English',
+      startDate: Date.now() - 60000,
+      endDate: Date.now(),
+      totalTimeForSession: 60,
+      dayOfWeek: 2,
+      mood: '3',
+    },
+  })
+  await popupPage.persistor.flush()
+  synchronizePersistedState(
+    settingsPage.store,
+    'persist:timerLogs',
+    localStorage.getItem('persist:timerLogs'),
+  )
+  assert.equal(settingsPage.store.getState().TimerLogsReducer.dates.length, 1)
+  const reopenedPopup = loadStoreInstance()
+  await waitForRehydration(reopenedPopup.persistor)
+  assert.deepEqual(
+    reopenedPopup.store
+      .getState()
+      .SettingReducer.studyGoals.goals.map(goal => goal.id),
+    ['week'],
+  )
+})
+
+test('migrates separate setting persistence and validates goal backup fields', async () => {
+  localStorage.clear()
+  localStorage.setItem(
+    'persist:setting',
+    JSON.stringify({
+      language: JSON.stringify('en'),
+      theme: JSON.stringify('dark'),
+      saveStateAfterClose: JSON.stringify(true),
+      dailyGoalMinutes: JSON.stringify(90),
+      notification: JSON.stringify({
+        isNotificationActive: true,
+        periodInMinutes: 60,
+      }),
+      _persist: JSON.stringify({ version: -1, rehydrated: true }),
+    }),
+  )
+  const popupPage = loadStoreInstance()
+  await waitForRehydration(popupPage.persistor)
+  assert.equal(
+    popupPage.store.getState().SettingReducer.studyGoals.goals[0].targetMinutes,
+    90,
+  )
+  const {
+    createExportedAppData,
+    isExportedAppData,
+    createMergedAppData,
+  } = require('../src/features/DataTransfer/helpers')
+  const state = popupPage.store.getState()
+  const chromeStorage = { sessionData: [], blackList: [] }
+  const backup = createExportedAppData({
+    state,
+    chromeStorage,
+    dateRange: { from: '', to: '' },
+  })
+  assert.equal(isExportedAppData(backup), true)
+  const importedBackup = structuredClone(backup)
+  importedBackup.redux.SettingReducer.studyGoals.goals[0].targetMinutes = 120
+  const merged = createMergedAppData({
+    currentState: state,
+    currentChromeStorage: chromeStorage,
+    importedData: importedBackup,
+  })
+  assert.equal(
+    merged.redux.SettingReducer.studyGoals.goals[0].targetMinutes,
+    90,
+  )
+  popupPage.store.dispatch({
+    type: 'locale/setSettingsState',
+    payload: importedBackup.redux.SettingReducer,
+  })
+  assert.equal(
+    popupPage.store.getState().SettingReducer.studyGoals.goals[0].targetMinutes,
+    120,
+  )
+  importedBackup.redux.SettingReducer.studyGoals.maxDailyMinutes = -10
+  assert.equal(isExportedAppData(importedBackup), false)
+  delete importedBackup.redux.SettingReducer.studyGoals
+  assert.equal(isExportedAppData(importedBackup), true)
 })

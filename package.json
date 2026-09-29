@@ -18,7 +18,8 @@
     "lint": "eslint --cache ./src",
     "lint:fix": "eslint --cache --fix ./src",
     "prettier": "prettier --write --cache ./src --log-level silent",
-    "prettier:check": "prettier --check \"./src/**/*.{js,jsx,ts,tsx,css,json,md}\""
+    "prettier:check": "prettier --check \"./src/**/*.{js,jsx,ts,tsx,css,json,md}\"",
+    "test:study-goals": "node --test scripts/study-goals.test.js scripts/study-goals-ui.test.js"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.188",

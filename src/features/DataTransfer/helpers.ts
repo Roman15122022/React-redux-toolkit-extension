@@ -1,3 +1,4 @@
+import { isStudyGoalsConfiguration } from '../StudyGoals/configuration'
 import {
   NotificationSettingState,
   SessionsDomainInfo,
@@ -116,6 +117,8 @@ export function isExportedAppData(data: unknown): data is ExportedAppData {
       isString(redux.SettingReducer.language) &&
       isString(redux.SettingReducer.theme) &&
       isBoolean(redux.SettingReducer.saveStateAfterClose) &&
+      (redux.SettingReducer.studyGoals === undefined ||
+        isStudyGoalsConfiguration(redux.SettingReducer.studyGoals)) &&
       isNotificationState(redux.SettingReducer.notification) &&
       isRecord(redux.StateSaverReducer) &&
       isRecord(redux.TimerLogsReducer) &&
