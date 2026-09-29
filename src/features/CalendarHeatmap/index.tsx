@@ -97,6 +97,8 @@ const CalendarHeatmap = ({
     weekdayLabelClass,
   } = SIZE_CONFIG[size]
 
+  const isDense = size === 'dense'
+
   useEffect(() => {
     if (!scrollRef.current) return
 
@@ -148,12 +150,12 @@ const CalendarHeatmap = ({
         ref={scrollRef}
         className="mt-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
-        <div className="min-w-max">
+        <div className={isDense ? 'w-full' : 'min-w-max'}>
           <div
             className="grid"
             style={{
               gap: `${cellGap}px`,
-              gridTemplateColumns: `repeat(${weeks.length}, ${cellSize}px)`,
+              gridTemplateColumns: `repeat(${weeks.length}, ${isDense ? 'minmax(0, 1fr)' : `${cellSize}px`})`,
               marginLeft: `${weekdayWidth + 8}px`,
             }}
           >
@@ -162,10 +164,17 @@ const CalendarHeatmap = ({
                 key={`${label}-${index}`}
                 className={cn(
                   monthLabelClass,
-                  'text-gray-500 dark:text-gray-300',
+                  'relative text-gray-500 dark:text-gray-300',
                 )}
               >
-                {label}
+                <span
+                  className={cn(
+                    'absolute whitespace-nowrap',
+                    index >= weeks.length - 3 ? 'right-0' : 'left-0',
+                  )}
+                >
+                  {label}
+                </span>
               </span>
             ))}
           </div>
@@ -180,7 +189,7 @@ const CalendarHeatmap = ({
                     'text-gray-500 dark:text-gray-300',
                   )}
                   style={{
-                    height: `${cellSize}px`,
+                    height: isDense ? undefined : `${cellSize}px`,
                     lineHeight: `${cellSize}px`,
                     width: `${weekdayWidth}px`,
                   }}
@@ -190,7 +199,15 @@ const CalendarHeatmap = ({
               ))}
             </div>
 
-            <div className="flex" style={{ gap: `${cellGap}px` }}>
+            <div
+              className={isDense ? 'grid min-w-0 flex-1' : 'flex'}
+              style={{
+                gap: `${cellGap}px`,
+                gridTemplateColumns: isDense
+                  ? `repeat(${weeks.length}, minmax(0, 1fr))`
+                  : undefined,
+              }}
+            >
               {weeks.map((week, weekIndex) => (
                 <div
                   key={week[0]?.dateKey || weekIndex}
@@ -215,8 +232,9 @@ const CalendarHeatmap = ({
                               'ring-2 ring-secondary-light ring-offset-1 ring-offset-white dark:ring-purple-light dark:ring-offset-black',
                           )}
                           style={{
-                            height: `${cellSize}px`,
-                            width: `${cellSize}px`,
+                            height: isDense ? undefined : `${cellSize}px`,
+                            width: isDense ? '100%' : `${cellSize}px`,
+                            aspectRatio: isDense ? '1' : undefined,
                           }}
                         />
                       </Tooltip>
@@ -229,7 +247,7 @@ const CalendarHeatmap = ({
         </div>
       </div>
 
-      <div className="mt-3 flex items-end justify-between gap-3 pl-0 pr-3">
+      <div className="mt-3 flex flex-wrap items-end justify-between gap-3">
         <div className="theme-text text-[12px]">
           <p className="text-[13px] font-bold leading-tight">
             {selectedDay

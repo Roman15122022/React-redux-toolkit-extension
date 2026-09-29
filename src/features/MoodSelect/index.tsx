@@ -37,7 +37,7 @@ export const MoodSelect = ({
           boxShadow: themeStyles.pillShadow,
         }}
         role="radiogroup"
-        aria-label="Mood"
+        aria-label={interfaceLang.popup.track.currentMood}
       >
         {Object.entries(MoodIcons).map(([moodValue, Icon]) => {
           const isSelected = moodValue === value

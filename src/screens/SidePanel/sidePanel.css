@@ -1,0 +1,19 @@
+body {
+  min-width: 240px;
+  margin: 0;
+  @apply bg-white dark:bg-black;
+}
+
+.side-panel-controls {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 300px) {
+  .side-panel-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .side-panel-controls > :last-child {
+    grid-column: 1 / -1;
+  }
+}

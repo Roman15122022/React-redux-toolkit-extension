@@ -191,6 +191,115 @@ test('changing the theme twice does not remove a period completed in another ext
   ])
 })
 
+test('timer history has its own persistence key and survives a stale page write', async () => {
+  localStorage.clear()
+  const popupPage = loadStoreInstance()
+  await waitForRehydration(popupPage.persistor)
+  const settingsPage = loadStoreInstance()
+  await waitForRehydration(settingsPage.persistor)
+
+  const completedPeriod = {
+    activityName: 'Panel session',
+    startDate: 1_725_897_600_000,
+    endDate: 1_725_897_630_000,
+    dayOfWeek: 2,
+    totalTimeForSession: 30,
+    mood: '3',
+  }
+
+  popupPage.store.dispatch({
+    type: 'timerLogs/addTimeLogs',
+    payload: completedPeriod,
+  })
+  await popupPage.persistor.flush()
+  const { synchronizePersistedState } =
+    require('../src/store/syncAcrossPages')
+  synchronizePersistedState(
+    settingsPage.store,
+    'persist:timerLogs',
+    localStorage.getItem('persist:timerLogs'),
+  )
+  settingsPage.store.dispatch({ type: 'locale/toggleTheme', payload: 'light' })
+  await settingsPage.persistor.flush()
+
+  assert.ok(localStorage.getItem('persist:timerLogs'))
+  const reopenedPage = loadStoreInstance()
+  await waitForRehydration(reopenedPage.persistor)
+  assert.deepEqual(reopenedPage.store.getState().TimerLogsReducer.dates, [
+    completedPeriod,
+  ])
+})
+
+test('a second page receives timer pause and note changes from persisted state', async () => {
+  localStorage.clear()
+  const popupPage = loadStoreInstance()
+  await waitForRehydration(popupPage.persistor)
+  const sidePanelPage = loadStoreInstance()
+  await waitForRehydration(sidePanelPage.persistor)
+  await sidePanelPage.persistor.flush()
+
+  popupPage.store.dispatch({
+    type: 'currentTimer/setCurrentTimerState',
+    payload: {
+      startDate: 1_725_897_600_000,
+      elapsedTime: 32,
+      pauseCount: 1,
+      note: 'Read chapter two',
+      stateTimer: { isActive: true, isPause: true },
+    },
+  })
+  await popupPage.persistor.flush()
+
+  const { synchronizePersistedState } =
+    require('../src/store/syncAcrossPages')
+  synchronizePersistedState(
+    sidePanelPage.store,
+    'persist:currentTimer',
+    localStorage.getItem('persist:currentTimer'),
+  )
+
+  assert.equal(sidePanelPage.store.getState().CurrentTimerReducer.elapsedTime, 32)
+  assert.equal(
+    sidePanelPage.store.getState().CurrentTimerReducer.note,
+    'Read chapter two',
+  )
+  assert.equal(
+    sidePanelPage.store.getState().CurrentTimerReducer.stateTimer.isPause,
+    true,
+  )
+})
+
+test('migrates timer history from the legacy root persistence key', async () => {
+  localStorage.clear()
+  const legacyLogs = {
+    dates: [
+      {
+        activityName: 'Legacy session',
+        startDate: 1_725_897_600_000,
+        endDate: 1_725_897_630_000,
+        dayOfWeek: 2,
+        totalTimeForSession: 30,
+        mood: '3',
+      },
+    ],
+    lastStartDate: 1_725_897_600_000,
+    lastNameActivity: 'Legacy session',
+    lastMood: '3',
+  }
+  localStorage.setItem(
+    'persist:root',
+    JSON.stringify({
+      TimerLogsReducer: JSON.stringify(legacyLogs),
+      _persist: JSON.stringify({ version: -1, rehydrated: true }),
+    }),
+  )
+
+  const page = loadStoreInstance()
+  await waitForRehydration(page.persistor)
+
+  assert.deepEqual(page.store.getState().TimerLogsReducer.dates, legacyLogs.dates)
+})
+
 test('migrates the timer from the legacy root persistence key', async () => {
   localStorage.clear()
 

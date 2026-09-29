@@ -8,5 +8,6 @@ export interface Setting {
   language: Language
   theme: ThemeVariants
   saveStateAfterClose: boolean
+  dailyGoalMinutes?: number
   notification: NotificationSettingState
 }

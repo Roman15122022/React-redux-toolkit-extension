@@ -33,7 +33,10 @@ const NotificationSetting = ({
   } = useNotificationSetting(isDark, interfaceLang)
 
   return (
-    <div className="my-4">
+    <section
+      aria-label={interfaceLang.settings.notification.turnOffOn}
+      className="my-4"
+    >
       <div className="flex items-center justify-between my-4">
         <div className="flex items-center gap-5">
           <Title
@@ -56,10 +59,10 @@ const NotificationSetting = ({
         />
       </div>
       {isNotificationOn && (
-        <div className="flex items-center justify-between my-4">
+        <div className="ml-2 flex items-center justify-between gap-3 border-l-2 border-secondary-light pl-4 dark:border-purple-dark">
           <Title
             title={interfaceLang.settings.notification.period}
-            variant={TypeTittle.SMALL}
+            variant={TypeTittle.TINY}
           />
           {isChangingMode ? (
             <div className="flex items-center gap-3 py-4 relative">
@@ -102,7 +105,7 @@ const NotificationSetting = ({
           )}
         </div>
       )}
-    </div>
+    </section>
   )
 }
 

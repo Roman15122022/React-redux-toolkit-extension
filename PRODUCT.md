@@ -27,8 +27,9 @@ not transmitted to a remote analytics or AI service.
 
 ## Operating Context
 
-Users operate TrackerR from a compact browser-extension popup. They start,
-pause, finish, or cancel a timer, then review completed activity in History.
+Users operate TrackerR from a compact browser-extension popup or an optional
+Chrome Side Panel. They start, pause, finish, or cancel a timer, then review
+completed activity in History.
 After a successful finish, a session report temporarily replaces the timer
 screen until the user closes it.
 
@@ -43,6 +44,8 @@ screen until the user closes it.
 - Focus scoring and recommendations must be deterministic, explainable, and
   useful when little history is available.
 - Session notes are optional and persisted with the completed timer log.
+- The Side Panel uses the same locally persisted timer as the popup and shows
+  progress toward a configurable daily goal (60 minutes by default).
 - User-facing text is available in English and Ukrainian.
 - The interface supports light and dark themes at popup width.
 

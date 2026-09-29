@@ -62,6 +62,38 @@ const domainTimeTrackerReady = domainTimeTracker
   .restore()
   .then(() => domainTimeTracker.reconcile())
 
+const FOCUS_PANEL_MENU_ID = 'openFocusPanel'
+
+chrome.runtime.onInstalled?.addListener(() => {
+  const browserChrome = chrome as unknown as {
+    sidePanel?: { open: (options: { windowId: number }) => Promise<void> }
+  }
+
+  if (!browserChrome.sidePanel?.open || !chrome.contextMenus) return
+
+  const menuTitle = chrome.i18n.getUILanguage().startsWith('uk')
+    ? 'Відкрити панель фокусу'
+    : 'Open focus panel'
+
+  chrome.contextMenus.create({
+    id: FOCUS_PANEL_MENU_ID,
+    title: menuTitle,
+    contexts: ['action'],
+  })
+})
+
+chrome.contextMenus?.onClicked.addListener((menuInfo, tab) => {
+  if (menuInfo.menuItemId !== FOCUS_PANEL_MENU_ID || !tab?.windowId) return
+
+  const browserChrome = chrome as unknown as {
+    sidePanel?: { open: (options: { windowId: number }) => Promise<void> }
+  }
+
+  void browserChrome.sidePanel
+    ?.open({ windowId: tab.windowId })
+    .catch(() => undefined)
+})
+
 chrome.runtime.onMessage.addListener(
   (message: { type?: string }, _sender, sendResponse) => {
     if (message?.type === CANCEL_TIMER_SESSION_MESSAGE) {

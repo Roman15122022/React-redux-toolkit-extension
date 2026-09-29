@@ -7,7 +7,15 @@ import Button from '../../components/Button'
 import { usePopup } from './usePopup'
 
 const Popup = (): JSX.Element => {
-  const { links } = usePopup()
+  const {
+    links,
+    canOpenSidePanel,
+    handleToggleSidePanel,
+    panelOpen,
+    panelDisabled,
+    panelError,
+    panelLocale,
+  } = usePopup()
 
   return (
     <div className="theme-text min-h-[400px] overflow-hidden bg-white dark:bg-black">
@@ -23,6 +31,25 @@ const Popup = (): JSX.Element => {
           </Button>
         ))}
       </div>
+      {canOpenSidePanel && (
+        <div className="mx-3 mt-1 text-right">
+          <button
+            type="button"
+            onClick={handleToggleSidePanel}
+            disabled={panelDisabled}
+            className="theme-text rounded-md px-2 py-1 text-xs font-semibold text-secondary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-secondary-light dark:text-purple-light dark:focus-visible:outline-purple-light"
+          >
+            {panelOpen ? panelLocale.close : panelLocale.open}
+          </button>
+          {panelError && (
+            <p role="alert" className="text-xs text-red-600">
+              {panelError === 'close'
+                ? panelLocale.closeError
+                : panelLocale.openError}
+            </p>
+          )}
+        </div>
+      )}
       <main className="mx-2 mb-2 mt-2 overflow-hidden rounded-2xl border border-[#eadeda] bg-[#fffaf8] dark:border-[#3b2440] dark:bg-[#120d13]">
         <PopupRouter />
       </main>

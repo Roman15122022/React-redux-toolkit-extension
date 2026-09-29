@@ -9,6 +9,7 @@ module.exports = {
   entry: {
     popup: path.resolve('src/screens/Popup/index.tsx'),
     options: path.resolve('src/screens/Settings/index.tsx'),
+    sidePanel: path.resolve('src/screens/SidePanel/index.tsx'),
     background: path.resolve('src/background/background.ts'),
   },
   module: {
@@ -57,7 +58,7 @@ module.exports = {
         },
       ],
     }),
-    ...getHtmlPlugins(['popup', 'options', 'newTab']),
+    ...getHtmlPlugins(['popup', 'options', 'sidePanel', 'newTab']),
   ],
   resolve: {
     extensions: ['.tsx', '.js', '.ts'],

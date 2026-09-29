@@ -11,6 +11,8 @@ import {
 } from 'redux-persist'
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 
+import { migrateTimerLogsState } from './timerLogsPersistence'
+import { listenForPersistedChanges } from './syncAcrossPages'
 import { migrateSettingState } from './settingPersistence'
 import TimerLogsReducer from './reducers/timeLogsReducer/TimerLogsSlice'
 import StateSaverReducer from './reducers/stateSaverReducer/StateSaverSlice'
@@ -23,7 +25,12 @@ import { migrateCurrentTimerState } from './currentTimerPersistence'
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['CurrentTimerReducer', 'SessionDataSlice', 'SettingReducer'],
+  blacklist: [
+    'CurrentTimerReducer',
+    'SessionDataSlice',
+    'SettingReducer',
+    'TimerLogsReducer',
+  ],
 }
 
 const currentTimerPersistConfig = {
@@ -38,6 +45,12 @@ const settingPersistConfig = {
   migrate: migrateSettingState,
 }
 
+const timerLogsPersistConfig = {
+  key: 'timerLogs',
+  storage,
+  migrate: migrateTimerLogsState,
+}
+
 const rootReducer = combineReducers({
   ClickerReducer,
   SettingReducer: persistReducer(settingPersistConfig, SettingReducer),
@@ -45,7 +58,7 @@ const rootReducer = combineReducers({
     currentTimerPersistConfig,
     CurrentTimerReducer,
   ),
-  TimerLogsReducer,
+  TimerLogsReducer: persistReducer(timerLogsPersistConfig, TimerLogsReducer),
   StateSaverReducer,
   SessionDataSlice,
 })
@@ -68,6 +81,10 @@ const setupStore = (): any => {
 export const store = setupStore()
 
 export const persistor = persistStore(store)
+
+if (typeof window !== 'undefined') {
+  listenForPersistedChanges(store)
+}
 
 export type RootState = ReturnType<typeof rootReducer>
 

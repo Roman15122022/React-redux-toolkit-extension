@@ -1,6 +1,12 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
+import {
+  closeSidePanel,
+  getSidePanelApi,
+  isSidePanelOpen,
+  openSidePanel,
+} from '../../utils/sidePanel'
 import { RoutesPath, TypeButton } from '../../types'
 import { stateSaverSlice } from '../../store/reducers/stateSaverReducer/StateSaverSlice'
 import { useTranslate } from '../../hooks/useTranslate'
@@ -24,6 +30,10 @@ export const usePopup = () => {
   const { handleSetDistractingDomains } = useManageDistractingDomains()
 
   const { interfaceLang } = useTranslate()
+  const [panelError, setPanelError] = useState<'open' | 'close' | null>(null)
+  const [panelOpen, setPanelOpen] = useState(false)
+  const [panelBusy, setPanelBusy] = useState(false)
+  const [panelWindowId, setPanelWindowId] = useState<number>()
   const location = useLocation()
   const navigate = useNavigate()
   const { activeRouteLink, setActiveRoute } = useStateSaver()
@@ -35,6 +45,58 @@ export const usePopup = () => {
     navigate(page)
     setActiveRoute(page)
   }
+
+  function handleToggleSidePanel(): void {
+    if (panelWindowId === undefined || panelBusy) return
+
+    setPanelError(null)
+    setPanelBusy(true)
+    const operation = panelOpen
+      ? closeSidePanel(panelWindowId)
+      : openSidePanel(panelWindowId)
+
+    void operation
+      .then(() => setPanelOpen(!panelOpen))
+      .catch(() => setPanelError(panelOpen ? 'close' : 'open'))
+      .finally(() => setPanelBusy(false))
+  }
+
+  useEffect(() => {
+    if (!getSidePanelApi()) return undefined
+
+    let disposed = false
+    let refreshInterval: ReturnType<typeof setInterval> | undefined
+
+    chrome.windows.getCurrent(currentWindow => {
+      if (disposed) return
+
+      if (currentWindow.id === undefined) {
+        setPanelError('open')
+
+        return
+      }
+
+      const windowId = currentWindow.id
+      setPanelWindowId(windowId)
+      const refreshPanelState = () => {
+        void isSidePanelOpen(windowId)
+          .then(isOpen => {
+            if (!disposed) setPanelOpen(isOpen)
+          })
+          .catch(() => {
+            if (!disposed) setPanelError('open')
+          })
+      }
+
+      refreshPanelState()
+      refreshInterval = setInterval(refreshPanelState, 500)
+    })
+
+    return () => {
+      disposed = true
+      clearInterval(refreshInterval)
+    }
+  }, [])
 
   const links: Links[] = [
     {
@@ -83,5 +145,14 @@ export const usePopup = () => {
     }
   }, [])
 
-  return { links }
+  return {
+    links,
+    canOpenSidePanel:
+      location.pathname === RoutesPath.TRACKER && Boolean(getSidePanelApi()),
+    handleToggleSidePanel,
+    panelOpen,
+    panelDisabled: panelBusy || panelWindowId === undefined,
+    panelError,
+    panelLocale: interfaceLang.sidePanel,
+  }
 }

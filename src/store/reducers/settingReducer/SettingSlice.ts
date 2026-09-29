@@ -13,6 +13,7 @@ const initialState: Setting = {
   language: Language.EN,
   theme: ThemeVariants.DARK,
   saveStateAfterClose: true,
+  dailyGoalMinutes: 60,
   notification: {
     isNotificationActive: true,
     periodInMinutes: 60,
@@ -31,6 +32,9 @@ export const settingSlice = createSlice({
     },
     toggleSaveState(state, action: PayloadAction<boolean>) {
       state.saveStateAfterClose = action.payload
+    },
+    setDailyGoalMinutes(state, action: PayloadAction<number>) {
+      state.dailyGoalMinutes = action.payload
     },
     setSettingsState(state, action: PayloadAction<Setting>) {
       Object.assign(state, action.payload)
