@@ -38,7 +38,7 @@ export default function StudyGoals({
           streak={streak}
         />
       )}
-      {!compact && nextMilestone !== null && (
+      {showStreak && !compact && nextMilestone !== null && (
         <p className="theme-text mb-3 text-xs">
           {locale.nextMilestone.replace('{days}', String(nextMilestone))}
         </p>

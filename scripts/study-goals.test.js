@@ -340,3 +340,70 @@ test('rejects an array-shaped goal kind in imported JSON', () => {
   assert.equal(isStudyGoalsConfiguration(damaged), false)
   assert.deepEqual(normalizeStudyGoalsConfiguration(damaged).goals, [])
 })
+
+test('session contribution splits prior progress and the newly filled portion', () => {
+  const {
+    getSessionGoalProgress,
+  } = require('../src/features/StudyGoals/sessionContribution.ts')
+  const finishedSession = {
+    activityName: 'English',
+    startDate: new Date(2026, 8, 30, 12).getTime(),
+    endDate: new Date(2026, 8, 30, 12, 10).getTime(),
+    totalTimeForSession: 600,
+  }
+  const previousSession = {
+    ...finishedSession,
+    startDate: finishedSession.startDate - 3600000,
+    endDate: finishedSession.endDate - 3600000,
+    totalTimeForSession: 3300,
+  }
+  const goals = configuration([
+    goal('day', 'daily-total', 60),
+    goal('english', 'weekly-activity', 120, ['English']),
+    goal('other', 'weekly-activity', 60, ['Math']),
+    { ...goal('off', 'weekly-total', 60), enabled: false },
+  ])
+  const progress = getSessionGoalProgress(
+    [previousSession, finishedSession],
+    goals,
+    finishedSession,
+  )
+  assert.deepEqual(
+    progress.map(item => item.goal.id),
+    ['day', 'english'],
+  )
+  assert.equal(progress[0].addedSeconds, 600)
+  assert.equal(progress[0].completedSeconds, 3900)
+  assert.equal(progress[0].beforePercent, (3300 / 3600) * 100)
+  assert.equal(progress[0].addedPercent, 100 - progress[0].beforePercent)
+  assert.ok(Math.abs(progress[1].addedPercent - (600 / 7200) * 100) < 1e-9)
+})
+
+test('already complete targets keep the session delta without overflowing the bar', () => {
+  const {
+    getSessionGoalProgress,
+  } = require('../src/features/StudyGoals/sessionContribution.ts')
+  const finishedSession = {
+    activityName: 'English',
+    startDate: new Date(2026, 8, 30, 12).getTime(),
+    endDate: new Date(2026, 8, 30, 12, 10).getTime(),
+    totalTimeForSession: 600,
+  }
+  const previousSession = {
+    ...finishedSession,
+    endDate: finishedSession.endDate - 3600000,
+    totalTimeForSession: 3600,
+  }
+  const progress = getSessionGoalProgress(
+    [previousSession, finishedSession],
+    configuration([goal('day', 'daily-total', 60)]),
+    finishedSession,
+  )
+  assert.equal(progress[0].beforePercent, 100)
+  assert.equal(progress[0].addedPercent, 0)
+  assert.equal(progress[0].addedSeconds, 600)
+  assert.deepEqual(
+    getSessionGoalProgress([], configuration([]), finishedSession),
+    [],
+  )
+})

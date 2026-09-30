@@ -10,3 +10,15 @@ body {
   min-height: 400px;
   overflow: hidden;
 }
+
+:root,
+:root * {
+  @apply scrollbar-thin scrollbar-thumb-secondary-light;
+  scrollbar-width: auto;
+  scrollbar-color: auto;
+}
+
+:root.dark,
+:root.dark * {
+  @apply scrollbar-track-black scrollbar-thumb-purple-dark;
+}

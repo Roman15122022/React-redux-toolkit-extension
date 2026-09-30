@@ -48,8 +48,8 @@ screen until the user closes it.
   weekly, and activity-specific weekly goals count completed sessions only.
   The existing daily target migrates without losing its configured value;
   new users start with a 60-minute daily target.
-- Goal configuration is shared across popup, Side Panel, Settings, Statistics,
-  and History. Progress and plans are derived from the saved session history.
+- Goals and their weekly plan are displayed only on Achievements and managed
+  in Settings. Progress and plans are derived from the saved session history.
 - The weekly plan uses local Monday–Sunday weeks, selected study days, recent
   workload, and a configurable daily workload limit (180 minutes by default).
   It reports unfinished time that cannot fit instead of exceeding the limit.

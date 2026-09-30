@@ -4,7 +4,6 @@ import { TypeButton } from '../../types'
 import { useTrackTime } from '../../NavigationPages/TrackTimePage/useTrackTime'
 import { useTranslate } from '../../hooks/useTranslate'
 import useTheme from '../../hooks/useTheme'
-import StudyGoals from '../../features/StudyGoals'
 import SessionSummary from '../../features/SessionSummary'
 import { MoodLabelKeys } from '../../features/MoodSelect/constants'
 import { MoodSelect } from '../../features/MoodSelect'
@@ -49,6 +48,7 @@ const SidePanel = (): JSX.Element => {
           layout="page"
           session={completedSession}
           completedGoalNames={completedGoalNames}
+          showGoalProgress
           onClose={handleCloseSessionSummary}
         />
       </div>
@@ -161,9 +161,7 @@ const SidePanel = (): JSX.Element => {
           </div>
         )}
 
-        <div className="mt-6">
-          <StudyGoals />
-        </div>
+        <div className="mt-6"></div>
       </section>
     </main>
   )

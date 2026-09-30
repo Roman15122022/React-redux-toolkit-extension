@@ -4,7 +4,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 
 import { cn } from '../../utils'
 import { TypeTittle } from '../../types'
-import StudyGoals from '../../features/StudyGoals'
+import StudyStreakProgress from '../../features/StudyStreak'
 import { SelectStatPeriod } from '../../features/SelectStatPeriod'
 import { SelectStatActivityName } from '../../features/SelectStatActivityName'
 import Title from '../../components/Title'
@@ -17,6 +17,7 @@ import { StatisticState } from './enums'
 const StatisticsPage = (): JSX.Element => {
   const {
     locale,
+    studyStreak,
     isDataAvailable,
     colorHint,
     handleToggleHint,
@@ -32,7 +33,7 @@ const StatisticsPage = (): JSX.Element => {
 
   return (
     <Container classes="mt-4">
-      <StudyGoals compact={false} showStreak />
+      <StudyStreakProgress locale={locale.streak} streak={studyStreak} />
       {!isDataAvailable ? (
         <Title
           classes="mt-5 text-center"

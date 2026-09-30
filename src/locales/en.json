@@ -389,6 +389,8 @@
     "historyNote": "Goal progress is for today and the current week.",
     "noHistory": "Progress uses the locally saved session history.",
     "saved": "Goal saved.",
-    "seconds": "sec"
+    "seconds": "sec",
+    "sessionProgress": "Goal progress",
+    "sessionContribution": "Striped time was added by this session."
   }
 }

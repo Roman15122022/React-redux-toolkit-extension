@@ -18,13 +18,18 @@ const ThemeSwitcher = ({
         title={interfaceLang.settings.darkTheme}
         variant={TypeTittle.SMALL}
       />
-      <div onClick={switchTheme} className="cursor-pointer">
+      <button
+        type="button"
+        onClick={switchTheme}
+        aria-label={interfaceLang.settings.darkTheme}
+        className="rounded-lg p-2 hover:bg-secondary-light/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-goal-light dark:hover:bg-purple-light/10 dark:focus-visible:outline-goal-dark"
+      >
         {isDark ? (
           <DarkModeIcon sx={{ fontSize: 28 }} color="secondary" />
         ) : (
           <LightModeIcon sx={{ fontSize: 28 }} color="warning" />
         )}
-      </div>
+      </button>
     </div>
   )
 }

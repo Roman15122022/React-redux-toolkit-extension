@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
+import { cn } from '../../utils'
 import { Locale } from '../../types'
 import { settingSlice } from '../../store/reducers/settingReducer/SettingSlice'
 import { useTranslate } from '../../hooks/useTranslate'
@@ -16,9 +17,11 @@ import {
 } from './configuration'
 
 const inputClasses =
-  'theme-text w-full min-w-0 rounded-lg border border-gray-300 bg-white p-2 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-secondary-light dark:border-purple-light dark:bg-[#211721] dark:focus-visible:outline-purple-light'
+  'theme-text w-full min-w-0 rounded-lg border border-[#d8cdca] bg-white px-3 py-2.5 text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-goal-light disabled:opacity-60 dark:border-[#58435b] dark:bg-[#211721] dark:focus-visible:outline-goal-dark'
 const buttonClasses =
-  'theme-text rounded-lg border border-gray-300 px-3 py-2 text-xs font-semibold hover:border-secondary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 dark:border-purple-light'
+  'theme-text rounded-lg border border-[#d8cdca] px-3 py-2 text-xs font-semibold transition-colors hover:bg-[#fff7f4] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-goal-light dark:border-[#58435b] dark:hover:bg-[#2d202e] dark:focus-visible:outline-goal-dark'
+const primaryButtonClasses =
+  'rounded-lg bg-goal-light px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-goal-light dark:bg-purple-dark dark:focus-visible:outline-goal-dark'
 
 type GoalEditorProps = {
   goal?: StudyGoal
@@ -96,7 +99,7 @@ function GoalEditor({
     <form
       onSubmit={handleSave}
       noValidate
-      className="mt-3 space-y-3 border-t border-gray-200 pt-3 dark:border-purple-dark"
+      className="mt-5 space-y-4 border-t border-[#eadeda] pt-5 dark:border-[#3b2440]"
     >
       <div>
         <label
@@ -148,7 +151,10 @@ function GoalEditor({
               <option key={name} value={name} />
             ))}
           </datalist>
-          <p id={`${prefix}-help`} className="mt-1 text-xs leading-relaxed">
+          <p
+            id={`${prefix}-help`}
+            className="mt-2 max-w-[65ch] text-sm leading-relaxed text-[#625a59] dark:text-[#d2c7d2]"
+          >
             {locale.renameHelp}
           </p>
         </div>
@@ -181,13 +187,13 @@ function GoalEditor({
         <p
           id={`${prefix}-error`}
           role="alert"
-          className="text-xs text-red-700 dark:text-red-200"
+          className="text-xs text-[#a12b26] dark:text-[#f2aaa5]"
         >
           {locale.invalidGoal.replace('{maximum}', String(maximum))}
         </p>
       )}
       <div className="flex gap-2">
-        <button type="submit" className={buttonClasses}>
+        <button type="submit" className={primaryButtonClasses}>
           {locale.save}
         </button>
         <button type="button" onClick={onCancel} className={buttonClasses}>
@@ -248,173 +254,195 @@ export default function GoalSettings(): JSX.Element {
   return (
     <section
       id="study-goals"
-      className="theme-text mt-6 scroll-mt-4 border-t border-gray-200 pt-5 dark:border-purple-dark"
+      className="theme-text my-8 scroll-mt-6 border-t border-[#eadeda] pt-7 dark:border-[#3b2440]"
     >
-      <h2 className="text-lg font-semibold">{locale.title}</h2>
-      <p className="mt-1 text-xs leading-relaxed">
+      <h2 className="text-xl font-bold tracking-tight">{locale.title}</h2>
+      <p className="mt-2 max-w-[65ch] text-sm leading-relaxed text-[#625a59] dark:text-[#d2c7d2]">
         {locale.completedOnly}. {locale.noHistory}
       </p>
-      <ul className="mt-4 divide-y divide-gray-200 dark:divide-purple-dark">
-        {configuration.goals.map(goal => (
-          <li key={goal.id} className="py-3">
-            <div className="flex items-baseline justify-between gap-3 text-sm">
-              <span className="min-w-0 break-words font-semibold">
-                {getGoalLabel(goal, locale)}
-              </span>
-              <span className="shrink-0 tabular-nums">
-                {goal.targetMinutes} {locale.minutes}
-              </span>
-            </div>
-            {goal.kind === 'weekly-activity' && (
-              <p className="mt-1 text-xs">{locale.weeklyActivity}</p>
-            )}
-            {!goal.enabled && <p className="mt-1 text-xs">{locale.disabled}</p>}
-            {goal.activityNames.length > 1 && (
-              <p className="mt-1 break-words text-xs">
-                {locale.aliases.replace(
-                  '{names}',
-                  goal.activityNames.slice(1).join(', '),
+      <div className="mt-6 grid gap-8 md:grid-cols-[1fr_0.9fr]">
+        <div>
+          <ul className="divide-y divide-gray-200 dark:divide-[#3b2440]">
+            {configuration.goals.map(goal => (
+              <li key={goal.id} className="pb-5 pt-4 first:pt-0">
+                <div className="flex items-baseline justify-between gap-3 text-sm">
+                  <span className="min-w-0 break-words font-semibold">
+                    {getGoalLabel(goal, locale)}
+                  </span>
+                  <span className="shrink-0 font-semibold tabular-nums text-goal-light dark:text-goal-dark">
+                    {goal.targetMinutes} {locale.minutes}
+                  </span>
+                </div>
+                {goal.kind === 'weekly-activity' && (
+                  <p className="mt-1 text-xs">{locale.weeklyActivity}</p>
                 )}
-              </p>
-            )}
-            <div className="mt-2 flex flex-wrap gap-2">
-              <button
-                type="button"
-                onClick={() => {
-                  setEditingId(goal.id)
-                  setStatus(null)
-                }}
-                className={buttonClasses}
-                aria-label={`${locale.edit}: ${getGoalLabel(goal, locale)}`}
-              >
-                {locale.edit}
-              </button>
-              <button
-                type="button"
-                onClick={() =>
-                  dispatch(
-                    settingSlice.actions.setStudyGoalEnabled({
-                      goalId: goal.id,
-                      enabled: !goal.enabled,
-                    }),
-                  )
-                }
-                className={buttonClasses}
-                aria-label={`${goal.enabled ? locale.disable : locale.enable}: ${getGoalLabel(goal, locale)}`}
-              >
-                {goal.enabled ? locale.disable : locale.enable}
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  dispatch(settingSlice.actions.deleteStudyGoal(goal.id))
-                  setEditingId(null)
-                }}
-                className={buttonClasses}
-                aria-label={`${locale.delete}: ${getGoalLabel(goal, locale)}`}
-              >
-                {locale.delete}
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
-      {!configuration.goals.length && (
-        <p className="my-3 text-xs">{locale.restoreGoal}</p>
-      )}
-      {editingId === null ? (
-        <button
-          type="button"
-          onClick={() => {
-            setEditingId('new')
-            setStatus(null)
-          }}
-          className={buttonClasses}
-        >
-          {locale.addGoal}
-        </button>
-      ) : (
-        <GoalEditor
-          key={editingId}
-          goal={editingGoal}
-          goals={configuration.goals}
-          locale={locale}
-          activityOptions={activityOptions}
-          onSave={saveGoal}
-          onCancel={() => setEditingId(null)}
-        />
-      )}
-      <form
-        onSubmit={saveLimits}
-        noValidate
-        className="mt-5 border-t border-gray-200 pt-4 dark:border-purple-dark"
-      >
-        <h3 className="text-sm font-semibold">{locale.planningLimits}</h3>
-        <fieldset className="mt-3">
-          <legend className="text-xs font-semibold">{locale.studyDays}</legend>
-          <div className="mt-2 flex flex-wrap gap-3">
-            {[1, 2, 3, 4, 5, 6, 0].map(day => (
-              <label key={day} className="flex items-center gap-1 text-xs">
-                <input
-                  type="checkbox"
-                  checked={configuration.studyWeekdays.includes(day)}
-                  onChange={event =>
-                    dispatch(
-                      settingSlice.actions.setStudyPlanningLimits({
-                        maxDailyMinutes: configuration.maxDailyMinutes,
-                        studyWeekdays: event.target.checked
-                          ? [...configuration.studyWeekdays, day]
-                          : configuration.studyWeekdays.filter(
-                              existing => existing !== day,
-                            ),
-                      }),
-                    )
-                  }
-                  className="accent-secondary-light dark:accent-purple-light"
-                />
-                {locale.weekdays[day]}
-              </label>
+                {!goal.enabled && (
+                  <p className="mt-1 text-xs">{locale.disabled}</p>
+                )}
+                {goal.activityNames.length > 1 && (
+                  <p className="mt-1 break-words text-xs">
+                    {locale.aliases.replace(
+                      '{names}',
+                      goal.activityNames.slice(1).join(', '),
+                    )}
+                  </p>
+                )}
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditingId(goal.id)
+                      setStatus(null)
+                    }}
+                    className={buttonClasses}
+                    aria-label={`${locale.edit}: ${getGoalLabel(goal, locale)}`}
+                  >
+                    {locale.edit}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      dispatch(
+                        settingSlice.actions.setStudyGoalEnabled({
+                          goalId: goal.id,
+                          enabled: !goal.enabled,
+                        }),
+                      )
+                    }
+                    className={buttonClasses}
+                    aria-label={`${goal.enabled ? locale.disable : locale.enable}: ${getGoalLabel(goal, locale)}`}
+                  >
+                    {goal.enabled ? locale.disable : locale.enable}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      dispatch(settingSlice.actions.deleteStudyGoal(goal.id))
+                      setEditingId(null)
+                    }}
+                    className={cn(
+                      buttonClasses,
+                      'text-[#a12b26] dark:text-[#f2aaa5]',
+                    )}
+                    aria-label={`${locale.delete}: ${getGoalLabel(goal, locale)}`}
+                  >
+                    {locale.delete}
+                  </button>
+                </div>
+              </li>
             ))}
-          </div>
-        </fieldset>
-        <label
-          htmlFor="study-goal-daily-limit"
-          className="mb-1 mt-3 block text-xs font-semibold"
-        >
-          {locale.maxDailyMinutes}
-        </label>
-        <div className="flex items-center gap-2">
-          <input
-            id="study-goal-daily-limit"
-            type="number"
-            inputMode="numeric"
-            min={1}
-            max={1440}
-            step={1}
-            value={maximumMinutes}
-            onChange={event => {
-              setMaximumMinutes(event.target.value)
-              setLimitError(false)
-            }}
-            aria-invalid={limitError}
-            aria-describedby={limitError ? 'study-goal-limit-error' : undefined}
-            className={inputClasses}
-          />
-          <button type="submit" className={buttonClasses}>
-            {locale.save}
-          </button>
+          </ul>
+          {!configuration.goals.length && (
+            <p className="my-3 text-xs">{locale.restoreGoal}</p>
+          )}
+          {editingId === null ? (
+            <button
+              type="button"
+              onClick={() => {
+                setEditingId('new')
+                setStatus(null)
+              }}
+              className={primaryButtonClasses}
+            >
+              {locale.addGoal}
+            </button>
+          ) : (
+            <GoalEditor
+              key={editingId}
+              goal={editingGoal}
+              goals={configuration.goals}
+              locale={locale}
+              activityOptions={activityOptions}
+              onSave={saveGoal}
+              onCancel={() => setEditingId(null)}
+            />
+          )}
         </div>
-        {limitError && (
-          <p
-            id="study-goal-limit-error"
-            role="alert"
-            className="mt-1 text-xs text-red-700 dark:text-red-200"
+        <form
+          onSubmit={saveLimits}
+          noValidate
+          className="border-t border-[#eadeda] pt-6 md:border-l md:border-t-0 md:pl-7 md:pt-0 dark:border-[#3b2440]"
+        >
+          <h3 className="text-base font-bold">{locale.planningLimits}</h3>
+          <fieldset className="mt-5">
+            <legend className="text-xs font-semibold">
+              {locale.studyDays}
+            </legend>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {[1, 2, 3, 4, 5, 6, 0].map(day => (
+                <label key={day} className="cursor-pointer">
+                  <span className="sr-only">{locale.weekdays[day]}</span>
+                  <input
+                    type="checkbox"
+                    checked={configuration.studyWeekdays.includes(day)}
+                    onChange={event =>
+                      dispatch(
+                        settingSlice.actions.setStudyPlanningLimits({
+                          maxDailyMinutes: configuration.maxDailyMinutes,
+                          studyWeekdays: event.target.checked
+                            ? [...configuration.studyWeekdays, day]
+                            : configuration.studyWeekdays.filter(
+                                existing => existing !== day,
+                              ),
+                        }),
+                      )
+                    }
+                    className="peer sr-only"
+                  />
+                  <span
+                    aria-hidden="true"
+                    className="flex h-10 min-w-[40px] items-center justify-center rounded-lg border border-[#d8cdca] px-2 text-xs font-semibold transition-colors peer-checked:border-goal-light peer-checked:bg-goal-light peer-checked:text-white peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-goal-light dark:border-[#58435b] dark:peer-checked:border-purple-dark dark:peer-checked:bg-purple-dark dark:peer-focus-visible:outline-goal-dark"
+                  >
+                    {locale.weekdays[day]}
+                  </span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+          <label
+            htmlFor="study-goal-daily-limit"
+            className="mb-2 mt-6 block text-xs font-semibold"
           >
-            {locale.invalidLimit}
-          </p>
-        )}
-      </form>
-      <p role="status" className="mt-2 text-xs">
+            {locale.maxDailyMinutes}
+          </label>
+          <div className="flex flex-wrap items-center gap-3">
+            <input
+              id="study-goal-daily-limit"
+              type="number"
+              inputMode="numeric"
+              min={1}
+              max={1440}
+              step={1}
+              value={maximumMinutes}
+              onChange={event => {
+                setMaximumMinutes(event.target.value)
+                setLimitError(false)
+              }}
+              aria-invalid={limitError}
+              aria-describedby={
+                limitError ? 'study-goal-limit-error' : undefined
+              }
+              className={cn(inputClasses, 'max-w-[160px]')}
+            />
+            <button type="submit" className={primaryButtonClasses}>
+              {locale.save}
+            </button>
+          </div>
+          {limitError && (
+            <p
+              id="study-goal-limit-error"
+              role="alert"
+              className="mt-1 text-xs text-[#a12b26] dark:text-[#f2aaa5]"
+            >
+              {locale.invalidLimit}
+            </p>
+          )}
+        </form>
+      </div>
+      <p
+        role="status"
+        className="mt-4 text-sm font-medium text-goal-light dark:text-goal-dark"
+      >
         {status ? locale[status] : ''}
       </p>
     </section>

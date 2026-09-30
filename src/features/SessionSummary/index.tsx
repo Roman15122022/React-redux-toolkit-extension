@@ -8,6 +8,7 @@ import { cn } from '../../utils'
 import { TypeButton, TimePeriod } from '../../types'
 import { fullFormatTime } from '../../NavigationPages/TrackTimePage/helpers'
 import { useTranslate } from '../../hooks/useTranslate'
+import SessionProgress from '../StudyGoals/SessionProgress'
 import Container from '../../components/Container'
 import Button from '../../components/Button'
 
@@ -18,6 +19,7 @@ type SessionSummaryProps = {
   onClose: () => void
   layout?: 'popup' | 'page'
   completedGoalNames?: string[]
+  showGoalProgress?: boolean
 }
 
 const SessionSummary = ({
@@ -25,6 +27,7 @@ const SessionSummary = ({
   onClose,
   layout = 'popup',
   completedGoalNames = [],
+  showGoalProgress = false,
 }: SessionSummaryProps): JSX.Element => {
   const { interfaceLang } = useTranslate()
   const {
@@ -87,6 +90,8 @@ const SessionSummary = ({
             ))}
           </div>
         )}
+
+        {showGoalProgress && <SessionProgress session={session} />}
 
         <section className="mt-4 rounded-2xl bg-white p-4 shadow-sm dark:bg-[#211721]">
           <div className="flex items-center justify-between gap-4">

@@ -2,7 +2,6 @@ import React from 'react'
 
 import { TypeButton } from '../../types'
 import StudyTimeInfoForDay from '../../features/StudyTimeInfoForDay'
-import StudyGoals from '../../features/StudyGoals'
 import StopStartButton from '../../features/StopStartButton'
 import SessionSummary from '../../features/SessionSummary'
 import { MoodSelect } from '../../features/MoodSelect'
@@ -41,6 +40,7 @@ const TrackTimePage = (): JSX.Element => {
       <SessionSummary
         session={completedSession}
         completedGoalNames={completedGoalNames}
+        showGoalProgress
         onClose={handleCloseSessionSummary}
       />
     )
@@ -103,7 +103,6 @@ const TrackTimePage = (): JSX.Element => {
         isLastTimeNeeded
         compactTotal
       />
-      <StudyGoals />
     </Container>
   )
 }

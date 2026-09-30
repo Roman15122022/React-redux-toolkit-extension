@@ -10,6 +10,7 @@ import { useStateSaver } from '../../hooks/useStateSaver'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import TextStatistics from '../../features/TextStatistics'
+import { useStudyGoals } from '../../features/StudyGoals/useStudyGoals'
 import { GraphStatistics } from '../../features/GraphStatistics'
 import { DomainSiteInfo } from '../../features/DomainSiteInfo'
 
@@ -19,6 +20,7 @@ import { StatisticState } from './enums'
 
 export const useStatisticsPage = () => {
   const { dates } = useAppSelector(state => state.TimerLogsReducer)
+  const { streak: studyStreak } = useStudyGoals()
   const {
     isHintActive: startValueHint,
     periodStat,
@@ -124,6 +126,7 @@ export const useStatisticsPage = () => {
 
   return {
     locale: interfaceLang.popup.statistics,
+    studyStreak,
     isDataAvailable: dates.length > 0,
     isHintActive,
     colorHint: isHintActive ? 'text-secondary-light dark:text-purple-dark' : '',

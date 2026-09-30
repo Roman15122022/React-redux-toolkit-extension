@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { cn } from '../../utils'
 import { Locale } from '../../types'
 import ProgressBar from '../../components/ProgressBar'
 
@@ -55,7 +56,12 @@ export function StudyGoalsView({
     : progress
 
   return (
-    <section className="theme-text border-t border-gray-200 py-3 dark:border-purple-dark">
+    <section
+      className={cn(
+        'theme-text py-3',
+        compact && 'border-t border-gray-200 dark:border-purple-dark',
+      )}
+    >
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-sm font-bold">{locale.title}</h2>
         <button

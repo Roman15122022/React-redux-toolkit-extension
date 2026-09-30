@@ -35,17 +35,23 @@ const Options = (): JSX.Element => {
   return (
     <div
       className={`${
-        isHistory ? 'w-[1220px] max-w-[calc(100vw-48px)]' : 'w-[500px]'
-      } m-auto mt-4`}
+        isHistory ? 'w-[1220px]' : 'w-[760px]'
+      } options-page mx-auto my-6 max-w-[calc(100vw-32px)] rounded-2xl border border-[#eadeda] bg-white p-5 sm:p-8 dark:border-[#3b2440] dark:bg-[#120d13]`}
     >
       {(isBlackList || isHistory) && (
-        <WestIcon
+        <button
+          type="button"
           onClick={isHistory ? toggleHistory : toggleBlackList}
-          className="theme-text hover:text-secondary-light dark:hover:text-purple-dark cursor-pointer"
-          sx={{ fontSize: 24 }}
-        />
+          aria-label={interfaceLang.settings.title}
+          className="mb-3 rounded-lg p-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-goal-light dark:focus-visible:outline-goal-dark"
+        >
+          <WestIcon
+            className="theme-text hover:text-secondary-light dark:hover:text-purple-dark cursor-pointer"
+            sx={{ fontSize: 24 }}
+          />
+        </button>
       )}
-      <Title title={title} variant={TypeTittle.LARGE} classes="text-center" />
+      <Title title={title} variant={TypeTittle.LARGE} classes="options-title" />
       <div className="mt-6">
         {isBlackList ? (
           <BlackList />
@@ -53,29 +59,32 @@ const Options = (): JSX.Element => {
           <HistoryHeatmapOptions />
         ) : (
           <>
-            <ThemeSwitcher
-              switchTheme={switchTheme}
-              isDark={isDark}
-              interfaceLang={interfaceLang}
-            />
-            <LocaleSwitcher
-              interfaceLang={interfaceLang}
-              language={language}
-              handleSelectLocale={handleSelectLocale}
-            />
-            <SaveStateToggler isDark={isDark} interfaceLang={interfaceLang} />
-            <NotificationSetting
-              isDark={isDark}
-              interfaceLang={interfaceLang}
-            />
+            <div className="options-preferences">
+              <ThemeSwitcher
+                switchTheme={switchTheme}
+                isDark={isDark}
+                interfaceLang={interfaceLang}
+              />
+              <LocaleSwitcher
+                interfaceLang={interfaceLang}
+                language={language}
+                handleSelectLocale={handleSelectLocale}
+              />
+              <SaveStateToggler isDark={isDark} interfaceLang={interfaceLang} />
+              <NotificationSetting
+                isDark={isDark}
+                interfaceLang={interfaceLang}
+              />
+            </div>
             <GoalSettings />
-            <div className="border-t-2 mt-4 dark:border-white" />
-            <BlackListSwitcher
-              interfaceLang={interfaceLang}
-              toggleBlackList={toggleBlackList}
-            />
-            <DataTransfer interfaceLang={interfaceLang} />
-            <ResetStatistics interfaceLang={interfaceLang} />
+            <div className="options-data border-t border-[#eadeda] pt-3 dark:border-[#3b2440]">
+              <BlackListSwitcher
+                interfaceLang={interfaceLang}
+                toggleBlackList={toggleBlackList}
+              />
+              <DataTransfer interfaceLang={interfaceLang} />
+              <ResetStatistics interfaceLang={interfaceLang} />
+            </div>
 
             <p className="theme-text text-center mt-8 opacity-60">
               {interfaceLang.settings.createdBy}
