@@ -50,11 +50,13 @@ const HistoryPage = (): JSX.Element => {
 
   if (!dates.length) {
     return (
-      <Title
-        variant={TypeTittle.SMALL}
-        classes="mt-5 text-center"
-        title={interfaceLang.popup.history.noHistory}
-      />
+      <Container classes="mt-4">
+        <Title
+          variant={TypeTittle.SMALL}
+          classes="mt-5 text-center"
+          title={interfaceLang.popup.history.noHistory}
+        />
+      </Container>
     )
   }
 

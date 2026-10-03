@@ -17,6 +17,7 @@ import { StatisticState } from './enums'
 const StatisticsPage = (): JSX.Element => {
   const {
     locale,
+    studyStreak,
     isDataAvailable,
     colorHint,
     handleToggleHint,
@@ -28,7 +29,6 @@ const StatisticsPage = (): JSX.Element => {
     selectStatStateVariants,
     isActivityFilterVisible,
     statisticState,
-    studyStreak,
   } = useStatisticsPage()
 
   return (

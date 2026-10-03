@@ -80,9 +80,9 @@ export const useOptions = () => {
     toggleBlackList,
     toggleHistory,
     title: isBlackList
-      ? `${interfaceLang.settings.titleTwo}📝`
+      ? interfaceLang.settings.titleTwo
       : isHistory
         ? interfaceLang.popup.header.history
-        : `${interfaceLang.settings.title}👨‍🎓`,
+        : interfaceLang.settings.title,
   }
 }

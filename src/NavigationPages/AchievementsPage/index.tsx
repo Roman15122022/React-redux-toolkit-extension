@@ -3,6 +3,7 @@ import { Tooltip } from '@mui/material'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 
 import { TypeTittle } from '../../types'
+import StudyGoals from '../../features/StudyGoals'
 import Title from '../../components/Title'
 import ProgressBar from '../../components/ProgressBar'
 import Container from '../../components/Container'
@@ -16,16 +17,24 @@ const AchievementsPage = (): JSX.Element => {
 
   if (!achievements.length) {
     return (
-      <Title
-        variant={TypeTittle.SMALL}
-        classes="mt-5 text-center"
-        title={locale.noAchievements}
-      />
+      <Container classes="mr-0 mt-4">
+        <div className="mb-4 mr-4 rounded-2xl border border-secondary-light p-3 dark:border-purple-dark">
+          <StudyGoals compact={false} />
+        </div>
+        <Title
+          variant={TypeTittle.SMALL}
+          classes="mt-5 text-center"
+          title={locale.noAchievements}
+        />
+      </Container>
     )
   }
 
   return (
     <Container classes="mr-0 mt-4">
+      <div className="mb-4 mr-4 rounded-2xl border border-secondary-light p-3 dark:border-purple-dark">
+        <StudyGoals compact={false} />
+      </div>
       <div className="flex gap-3 justify-end items-center w-[95%]">
         <button onClick={iconSort.onClick}>
           {createElement(iconSort.icon, {

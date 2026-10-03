@@ -2,15 +2,12 @@ import React from 'react'
 
 import { TypeButton } from '../../types'
 import { useTrackTime } from '../../NavigationPages/TrackTimePage/useTrackTime'
-import { getDailyGoalProgress } from '../../NavigationPages/TrackTimePage/timerState'
 import { useTranslate } from '../../hooks/useTranslate'
 import useTheme from '../../hooks/useTheme'
-import { useAppSelector } from '../../hooks/useAppSelector'
 import SessionSummary from '../../features/SessionSummary'
 import { MoodLabelKeys } from '../../features/MoodSelect/constants'
 import { MoodSelect } from '../../features/MoodSelect'
 import InputNameActivity from '../../features/InputNameActivity'
-import ProgressBar from '../../components/ProgressBar'
 import Button from '../../components/Button'
 
 import { useCurrentDomain } from './useCurrentDomain'
@@ -21,7 +18,6 @@ const SidePanel = (): JSX.Element => {
   const panel = interfaceLang.sidePanel
   const {
     time,
-    seconds,
     isActive,
     isPaused,
     isFinishing,
@@ -40,19 +36,10 @@ const SidePanel = (): JSX.Element => {
     handleStopTimer,
     handleCancelTimer,
     completedSession,
+    completedGoalNames,
     handleCloseSessionSummary,
   } = useTrackTime()
-  const sessions = useAppSelector(state => state.TimerLogsReducer.dates)
-  const goalMinutes = useAppSelector(
-    state => state.SettingReducer.dailyGoalMinutes ?? 60,
-  )
   const domain = useCurrentDomain()
-  const progress = getDailyGoalProgress(
-    sessions,
-    isActive ? seconds : 0,
-    goalMinutes,
-    Date.now(),
-  )
 
   if (completedSession) {
     return (
@@ -60,6 +47,8 @@ const SidePanel = (): JSX.Element => {
         <SessionSummary
           layout="page"
           session={completedSession}
+          completedGoalNames={completedGoalNames}
+          showGoalProgress
           onClose={handleCloseSessionSummary}
         />
       </div>
@@ -172,25 +161,7 @@ const SidePanel = (): JSX.Element => {
           </div>
         )}
 
-        <div className="mt-6 border-t border-[#eadeda] pt-4 dark:border-[#3b2440]">
-          <div className="flex flex-wrap items-baseline justify-between gap-2 text-xs">
-            <span className="font-semibold">{panel.dailyGoal}</span>
-            <span className="tabular-nums">
-              {Math.floor(progress.seconds / 60)} / {goalMinutes}{' '}
-              {panel.minutes}
-            </span>
-          </div>
-          <div
-            role="progressbar"
-            aria-label={panel.dailyGoal}
-            aria-valuenow={progress.percent}
-            aria-valuemin={0}
-            aria-valuemax={100}
-            className="mt-2"
-          >
-            <ProgressBar percents={progress.percent} />
-          </div>
-        </div>
+        <div className="mt-6"></div>
       </section>
     </main>
   )

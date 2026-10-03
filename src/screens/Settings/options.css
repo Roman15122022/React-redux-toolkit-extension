@@ -5,3 +5,41 @@
 .custom-select .MuiSelect-outlined {
   @apply border-none focus:border-none;
 }
+
+.options-title {
+  @apply text-left text-3xl font-bold tracking-tight;
+}
+
+.options-preferences > * {
+  @apply my-0 border-b border-[#eadeda] py-4 dark:border-[#3b2440];
+}
+
+.options-preferences > :last-child {
+  @apply border-b-0 pb-0;
+}
+
+.options-page .options-preferences h1,
+.options-page .options-data h1 {
+  @apply text-sm font-semibold leading-relaxed;
+}
+
+.options-page .options-data > * {
+  @apply py-2;
+}
+
+.options-page .options-data > div > .flex {
+  @apply flex-wrap gap-3;
+}
+
+.options-page ::selection {
+  @apply bg-secondary-light/20 dark:bg-purple-light/30;
+}
+
+.options-page input,
+.options-page select {
+  @apply caret-goal-light dark:caret-goal-dark;
+}
+
+.options-page .options-reset button.border-2 {
+  @apply border-[#a12b26] text-[#a12b26] dark:border-[#f2aaa5] dark:text-[#f2aaa5];
+}

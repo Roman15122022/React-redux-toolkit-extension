@@ -31,6 +31,7 @@ const TrackTimePage = (): JSX.Element => {
     mood,
     handleChangeMood,
     completedSession,
+    completedGoalNames,
     handleCloseSessionSummary,
   } = useTrackTime()
 
@@ -38,6 +39,8 @@ const TrackTimePage = (): JSX.Element => {
     return (
       <SessionSummary
         session={completedSession}
+        completedGoalNames={completedGoalNames}
+        showGoalProgress
         onClose={handleCloseSessionSummary}
       />
     )

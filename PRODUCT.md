@@ -44,8 +44,17 @@ screen until the user closes it.
 - Focus scoring and recommendations must be deterministic, explainable, and
   useful when little history is available.
 - Session notes are optional and persisted with the completed timer log.
-- The Side Panel uses the same locally persisted timer as the popup and shows
-  progress toward a configurable daily goal (60 minutes by default).
+- The Side Panel uses the same locally persisted timer as the popup. Daily,
+  weekly, and activity-specific weekly goals count completed sessions only.
+  The existing daily target migrates without losing its configured value;
+  new users start with a 60-minute daily target.
+- Goals and their weekly plan are displayed only on Achievements and managed
+  in Settings. Progress and plans are derived from the saved session history.
+- The weekly plan uses local Monday–Sunday weeks, selected study days, recent
+  workload, and a configurable daily workload limit (180 minutes by default).
+  It reports unfinished time that cannot fit instead of exceeding the limit.
+- Study streaks count days with completed study sessions and forgive one missed
+  day per streak. Reaching a time target is not required to maintain a streak.
 - User-facing text is available in English and Ukrainian.
 - The interface supports light and dark themes at popup width.
 
@@ -53,6 +62,7 @@ screen until the user closes it.
 
 - Product requirements are tracked in GitHub issue #60 and related issues #64,
   #66, #67, and #68.
+- Daily and weekly goals and deterministic planning follow GitHub issue #58.
 - Existing timer logs, tracked-domain sessions, blacklist behavior, local AI
   helpers, themes, localization, and History UI are implemented in the
   repository.

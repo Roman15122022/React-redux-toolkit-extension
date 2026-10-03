@@ -28,11 +28,17 @@ export const BlackListSwitcher = ({
         </Tooltip>
       </div>
 
-      <EastIcon
+      <button
+        type="button"
         onClick={toggleBlackList}
-        className="theme-text hover:text-secondary-light dark:hover:text-purple-dark cursor-pointer"
-        sx={{ fontSize: 24 }}
-      />
+        aria-label={interfaceLang.settings.blackList.title}
+        className="rounded-lg p-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-goal-light dark:focus-visible:outline-goal-dark"
+      >
+        <EastIcon
+          className="theme-text hover:text-secondary-light dark:hover:text-purple-dark cursor-pointer"
+          sx={{ fontSize: 24 }}
+        />
+      </button>
     </div>
   )
 }

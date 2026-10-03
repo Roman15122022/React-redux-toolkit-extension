@@ -1,4 +1,5 @@
 import type { StudyStreak, TimePeriod } from '../../types'
+import { getValidCompletedSessions } from '../../features/StudyGoals/helpers'
 
 import { Period } from './types'
 
@@ -18,7 +19,11 @@ export function getStudyStreak(
   todayTimestamp: number,
 ): StudyStreak {
   const studyDays = [
-    ...new Set(dates.map(date => getCalendarDayNumber(date.endDate))),
+    ...new Set(
+      getValidCompletedSessions(dates, todayTimestamp).map(date =>
+        getCalendarDayNumber(date.endDate),
+      ),
+    ),
   ].sort((firstDay, secondDay) => firstDay - secondDay)
 
   if (studyDays.length === 0) {

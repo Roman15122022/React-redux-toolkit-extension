@@ -10,15 +10,17 @@ import { useStateSaver } from '../../hooks/useStateSaver'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import TextStatistics from '../../features/TextStatistics'
+import { useStudyGoals } from '../../features/StudyGoals/useStudyGoals'
 import { GraphStatistics } from '../../features/GraphStatistics'
 import { DomainSiteInfo } from '../../features/DomainSiteInfo'
 
 import { Period } from './types'
-import { getDatesByPeriod, getStudyStreak } from './helpers'
+import { getDatesByPeriod } from './helpers'
 import { StatisticState } from './enums'
 
 export const useStatisticsPage = () => {
   const { dates } = useAppSelector(state => state.TimerLogsReducer)
+  const { streak: studyStreak } = useStudyGoals()
   const {
     isHintActive: startValueHint,
     periodStat,
@@ -77,8 +79,6 @@ export const useStatisticsPage = () => {
     return dataByPeriod.filter(item => item.activityName === activityNameFilter)
   }, [dataByPeriod, activityName])
 
-  const studyStreak = getStudyStreak(dates, Date.now())
-
   const componentsByState = {
     [StatisticState.TEXT]: (
       <TextStatistics
@@ -126,6 +126,7 @@ export const useStatisticsPage = () => {
 
   return {
     locale: interfaceLang.popup.statistics,
+    studyStreak,
     isDataAvailable: dates.length > 0,
     isHintActive,
     colorHint: isHintActive ? 'text-secondary-light dark:text-purple-dark' : '',
@@ -139,6 +140,5 @@ export const useStatisticsPage = () => {
     statComponentByState: componentsByState[statisticState] || null,
     selectStatStateVariants,
     isActivityFilterVisible,
-    studyStreak,
   }
 }

@@ -22,7 +22,7 @@ const ResetStatistics = ({
   } = useResetStatistics(interfaceLang)
 
   return (
-    <div>
+    <div className="options-reset">
       <div className="flex items-center justify-between my-4">
         <Title title={titleText} variant={TypeTittle.SMALL} />
         {!isBtnActive ? (
