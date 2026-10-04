@@ -18,7 +18,7 @@ export const TextStatDomain = ({
   addToBlack,
 }: TextStatDomainProps): JSX.Element => {
   return (
-    <div className="-mr-4 h-[250px] overflow-y-scroll scrollbar-thin scrollbar scrollbar-thumb-secondary-light dark:scrollbar-track-white dark:scrollbar-thumb-purple-dark dark:scrollbar-track-black">
+    <div>
       {allActualDomenDataText.map(({ label, value }, index) => {
         const isBlackListed = isInBlackList(label)
 

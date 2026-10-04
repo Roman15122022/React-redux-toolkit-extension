@@ -1,8 +1,8 @@
 body {
-  min-height: 400px;
+  height: 500px;
   width: 400px;
   margin: 0;
-  overflow-x: hidden;
+  overflow: hidden;
   @apply bg-white dark:bg-black;
 }
 

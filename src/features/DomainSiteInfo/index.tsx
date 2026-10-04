@@ -78,6 +78,10 @@ export const DomainSiteInfo = ({
             width={400}
             height={220}
             slotProps={{
+              noDataOverlay: {
+                message: locale.noData,
+                sx: { fill: colorText },
+              },
               legend: {
                 labelStyle: {
                   fill: colorText,

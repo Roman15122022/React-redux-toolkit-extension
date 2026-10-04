@@ -4,7 +4,6 @@ import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded'
 import BlockRoundedIcon from '@mui/icons-material/BlockRounded'
 import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded'
 
-import { cn } from '../../utils'
 import { TypeButton, TimePeriod } from '../../types'
 import { fullFormatTime } from '../../NavigationPages/TrackTimePage/helpers'
 import { useTranslate } from '../../hooks/useTranslate'
@@ -17,7 +16,6 @@ import { useSessionSummary } from './useSessionSummary'
 type SessionSummaryProps = {
   session: TimePeriod
   onClose: () => void
-  layout?: 'popup' | 'page'
   completedGoalNames?: string[]
   showGoalProgress?: boolean
 }
@@ -25,7 +23,6 @@ type SessionSummaryProps = {
 const SessionSummary = ({
   session,
   onClose,
-  layout = 'popup',
   completedGoalNames = [],
   showGoalProgress = false,
 }: SessionSummaryProps): JSX.Element => {
@@ -60,12 +57,7 @@ const SessionSummary = ({
 
   return (
     <Container classes="mx-0 mt-0 pb-3">
-      <div
-        className={cn(
-          'p-4 scrollbar-thin scrollbar-thumb-secondary-light dark:scrollbar-thumb-purple-dark',
-          layout === 'popup' && 'max-h-[520px] overflow-y-auto',
-        )}
-      >
+      <div className="p-4">
         <div className="flex items-start gap-3">
           <CheckCircleRoundedIcon
             className="text-secondary-light dark:text-purple-light"

@@ -32,7 +32,7 @@ const StatisticsPage = (): JSX.Element => {
   } = useStatisticsPage()
 
   return (
-    <Container classes="mt-4">
+    <Container classes="mt-0 py-4">
       <StudyStreakProgress locale={locale.streak} streak={studyStreak} />
       {!isDataAvailable ? (
         <Title

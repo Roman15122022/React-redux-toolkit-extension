@@ -316,6 +316,7 @@
         "verySatisfied": "Відмінне"
       },
       "siteDomainStat": {
+        "noData": "Немає даних для відображення",
         "title": "Сайти під час навчання",
         "others": "Інші",
         "blackList": "ЧС",

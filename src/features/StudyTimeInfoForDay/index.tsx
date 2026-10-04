@@ -59,13 +59,7 @@ const StudyTimeInfoForDay = ({
         </div>
       )}
       {periods.length > 0 && (
-        <div
-          className={cn(
-            'mt-2 h-[125px] overflow-y-auto pr-1 scrollbar-thin scrollbar scrollbar-track-transparent scrollbar-thumb-secondary-light dark:scrollbar-thumb-purple-dark',
-            compactTotal && 'mt-0',
-            sxList,
-          )}
-        >
+        <div className={cn('mt-2 pr-1', compactTotal && 'mt-0', sxList)}>
           {periods
             .map(({ period, activityName, source }, index) => (
               <button

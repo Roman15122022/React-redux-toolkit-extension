@@ -20,6 +20,61 @@ function transpileTypeScript(module, filename) {
 require.extensions['.ts'] = transpileTypeScript
 require.extensions['.tsx'] = transpileTypeScript
 
+for (const { language, color, message } of [
+  { language: 'ua', color: 'white', message: 'Немає даних для відображення' },
+  { language: 'en', color: 'black', message: 'No data to display' },
+]) {
+  test(`localizes the empty site chart in ${language} with ${color} text`, () => {
+    const React = require('react')
+    const ReactDOMServer = require('react-dom/server')
+    const hookModulePath = require.resolve(
+      '../src/features/DomainSiteInfo/useDomainSiteInfo',
+    )
+    const componentModulePath = require.resolve(
+      '../src/features/DomainSiteInfo',
+    )
+    const originalHookModule = require.cache[hookModulePath]
+    const locale = require(`../src/locales/${language}.json`).popup.statistics
+      .siteDomainStat
+
+    require.cache[hookModulePath] = {
+      exports: {
+        useDomainSiteInfo: () => ({
+          locale: { ...locale, noData: message },
+          filterToOtherData: [],
+          colorText: color,
+          valueFormatter: () => '',
+          isGraph: true,
+          handleToggleGraphText: () => {},
+        }),
+      },
+    }
+    delete require.cache[componentModulePath]
+
+    try {
+      const { DomainSiteInfo } = require(componentModulePath)
+      const markup = ReactDOMServer.renderToStaticMarkup(
+        React.createElement(DomainSiteInfo, {
+          period: '1',
+          setIsActivityFilterVisible: () => {},
+        }),
+      )
+
+      assert.ok(markup.includes(message))
+      assert.ok(markup.includes(`fill:${color}`))
+      assert.equal(locale.noData, message)
+    } finally {
+      delete require.cache[componentModulePath]
+
+      if (originalHookModule) {
+        require.cache[hookModulePath] = originalHookModule
+      } else {
+        delete require.cache[hookModulePath]
+      }
+    }
+  })
+}
+
 test('keeps the full activity name available in the pie chart legend', () => {
   const React = require('react')
   const ReactDOMServer = require('react-dom/server')

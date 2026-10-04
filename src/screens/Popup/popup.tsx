@@ -18,8 +18,8 @@ const Popup = (): JSX.Element => {
   } = usePopup()
 
   return (
-    <div className="theme-text min-h-[400px] overflow-hidden bg-white dark:bg-black">
-      <div className="mx-2 mt-2 flex justify-center rounded-2xl bg-[#fff7f4] px-1 py-1 dark:bg-[#160f17]">
+    <div className="theme-text flex h-[500px] flex-col overflow-hidden bg-white dark:bg-black">
+      <div className="mx-2 mt-2 flex shrink-0 justify-center rounded-2xl bg-[#fff7f4] px-1 py-1 dark:bg-[#160f17]">
         {links.map(({ route, variant, name }) => (
           <Button
             key={name}
@@ -32,7 +32,7 @@ const Popup = (): JSX.Element => {
         ))}
       </div>
       {canOpenSidePanel && (
-        <div className="mx-3 mt-1 text-right">
+        <div className="mx-3 mt-1 shrink-0 text-right">
           <button
             type="button"
             onClick={handleToggleSidePanel}
@@ -50,7 +50,7 @@ const Popup = (): JSX.Element => {
           )}
         </div>
       )}
-      <main className="mx-2 mb-2 mt-2 overflow-hidden rounded-2xl border border-[#eadeda] bg-[#fffaf8] dark:border-[#3b2440] dark:bg-[#120d13]">
+      <main className="mx-2 mb-2 mt-2 min-h-0 flex-1 overflow-x-hidden overflow-y-auto rounded-2xl border border-[#eadeda] bg-[#fffaf8] dark:border-[#3b2440] dark:bg-[#120d13]">
         <PopupRouter />
       </main>
     </div>

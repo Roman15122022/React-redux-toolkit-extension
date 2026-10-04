@@ -49,7 +49,7 @@ const AchievementsPage = (): JSX.Element => {
           />
         </Tooltip>
       </div>
-      <div className="h-[300px] overflow-y-scroll scrollbar-thin scrollbar scrollbar-thumb-secondary-light dark:scrollbar-track-white dark:scrollbar-thumb-purple-dark dark:scrollbar-track-black">
+      <div className="pb-4">
         {achievements.map((subject, index) => (
           <div key={subject.name} className="mt-4 w-[97%]">
             <span className="text-sm font-bold">

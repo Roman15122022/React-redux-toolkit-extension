@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { cn } from '../../utils'
 import { TypeTittle } from '../../types'
 import { MoodDictionary } from '../../constants/specConstants'
 import Title from '../../components/Title'
@@ -93,13 +92,7 @@ export const AIHelper = (): JSX.Element => {
 
   return (
     <Container classes="mr-0">
-      <div
-        className={cn(
-          'h-[305px] overflow-y-scroll overflow-x-hidden pr-3',
-          'scrollbar-thin scrollbar scrollbar-thumb-secondary-light',
-          'dark:scrollbar-track-white dark:scrollbar-thumb-purple-dark dark:scrollbar-track-black',
-        )}
-      >
+      <div className="pr-3 pb-4">
         <div className="font-semibold italic theme-text">
           {locale.description}
         </div>

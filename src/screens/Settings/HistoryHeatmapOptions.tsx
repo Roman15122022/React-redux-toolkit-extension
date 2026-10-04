@@ -55,7 +55,7 @@ const HistoryHeatmapOptions = (): JSX.Element => {
           date={selectedDate}
           isLastTimeNeeded={false}
           classes="mt-0 text-black dark:text-white"
-          sxList="mt-1 h-[150px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          sxList="mt-1"
         />
       </div>
     </div>

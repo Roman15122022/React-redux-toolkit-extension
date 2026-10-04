@@ -45,7 +45,6 @@ const SidePanel = (): JSX.Element => {
     return (
       <div className="min-h-screen bg-white p-2 dark:bg-black">
         <SessionSummary
-          layout="page"
           session={completedSession}
           completedGoalNames={completedGoalNames}
           showGoalProgress

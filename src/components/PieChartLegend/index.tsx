@@ -6,7 +6,7 @@ const PieChartLegend = ({ items }: PieChartLegendProps): JSX.Element => {
   return (
     <ul
       role="list"
-      className="grid max-h-24 w-full grid-cols-2 gap-x-4 gap-y-2 overflow-y-auto pb-4 pr-1 text-xs [scrollbar-width:thin]"
+      className="grid w-full grid-cols-2 gap-x-4 gap-y-2 pb-4 pr-1 text-xs"
     >
       {items.map(({ id, label, color }) => (
         <li key={id} className="theme-text flex min-w-0 items-center gap-2">

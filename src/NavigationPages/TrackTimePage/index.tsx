@@ -15,7 +15,6 @@ const TrackTimePage = (): JSX.Element => {
   const {
     locale,
     time: { formattedSeconds, formattedMinutes, formattedHours },
-    lastTime,
     lastNameActivity,
     date,
     handleStopTimer,
@@ -47,9 +46,9 @@ const TrackTimePage = (): JSX.Element => {
   }
 
   return (
-    <Container classes="mx-0 mt-0 p-4">
+    <Container classes="mx-0 mt-0 p-4 pt-6">
       <div className="flex items-center justify-center gap-3">
-        <div className="theme-text text-center text-5xl tabular-nums">
+        <div className="theme-text text-center text-[52px] leading-none tabular-nums">
           {formattedHours}:{formattedMinutes}:{formattedSeconds}
         </div>
         <StopStartButton
@@ -97,12 +96,7 @@ const TrackTimePage = (): JSX.Element => {
           </div>
         )}
       </div>
-      <StudyTimeInfoForDay
-        lastTime={lastTime}
-        date={date}
-        isLastTimeNeeded
-        compactTotal
-      />
+      <StudyTimeInfoForDay date={date} isLastTimeNeeded={false} compactTotal />
     </Container>
   )
 }

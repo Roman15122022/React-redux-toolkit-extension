@@ -121,7 +121,7 @@ const HistoryPage = (): JSX.Element => {
       {historyView === 'list' ? (
         <>
           <div className="h-[118px]">
-            <div className="flex gap-2 flex-wrap justify-start">
+            <div className="grid grid-cols-4 gap-2">
               {historyDates.map(({ name, onClick, isSelected }) => (
                 <Button
                   key={name}
@@ -129,7 +129,7 @@ const HistoryPage = (): JSX.Element => {
                   variant={
                     isSelected ? TypeButton.SECONDARY : TypeButton.PRIMARY
                   }
-                  classes="w-[85px]"
+                  classes="min-w-0 w-full whitespace-nowrap px-2"
                 >
                   {name}
                 </Button>
