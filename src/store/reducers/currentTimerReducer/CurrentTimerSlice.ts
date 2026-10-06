@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { ChromeKeys, ChromeStorageProps, StateTimer } from '../../../types'
+import { SessionConfiguration } from '../../../features/SessionTemplates/types'
 
 import { CurrentTimer } from './types'
 
@@ -9,6 +10,7 @@ const initialState: CurrentTimer = {
   elapsedTime: 0,
   pauseCount: 0,
   note: '',
+  sessionConfiguration: null,
   stateTimer: null,
 }
 
@@ -16,6 +18,12 @@ export const currentTimerSlice = createSlice({
   name: 'currentTimer',
   initialState,
   reducers: {
+    setSessionConfiguration(
+      state,
+      action: PayloadAction<SessionConfiguration | null>,
+    ) {
+      state.sessionConfiguration = action.payload
+    },
     setStartDate(state, action: PayloadAction<number>) {
       state.startDate = action.payload
     },
@@ -39,9 +47,15 @@ export const currentTimerSlice = createSlice({
 
       const isActive = action.payload?.isActive ?? false
       const storageData: ChromeStorageProps = {
-        [ChromeKeys.CHROME_STATE_TIMER]: action.payload || {
-          isActive: false,
-          isPause: false,
+        [ChromeKeys.CHROME_STATE_TIMER]: {
+          ...(action.payload || { isActive: false, isPause: false }),
+          ...(state.sessionConfiguration && isActive
+            ? {
+                blockedDomains: state.sessionConfiguration.focusMode
+                  ? [...state.sessionConfiguration.blockedDomains]
+                  : [],
+              }
+            : {}),
         },
       }
 

@@ -1,3 +1,4 @@
+import { getSessionBlockedDomains } from '../features/SessionTemplates/helpers'
 import {
   CANCEL_TIMER_SESSION_MESSAGE,
   FINISH_TIMER_SESSION_MESSAGE,
@@ -171,7 +172,11 @@ chrome.webNavigation.onBeforeNavigate.addListener(
       if (!isActive) return
 
       // Check if the site is in the blacklist (including subdomains)
-      const isBlocked = blackList.some(blockedDomain => {
+      const sessionBlockedDomains = getSessionBlockedDomains(
+        timerState,
+        blackList,
+      )
+      const isBlocked = sessionBlockedDomains.some(blockedDomain => {
         const cleanBlockedDomain = blockedDomain
           .replace(/^www\./, '')
           .toLowerCase()

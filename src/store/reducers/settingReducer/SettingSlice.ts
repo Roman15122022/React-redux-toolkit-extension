@@ -12,10 +12,16 @@ import {
   isValidMinutes,
   normalizeStudyGoalsConfiguration,
 } from '../../../features/StudyGoals/configuration'
+import { SessionTemplate } from '../../../features/SessionTemplates/types'
+import {
+  getTemplateError,
+  normalizeSessionTemplates,
+} from '../../../features/SessionTemplates/helpers'
 
 import { Setting } from './types'
 
 const initialState: Setting = {
+  sessionTemplates: [],
   language: Language.EN,
   theme: ThemeVariants.DARK,
   saveStateAfterClose: true,
@@ -31,6 +37,41 @@ export const settingSlice = createSlice({
   name: 'locale',
   initialState,
   reducers: {
+    saveSessionTemplate(state, action: PayloadAction<SessionTemplate>) {
+      const templates = normalizeSessionTemplates(state.sessionTemplates)
+
+      if (getTemplateError(action.payload, templates)) return
+
+      const [template] = normalizeSessionTemplates([action.payload])
+      const templateIndex = templates.findIndex(item => item.id === template.id)
+
+      if (templateIndex < 0) templates.push(template)
+      else templates[templateIndex] = template
+
+      state.sessionTemplates = templates
+    },
+    deleteSessionTemplate(state, action: PayloadAction<string>) {
+      state.sessionTemplates = normalizeSessionTemplates(
+        state.sessionTemplates,
+      ).filter(template => template.id !== action.payload)
+    },
+    moveSessionTemplate(
+      state,
+      action: PayloadAction<{ id: string; direction: -1 | 1 }>,
+    ) {
+      const templates = normalizeSessionTemplates(state.sessionTemplates)
+      const currentIndex = templates.findIndex(
+        template => template.id === action.payload.id,
+      )
+      const nextIndex = currentIndex + action.payload.direction
+
+      if (currentIndex < 0 || nextIndex < 0 || nextIndex >= templates.length)
+        return
+
+      const [movedTemplate] = templates.splice(currentIndex, 1)
+      templates.splice(nextIndex, 0, movedTemplate)
+      state.sessionTemplates = templates
+    },
     setLocale(state, action: PayloadAction<Language>): void {
       state.language = action.payload
     },
@@ -42,6 +83,9 @@ export const settingSlice = createSlice({
     },
     setSettingsState(state, action: PayloadAction<Setting>) {
       Object.assign(state, action.payload)
+      state.sessionTemplates = normalizeSessionTemplates(
+        action.payload.sessionTemplates,
+      )
       state.studyGoals = normalizeStudyGoalsConfiguration(
         action.payload.studyGoals,
         action.payload.dailyGoalMinutes,

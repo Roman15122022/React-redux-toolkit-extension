@@ -557,3 +557,63 @@ test('migrates separate setting persistence and validates goal backup fields', a
   delete importedBackup.redux.SettingReducer.studyGoals
   assert.equal(isExportedAppData(importedBackup), true)
 })
+
+test('templates and active session presets survive reopening and cross-page synchronization', async () => {
+  localStorage.clear()
+  const popupPage = loadStoreInstance()
+  await waitForRehydration(popupPage.persistor)
+  const template = {
+    id: 'english-focus',
+    name: 'English focus',
+    activityName: 'English',
+    targetMinutes: 25,
+    mood: '4',
+    focusMode: true,
+    blockedDomains: ['youtube.com'],
+  }
+  popupPage.store.dispatch({
+    type: 'locale/saveSessionTemplate',
+    payload: template,
+  })
+  popupPage.store.dispatch({
+    type: 'currentTimer/setSessionConfiguration',
+    payload: {
+      targetMinutes: 25,
+      focusMode: true,
+      blockedDomains: ['youtube.com'],
+    },
+  })
+  await popupPage.persistor.flush()
+  const reopenedPage = loadStoreInstance()
+  await waitForRehydration(reopenedPage.persistor)
+  assert.deepEqual(
+    reopenedPage.store.getState().SettingReducer.sessionTemplates,
+    [template],
+  )
+  assert.deepEqual(
+    reopenedPage.store.getState().CurrentTimerReducer.sessionConfiguration,
+    {
+      targetMinutes: 25,
+      focusMode: true,
+      blockedDomains: ['youtube.com'],
+    },
+  )
+  popupPage.store.dispatch({
+    type: 'locale/saveSessionTemplate',
+    payload: { ...template, targetMinutes: 40 },
+  })
+  await popupPage.persistor.flush()
+  const {
+    synchronizePersistedState,
+  } = require('../src/store/syncAcrossPages.ts')
+  synchronizePersistedState(
+    reopenedPage.store,
+    'persist:setting',
+    localStorage.getItem('persist:setting'),
+  )
+  assert.equal(
+    reopenedPage.store.getState().SettingReducer.sessionTemplates[0]
+      .targetMinutes,
+    40,
+  )
+})

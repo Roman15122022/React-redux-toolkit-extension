@@ -55,6 +55,15 @@ screen until the user closes it.
   It reports unfinished time that cannot fit instead of exceeding the limit.
 - Study streaks count days with completed study sessions and forgive one missed
   day per streak. Reaching a time target is not required to maintain a streak.
+- Tracker shows locally saved session templates and up to three distinct recent
+  session setups. Templates contain an activity, duration target, initial mood,
+  focus toggle, and selected sites from the global blacklist. They support
+  one-click start, editing, ordering, and deletion. New templates prefill from
+  the latest completed session. Deleted blacklist entries are skipped.
+- Template targets never stop the timer automatically. Popup and Side Panel
+  show the target; completed sessions preserve their configuration for reuse.
+  Session blocking presets do not replace the global blacklist. Manual sessions
+  retain the existing global blocking behavior.
 - User-facing text is available in English and Ukrainian.
 - The interface supports light and dark themes at popup width.
 

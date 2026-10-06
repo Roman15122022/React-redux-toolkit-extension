@@ -3,6 +3,7 @@ import { PersistedState } from 'redux-persist'
 
 import { Language, ThemeVariants } from '../types'
 import { normalizeStudyGoalsConfiguration } from '../features/StudyGoals/configuration'
+import { normalizeSessionTemplates } from '../features/SessionTemplates/helpers'
 
 import { Setting } from './reducers/settingReducer/types'
 
@@ -34,6 +35,7 @@ export async function migrateSettingState(
 
     const migratedSetting = {
       ...setting,
+      sessionTemplates: normalizeSessionTemplates(setting.sessionTemplates),
       studyGoals: normalizeStudyGoalsConfiguration(
         setting.studyGoals,
         setting.dailyGoalMinutes,
@@ -62,6 +64,7 @@ export async function migrateSettingState(
 
     const migratedSetting = {
       ...setting,
+      sessionTemplates: normalizeSessionTemplates(setting.sessionTemplates),
       studyGoals: normalizeStudyGoalsConfiguration(
         setting.studyGoals,
         setting.dailyGoalMinutes,

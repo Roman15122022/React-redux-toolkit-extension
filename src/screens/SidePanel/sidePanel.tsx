@@ -4,6 +4,7 @@ import { TypeButton } from '../../types'
 import { useTrackTime } from '../../NavigationPages/TrackTimePage/useTrackTime'
 import { useTranslate } from '../../hooks/useTranslate'
 import useTheme from '../../hooks/useTheme'
+import { SessionTarget } from '../../features/SessionTemplates/SessionTarget'
 import SessionSummary from '../../features/SessionSummary'
 import { MoodLabelKeys } from '../../features/MoodSelect/constants'
 import { MoodSelect } from '../../features/MoodSelect'
@@ -18,6 +19,8 @@ const SidePanel = (): JSX.Element => {
   const panel = interfaceLang.sidePanel
   const {
     time,
+    seconds,
+    sessionConfiguration,
     isActive,
     isPaused,
     isFinishing,
@@ -66,6 +69,12 @@ const SidePanel = (): JSX.Element => {
           {time.formattedHours}:{time.formattedMinutes}:{time.formattedSeconds}
         </p>
 
+        {isActive && (
+          <SessionTarget
+            configuration={sessionConfiguration}
+            seconds={seconds}
+          />
+        )}
         {isActive ? (
           <>
             <dl className="mt-5 space-y-3 text-sm">

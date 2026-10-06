@@ -3,6 +3,8 @@ import React from 'react'
 import { TypeButton } from '../../types'
 import StudyTimeInfoForDay from '../../features/StudyTimeInfoForDay'
 import StopStartButton from '../../features/StopStartButton'
+import { SessionTarget } from '../../features/SessionTemplates/SessionTarget'
+import SessionTemplates from '../../features/SessionTemplates'
 import SessionSummary from '../../features/SessionSummary'
 import { MoodSelect } from '../../features/MoodSelect'
 import InputNameActivity from '../../features/InputNameActivity'
@@ -22,6 +24,11 @@ const TrackTimePage = (): JSX.Element => {
     handleStartFromButton,
     handlePauseTimer,
     handleStartSession,
+    handleStartTemplate,
+    isStartingTemplate,
+    templateStartError,
+    sessionConfiguration,
+    seconds,
     isPaused,
     isActive,
     isError,
@@ -58,6 +65,9 @@ const TrackTimePage = (): JSX.Element => {
           handleStartFromButton={handleStartFromButton}
         />
       </div>
+      {isActive && (
+        <SessionTarget configuration={sessionConfiguration} seconds={seconds} />
+      )}
       <div className="mt-8 flex justify-evenly items-center">
         {isActive ? (
           <div className="flex gap-3 justify-center items-center">
@@ -90,12 +100,20 @@ const TrackTimePage = (): JSX.Element => {
             <Button
               classes="whitespace-nowrap mt-2"
               onClick={handleStartSession}
+              disabled={isStartingTemplate}
             >
               {locale.start}
             </Button>
           </div>
         )}
       </div>
+      {!isActive && (
+        <SessionTemplates
+          onStart={handleStartTemplate}
+          isStarting={isStartingTemplate}
+          startError={templateStartError}
+        />
+      )}
       <StudyTimeInfoForDay date={date} isLastTimeNeeded={false} compactTotal />
     </Container>
   )

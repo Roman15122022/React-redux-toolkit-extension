@@ -1,4 +1,4 @@
-import { SyntheticEvent, useEffect, useState } from 'react'
+import { SyntheticEvent, useEffect, useRef, useState } from 'react'
 
 import { trainAIModelAfterSession } from '../AIHelper/aiModel'
 import { getDayOfWeekNumber } from '../../utils'
@@ -13,6 +13,14 @@ import { getCompletedGoalIds } from '../../features/StudyGoals/milestones'
 import { getStudyGoalProgress } from '../../features/StudyGoals/helpers'
 import { getGoalLabel } from '../../features/StudyGoals/GoalProgress'
 import { normalizeStudyGoalsConfiguration } from '../../features/StudyGoals/configuration'
+import {
+  SessionConfiguration,
+  SessionTemplate,
+} from '../../features/SessionTemplates/types'
+import {
+  getTemplateError,
+  getSessionConfiguration,
+} from '../../features/SessionTemplates/helpers'
 import {
   createSessionSummary,
   getSessionDomainData,
@@ -34,6 +42,11 @@ export const useTrackTime = () => {
   const distractingDomains = useAppSelector(
     state => state.SessionDataSlice.distractingDomains || [],
   )
+  const startingTemplate = useRef(false)
+  const [isStartingTemplate, setIsStartingTemplate] = useState(false)
+  const [templateStartError, setTemplateStartError] = useState<
+    'invalid' | 'startError' | null
+  >(null)
   const [now, setNow] = useState(Date.now())
   const [lastTime, setLastTime] = useState('')
   const [mood, setMood] = useState(lastMood || '3')
@@ -104,6 +117,9 @@ export const useTrackTime = () => {
         mood: lastMood,
         note: timer.note?.trim() || '',
         pauseCount: timer.pauseCount || 0,
+        ...(timer.sessionConfiguration
+          ? { sessionConfiguration: timer.sessionConfiguration }
+          : {}),
       }
       const sessionDomainData = getSessionDomainData(timeLog, domainSessions)
       const summary = createSessionSummary({
@@ -183,19 +199,31 @@ export const useTrackTime = () => {
     setNow(resumedAt)
   }
 
-  function handleStartSession(): void {
-    if (!inputText.trim()) {
+  function startSession(
+    activityName: string,
+    initialMood: string,
+    configuration: SessionConfiguration | null = null,
+  ): boolean {
+    if (
+      store.getState().CurrentTimerReducer.stateTimer?.isActive ||
+      isFinishing
+    )
+      return false
+
+    if (!activityName.trim()) {
       setIsError(true)
 
-      return
+      return false
     }
 
     const startedAt = Date.now()
+    dispatch(currentTimerSlice.actions.resetCurrentTimer())
+    dispatch(currentTimerSlice.actions.setSessionConfiguration(configuration))
     dispatch(currentTimerSlice.actions.setStartDate(startedAt))
     dispatch(currentTimerSlice.actions.setElapsedTime(0))
     dispatch(timerLogsSlice.actions.setLastStartDate(startedAt))
-    dispatch(timerLogsSlice.actions.setLastNameActivity(inputText.trim()))
-    dispatch(timerLogsSlice.actions.setLastMood(mood))
+    dispatch(timerLogsSlice.actions.setLastNameActivity(activityName.trim()))
+    dispatch(timerLogsSlice.actions.setLastMood(initialMood))
     dispatch(
       currentTimerSlice.actions.setStateTimer({
         isActive: true,
@@ -206,6 +234,56 @@ export const useTrackTime = () => {
     setLastTime('')
     setCompletedSession(null)
     setCompletedGoalNames([])
+    setTemplateStartError(null)
+
+    return true
+  }
+
+  function handleStartSession(): void {
+    if (startingTemplate.current) return
+
+    startSession(inputText, mood)
+  }
+
+  async function handleStartTemplate(
+    template: SessionTemplate,
+  ): Promise<boolean> {
+    if (
+      startingTemplate.current ||
+      store.getState().CurrentTimerReducer.stateTimer?.isActive
+    )
+      return false
+
+    if (getTemplateError(template, [])) {
+      setTemplateStartError('invalid')
+
+      return false
+    }
+
+    startingTemplate.current = true
+    setIsStartingTemplate(true)
+    setTemplateStartError(null)
+    try {
+      const storageData = await chrome.storage.local.get('blackList')
+      const availableDomains = Array.isArray(storageData.blackList)
+        ? storageData.blackList.filter(
+            (domain: unknown): domain is string => typeof domain === 'string',
+          )
+        : []
+
+      return startSession(
+        template.activityName,
+        template.mood,
+        getSessionConfiguration(template, availableDomains),
+      )
+    } catch {
+      setTemplateStartError('startError')
+
+      return false
+    } finally {
+      startingTemplate.current = false
+      setIsStartingTemplate(false)
+    }
   }
 
   function handlePauseTimer(): void {
@@ -226,6 +304,10 @@ export const useTrackTime = () => {
     time: formatTime(seconds),
     seconds,
     handleStartSession,
+    handleStartTemplate,
+    isStartingTemplate,
+    templateStartError,
+    sessionConfiguration: timer.sessionConfiguration,
     handleStopTimer,
     handleCancelTimer,
     handlePauseTimer,
